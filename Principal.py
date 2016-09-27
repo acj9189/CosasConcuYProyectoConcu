@@ -8,7 +8,9 @@ class Application(tk.Frame):
 
         self.TipoCreacion = "MG"
 
-        self.AutomataAnalisis =Automata()
+        self.AutomataAnalisis = Automata()
+        Automata.crearEstado("hola",0,0,True,True)
+
 
         self.pack()
         self.create_widgets()
