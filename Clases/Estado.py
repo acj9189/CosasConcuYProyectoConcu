@@ -1,12 +1,12 @@
 
-from Estado import Estado
-from Transicion import Transicion
+#from Estado import Estado
+#from Transicion import Transicion
 
 class Estado:
 
 	def __init__():
 		self.estadoNombre
-		self.listaTransiciones
+		self.listaTransiciones = []
 		self.posX
 		self.PosY
 		self.esEstadoInicial

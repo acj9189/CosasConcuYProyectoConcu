@@ -9,7 +9,7 @@ class Application(tk.Frame):
         self.TipoCreacion = "MG"
 
         self.AutomataAnalisis = Automata()
-        Automata.crearEstado("hola",0,0,True,True)
+        Automata.crearEstado(self,"hola", 0, 0, True, True)
 
 
         self.pack()
