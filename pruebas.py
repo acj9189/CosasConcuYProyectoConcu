@@ -1,12 +1,20 @@
- def create_widgets(self):
-        self.hi_there = tk.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.pack(side="top")
 
-        self.quit = tk.Button(self, text="QUIT", fg="red",
-                              command=root.destroy)
-        self.quit.pack(side="bottom")
+from Clases.Automata import *
 
-    def say_hi(self):
-        print("hi there, everyone!")
+class P():
+	def __init__(self):
+		self.AutomataAnalisis = Automata()
+
+		#Automata.crearEstado(self,"AFD-AFN", "hola", 0, 0, True, True)
+
+	def llamarCrearEstado(self, estadoNombre, posX, posY, esEstadoInicial, esEstadoAceptador):
+		self.AutomataAnalisis.crearEstado(estadoNombre, posX , posY, esEstadoInicial, esEstadoAceptador)
+
+
+
+
+
+
+
+P = P()
+P.llamarCrearEstado("q0", 0, 0, False, False)

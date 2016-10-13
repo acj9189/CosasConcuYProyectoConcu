@@ -1,18 +1,24 @@
-#from Estado import Estado
-#from Transicion import Transicion
+from Estado import *
+from Transicion import *
 
 class Automata(object):
 
 	def __init__(self):
-		listaEstados = []
-		esDeterminista = False
-		tieneEstadoInicial = False
-		tieneEstadoFinal = False
-		tipodeAutomata = "AFD-AFN"
+		self.listaEstados = []
+		self.esDeterminista = False
+		self.tieneEstadoInicial = False
+		self.tieneEstadoFinal = False
+		self.tipodeAutomata = "AFD-AFN"
+		print(self.tipodeAutomata)
 
-	def crearEstado(self, estadoNombre, posX, PosY, esEstadoInicial, esEstadoAceptador):
-		if self.tipodeAutomata == "AFD-AFN":
-			self.listaEstados.append(Estado(estadoNombre, Transicion(), posX, PosY, esEstadoInicial, esEstadoAceptador))
+	def crearEstado(self, estadoNombre, posX, posY, esEstadoInicial, esEstadoAceptador):
+
+		if(self.tipodeAutomata == "AFD-AFN"):
+			#print(self.tipodeAutomata)
+			#self.listaEstados.append("hola")
+			#print(self.listaEstados[0])
+			self.listaEstados.append(Estado(estadoNombre, Transicion(), posX, posY, esEstadoInicial, esEstadoAceptador))
+
 		elif(self.tipodeAutomata == "MME"):
 			pass
 		elif(self.tipodeAutomata == "MMO"):
@@ -20,14 +26,4 @@ class Automata(object):
 		elif(self.tipodeAutomata == "PILA"):
 			pass
 
-	def validarSiTieneEstadosFinalesInicial(self):
-		if((self.tieneEstadoInicial == False) or (self.tieneEstadoFinal == False)):
-			return "NO"
-		else:
-			return "SI"
 
-	def crearTransicion(self):
-		pass
-
-	def realizarReversa(self):
-		pass

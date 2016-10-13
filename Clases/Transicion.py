@@ -2,15 +2,15 @@
 from Estado import *
 
 
-class Transicion:
+class Transicion(object):
 
 	def __init__(self):
-		self.estadoOrigen
-		self.estadoDestino
-		self.simboloT
+		self.estadoOrigen = None
+		self.estadoDestino = None
+		self.simboloT = None
 
 
-	def __init__(self, estadoOrigen, estadoDestino,simboloT):
+	""""def __init__(self, estadoOrigen, estadoDestino,simboloT):
 		self.estadoOrigen = estadoOrigen
 		self.estadoDestino = estadoDestino
-		self.simboloT = simboloT
+		self.simboloT = simboloT"""

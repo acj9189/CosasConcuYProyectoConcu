@@ -2,15 +2,15 @@
 #from Estado import Estado
 #from Transicion import Transicion
 
-class Estado:
+class Estado(object):
 
-	def __init__():
-		self.estadoNombre
+	"""def __init__(self):
+		self.estadoNombre = ""
 		self.listaTransiciones = []
-		self.posX
-		self.PosY
-		self.esEstadoInicial
-		self.esEstadoAceptador
+		self.posX = 0
+		self.PosY = 0
+		self.esEstadoInicial = False
+		self.esEstadoAceptador = False"""
 
 
 
