@@ -50,7 +50,7 @@ class Automata(object):
 		else:
 			return "No hay suficientes estados para crear una transicion"
 
-	# Desde Aca tengo que revisar que funione correctmante....
+	# Desde Aca tengo que revisar que funione correctmante.... todos y cada uno de los metodos que hay de aqui para abajo....
 	def encontrarInicial(self):
 		estadoInicialEn = None
 		self.tieneEstadoInicial = False
