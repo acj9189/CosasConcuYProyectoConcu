@@ -50,5 +50,26 @@ class Automata(object):
 		else:
 			return "No hay suficientes estados para crear una transicion"
 
+	def encontrarInicial(self):
+		estadoInicialEn = None
+		self.tieneEstadoInicial = False
+		for esini in self.listaEstados:
+			if(esini.esEstadoInicial == True):
+				estadoInicialEn = esini
+				self.tieneEstadoInicial = True
+				break
+		return estadoInicialEn
+
+	def encontrarFinal(self):
+
+		if((self.tipodeAutomata == "PILA") or (self.tipodeAutomata == "AFD-AFN")):
+			ListaFinalesEn = []
+			self.tieneEstadoFinal = False
+			for esfini in self.listaEstados:
+				if(esfini.esEstadoAceptador == True):
+					ListaFinalesEn.append(esfini)
+					self.tieneEstadoFinal = True
+			return ListaFinalesEn
+
 
 
