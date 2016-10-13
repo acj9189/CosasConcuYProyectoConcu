@@ -14,3 +14,8 @@ class Transicion(object):
 		self.estadoOrigen = estadoOrigen
 		self.estadoDestino = estadoDestino
 		self.simboloT = simboloT"""
+
+	def crearTransicion(self, estadoOrigen, estadoDestino,simboloT):
+		self.estadoOrigen = estadoOrigen
+		self.estadoDestino = estadoDestino
+		self.simboloT = simboloT
