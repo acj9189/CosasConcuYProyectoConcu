@@ -12,8 +12,9 @@ class P():
 
 	def llamarCrearTransicion(self):
 		estadoOrigen = self.AutomataAnalisis.listaEstados[0]
-		estadoDestino = self.AutomataAnalisis.listaEstados[1]
+		estadoDestino = self.AutomataAnalisis.listaEstados[0]
 		simbolo = "a"
+		#return self.AutomataAnalisis.crearTransicion(estadoOrigen, estadoDestino, simbolo)
 		self.AutomataAnalisis.crearTransicion(estadoOrigen, estadoDestino, simbolo)
 
 
@@ -24,5 +25,5 @@ class P():
 
 P = P()
 P.llamarCrearEstado("q0", 0, 0, False, False)
-P.llamarCrearEstado("q1", 0, 0, False, False)
-P.llamarCrearTransicion()
+#P.llamarCrearEstado("q1", 0, 0, False, False)
+print(P.llamarCrearTransicion())
