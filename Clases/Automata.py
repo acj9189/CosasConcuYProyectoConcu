@@ -50,6 +50,7 @@ class Automata(object):
 		else:
 			return "No hay suficientes estados para crear una transicion"
 
+	# Desde Aca tengo que revisar que funione correctmante....
 	def encontrarInicial(self):
 		estadoInicialEn = None
 		self.tieneEstadoInicial = False
@@ -71,5 +72,54 @@ class Automata(object):
 					self.tieneEstadoFinal = True
 			return ListaFinalesEn
 
+	def realizarReversa(self):
+		self.esDeterminista = False
+		self.crearEstadoSiExisteMasdeUnAcept()
+		self.cambiarDireccionTran()
+		# Organizar para crera una posiocion
 
+	def crearEstadoSiExisteMasdeUnAcept(self):
+		ListaFinalesRe = encontrarFinal
+		numEstadosFini = len(ListaFinalesRe)
+		if(numEstadosFini > 1):
+			listaTransiciones = []
+			tempEs = Estado("fi", listaTransiciones, 0, 0,False,True)
+			for es in self.listaEstados:
+				if(es.esEstadoAceptador == True):
+					es.esEstadoAceptador = False
+					tempTran = Transicion(es, tempEs, "-")
+					es.listaTransiciones.append(tempTran)
+			self.listaEstados.append(tempEs)
+
+	def cambiarDireccionTran(self):
+		tempEs = self.encontrarInicial()
+		listaEstadosTemp = []
+		for es in self.listaEstados:
+			listaEstadosTemp.append(es)
+			#if(es.listaTransiciones != None):
+			for tran in es.listaTransiciones:
+				if((tran.estadoDestino in listaEstadosTemp) == False):
+					tranTemp1 = Transicion()
+					tranTemp2 = tran
+					estadoT = tran.estadoDestino
+					tranTemp1.estadoOrigen = estadoT
+					tranTemp1.estadoDestino = tran.estadoOrigen
+					tranTemp1.simboloT = tran.simboloT
+					es.listaTransiciones.remove(tranTemp2)
+					estadoT.listaTransiciones.append(tranTemp1)
+
+			if(es.esEstadoInicial == True):
+				es.esEstadoInicial = False
+				es.esEstadoAceptador = True
+
+			if(es.esEstadoAceptador == True):
+				es.esEstadoInicial = True
+				es.esEstadoAceptador = False
+
+	def realizarComplemento(self):
+		for es in self.listaEstados:
+			if(es.esEstadoAceptador == True):
+				es.esEstadoAceptador = False
+			else:
+				es.esEstadoAceptador = True
 
