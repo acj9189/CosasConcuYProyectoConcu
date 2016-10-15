@@ -72,6 +72,7 @@ class Automata(object):
 					self.tieneEstadoFinal = True
 			return ListaFinalesEn
 
+	# Modificar para realizar metodos de Hilos
 	def realizarReversa(self):
 		self.esDeterminista = False
 		self.crearEstadoSiExisteMasdeUnAcept()
@@ -116,6 +117,7 @@ class Automata(object):
 				es.esEstadoInicial = True
 				es.esEstadoAceptador = False
 
+	# Modificar para realizar metodos de Hilos
 	def realizarComplemento(self):
 		for es in self.listaEstados:
 			if(es.esEstadoAceptador == True):
