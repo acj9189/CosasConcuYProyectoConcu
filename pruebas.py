@@ -27,3 +27,4 @@ P = P()
 P.llamarCrearEstado("q0", 0, 0, False, False)
 #P.llamarCrearEstado("q1", 0, 0, False, False)
 print(P.llamarCrearTransicion())
+#hola
