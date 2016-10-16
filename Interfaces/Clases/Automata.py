@@ -30,26 +30,17 @@ class Automata(object):
 			pass
 
 	def crearTransicion(self, estadoOrigen, estadoDestino, simbolo):
-		numEstados = len(self.listaEstados)
-		print(numEstados)
-		if(numEstados > 1):
-
-			if(self.tipodeAutomata == "AFD-AFN"):
-
-				nuevaTransicion = Transicion()
-				nuevaTransicion.crearTransicion(estadoOrigen, estadoDestino,simbolo)
-				estadoOrigen.listaTransiciones.append(nuevaTransicion)
-				print("se creo")
-
-			elif(self.tipodeAutomata == "MME"):
-				pass
-			elif(self.tipodeAutomata == "MMO"):
-				pass
-			elif(self.tipodeAutomata == "PILA"):
-				pass
-
-		else:
-			return "No hay suficientes estados para crear una transicion"
+		if(self.tipodeAutomata == "AFD-AFN"):
+			nuevaTransicion = Transicion()
+			nuevaTransicion.crearTransicion(estadoOrigen, estadoDestino,simbolo)
+			estadoOrigen.listaTransiciones.append(nuevaTransicion)
+			print("se creo")
+		elif(self.tipodeAutomata == "MME"):
+			pass
+		elif(self.tipodeAutomata == "MMO"):
+			pass
+		elif(self.tipodeAutomata == "PILA"):
+			pass
 
 	# Desde Aca tengo que revisar que funione correctmante.... todos y cada uno de los metodos que hay de aqui para abajo....
 	def encontrarInicial(self):

@@ -1,5 +1,6 @@
 from Tkinter import*
 import tkMessageBox
+import tkSimpleDialog
 from ttk import *
 from Clases.clsAutomata import *
 from Clases.clsEstado import *
@@ -55,46 +56,10 @@ class Ventana(object):
 
             if finalseleccionado is not None:
                 #var = tkMessageBox.askyesno("Title", "Your question goes here?")
-                var = tkMessageBox.en
+                simbolo = tkSimpleDialog.askstring("Ingresar","Ingrece el simbolo de la transicion")
+                print(simbolo)
+                self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo)
 
-
-
-
-                """"self.menuTransicion = Menu(self.ventanaPrincipal, tearoff=0)
-                self.root1 = Tk()
-                la = Label(self.root1, text= "Ingrece el simbolo").pack()
-                #v = StringVar(self.root1, value='Ingrece el valor de Simbolo')
-                self.e = Entry(self.root1)
-                self.e.pack()
-                b1 = Button(self.root1,text="ok",command = self.root1.destroy)
-                b1.pack()
-
-
-
-                self.ventanaPrincipal.wait_window(self.root1)
-                print("hola")
-
-                for e in self.automata.alfabeto:
-                    if e == 'E':
-                        continue
-                    self.menuTransicion.add_command(label=e,
-                                                    command=lambda c=e, ant=finalseleccionado, sel=self.inicialseleccionado: self.crearTransicion(sel,
-                                                                                                                                 ant,
-                                                                                                                                 c))
-                self.menuTransicion.add_separator()
-                self.menuTransicion.add_command(label='E',
-                                                command=lambda c='E', ant=finalseleccionado, sel=self.inicialseleccionado: self.crearTransicion(sel,
-                                                                                                                               ant,
-                                                                                                                               c))
-                self.menuTransicion.add_separator
-                self.menuTransicion.add_command(label='Cancelar', command=lambda: self.cancelar())
-                try:
-
-                    self.menuTransicion.grab_set()
-                finally:
-                    self.menuTransicion.grab_release()
-        else:
-            pass"""
         self.modoOperacion = 0
         self.actualizarScreen()
 
@@ -110,8 +75,8 @@ class Ventana(object):
     def crearEstado(self):
         self.modoOperacion = 1
 
-    def crearTransicion(self, sel, ant, caracter):
-        self.automata.diccionarioEstados[sel][caracter].append(ant)
+    def crearTransicion(self, origen, destino, simbolo):
+        self.automata.crearTransicion(origen, destino, simbolo)
         self.actualizarScreen()
 
     def mostrarMenu(self, event):
@@ -204,51 +169,51 @@ class Ventana(object):
         if self.modoOperacion == 2:
             self.canvas.create_line(self.inicialseleccionado.getX(), self.inicialseleccionado.getY(), self.posX, self.posY)
         for a in self.automata.listaEstados:
-            # pintar transiciones
-            """"for c in self.automata.alfabeto:
-                for d in self.automata.diccionarioEstados[a][c]:
-                    if d is a:
-                        # lazo
-                        self.canvas.create_text(d.getX(), d.getY() - 70, text=c)
-                        self.canvas.create_line(a.getX() + tam, a.getY() + tam / 4, d.getX(), d.getY() - (tam * 5),
-                                                d.getX() - tam, d.getY() - tam / 2, arrow=LAST, smooth=True)
-                    else:
-                        if d.getX() > a.getX():
-                            if a.getY() <= d.getY():
-                                pm = (d.getX() - (d.getX() - a.getX()) / 2, a.getY())
-                                pt = (pm[0] + 30, pm[1] + 50)
-                            else:
-                                pm = (d.getX() - (d.getX() - a.getX()) / 2, d.getY())
-                                pt = (pm[0] + 30, pm[1] - 50)
-                            self.canvas.create_text(pt, text=c)
-                            self.canvas.create_line(a.getX(), a.getY(), pm, d.getX(), d.getY() - tam, arrow=LAST,
-                                                    smooth=True)
-                        else:
-                            if a.getY() <= d.getY():
-                                pm = (d.getX() - (d.getX() - a.getX()) / 2, d.getY())
-                                pt = (pm[0] + 30, pm[1] + 50)
-                            else:
-                                pm = (d.getX() - (d.getX() - a.getX()) / 2, a.getY())
-                                pt = (pm[0] + 30, pm[1] - 50)
-                            self.canvas.create_text(pt, text=c)
-                            self.canvas.create_line(a.getX(), a.getY(), pm, d.getX(), d.getY() + tam, arrow=LAST,
-                                                    smooth=True)
 
+            # pintar transiciones
+
+            for d in a.listaTransiciones:
+                if(d.getestadoOrigen() == d.getestadoDestino()):
+                     # lazo
+                        self.canvas.create_text(d.getestadoOrigen().getX(), d.getestadoOrigen().getY() - 70, text = d.getSimbolo())
+                        self.canvas.create_line(a.getX() + tam, a.getY() + tam / 4, d.getestadoOrigen().getX(), d.getestadoOrigen().getY() - (tam * 5),
+                                                d.getestadoOrigen().getX() - tam, d.getestadoOrigen().getY() - tam / 2, arrow=LAST, smooth=True)
+                else:
+                    # Destino mayor que origen
+                    if (d.getestadoDestino().getX() > a.getX()):
+                         print("entro origen mayor que destino")
+                         if (a.getY() <= d.getestadoDestino().getY()):
+                             pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, a.getY())
+                             pt = (pm[0] + 30, pm[1] + 30)
+                         else:
+                             pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2,d.getestadoDestino().getY())
+                             pt = (pm[0] + 30, pm[1] - 30)
+                         self.canvas.create_text(pt, text = d.getSimbolo())
+                         self.canvas.create_line(a.getX(), a.getY(), pm, d.getestadoDestino().getX(), d.getestadoDestino().getY() - tam, arrow=LAST,
+                                                    smooth=True)
+                    else:
+                        # Origen mayor que Destino
+                         if (a.getY() <= d.getestadoDestino().getY()):
+                             print("entro origen menor o igual q destino")
+                             pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, d.getestadoDestino().getY())
+                             pt = (pm[0] + 10, pm[1] + 50)
+                         else:
+                             pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, a.getY())
+                             pt = (pm[0] + 10, pm[1] - 50)
+                         self.canvas.create_text(pt, text = d.getSimbolo())
+                         self.canvas.create_line(a.getX(), a.getY(), pm, d.getestadoDestino().getX(), d.getestadoDestino().getY() + tam, arrow=LAST,
+                                                    smooth=True)
 
             # pintar estados """
+
             self.canvas.create_oval(a.getX() - tam, a.getY() - tam, a.getX() + tam, a.getY() + tam, fill='red',
-                                    activeoutline='blue', outline='black', width=2)
+                                    activeoutline='blue', outline='white', width=2)
             if a.esEstadoAceptador == True:
                 self.canvas.create_oval(a.getX() - 12, a.getY() - 12, a.getX() + 12, a.getY() + 12)
 
             if a.esEstadoInicial == True:
                 self.canvas.create_line(a.getX() - tam * 2, a.getY(), a.getX() - tam, a.getY(), arrow=LAST)
             self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre())
-
-    def DestWin(self):
-        print(self.e.get())
-        self.root1.dispose()
-
 
 
 if __name__ == '__main__':
