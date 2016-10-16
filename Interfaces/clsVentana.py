@@ -1,4 +1,5 @@
 from Tkinter import*
+import tkMessageBox
 from ttk import *
 from Clases.clsAutomata import *
 from Clases.clsEstado import *
@@ -18,7 +19,7 @@ class Ventana(object):
         self.ventanaPrincipal = Tk()
         self.frame = Frame(self.ventanaPrincipal)
         self.canvas = Canvas(self.frame, bd=6, bg='white', width=1200, height=800)
-        self.ventanaPrincipal.title("Prueba Automata")
+        self.ventanaPrincipal.title("Realizar Automata")
         self.ventanaPrincipal.geometry("1140x700+0+0")
         self.canvas.place(x=0, y=0)
         self.frame.grid(column=0, row=0)
@@ -53,9 +54,27 @@ class Ventana(object):
             finalseleccionado = self.automata.buscarEstado(event.x, event.y)
 
             if finalseleccionado is not None:
-                self.menuTransicion = Menu(self.ventanaPrincipal, tearoff=0)
+                #var = tkMessageBox.askyesno("Title", "Your question goes here?")
+                var = tkMessageBox.en
 
-                """"for e in self.automata.alfabeto:
+
+
+
+                """"self.menuTransicion = Menu(self.ventanaPrincipal, tearoff=0)
+                self.root1 = Tk()
+                la = Label(self.root1, text= "Ingrece el simbolo").pack()
+                #v = StringVar(self.root1, value='Ingrece el valor de Simbolo')
+                self.e = Entry(self.root1)
+                self.e.pack()
+                b1 = Button(self.root1,text="ok",command = self.root1.destroy)
+                b1.pack()
+
+
+
+                self.ventanaPrincipal.wait_window(self.root1)
+                print("hola")
+
+                for e in self.automata.alfabeto:
                     if e == 'E':
                         continue
                     self.menuTransicion.add_command(label=e,
@@ -68,14 +87,14 @@ class Ventana(object):
                                                                                                                                ant,
                                                                                                                                c))
                 self.menuTransicion.add_separator
-                self.menuTransicion.add_command(label='Cancelar', command=lambda: self.cancelar())"""
+                self.menuTransicion.add_command(label='Cancelar', command=lambda: self.cancelar())
                 try:
-                    self.menuTransicion.tk_popup(event.x_root + 20, event.y_root + 20, 0)
+
                     self.menuTransicion.grab_set()
                 finally:
                     self.menuTransicion.grab_release()
         else:
-            pass
+            pass"""
         self.modoOperacion = 0
         self.actualizarScreen()
 
@@ -224,7 +243,12 @@ class Ventana(object):
 
             if a.esEstadoInicial == True:
                 self.canvas.create_line(a.getX() - tam * 2, a.getY(), a.getX() - tam, a.getY(), arrow=LAST)
-            self.canvas.create_text(a.getX(), a.getY(), fill = 'black', text = a.getestadoNombre())
+            self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre())
+
+    def DestWin(self):
+        print(self.e.get())
+        self.root1.dispose()
+
 
 
 if __name__ == '__main__':
