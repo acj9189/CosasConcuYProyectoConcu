@@ -1,10 +1,10 @@
 from Tkinter import*
 from ttk import *
-from clsAutomata import *
-from clsEstado import *
+from Clases.clsAutomata import *
+from Clases.clsEstado import *
 
-from Automata import *
-from Estado import *
+from Clases.Automata import *
+from Clases.Estado import *
 
 
 class Ventana(object):
