@@ -11,7 +11,7 @@ class Ventana(object):
     def __init__(self):
         #self.automata = clsAutomata(['0', '1'])
         self.automata = Automata()
-        self.seleccionar = None
+        self.inicialseleccionado = None
         self.posX = 0
         self.posY = 0
         #self.op = ''
@@ -19,7 +19,7 @@ class Ventana(object):
         self.frame = Frame(self.ventanaPrincipal)
         self.canvas = Canvas(self.frame, bd=6, bg='white', width=1200, height=800)
         self.ventanaPrincipal.title("Prueba Automata")
-        self.ventanaPrincipal.geometry("1300x900")
+        self.ventanaPrincipal.geometry("1140x700+0+0")
         self.canvas.place(x=0, y=0)
         self.frame.grid(column=0, row=0)
         self.frame.columnconfigure(0, weight=1)
@@ -27,13 +27,12 @@ class Ventana(object):
         self.txtCadena = StringVar()
         self.modoOperacion = 0
         Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=1, row=1)
-        Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
-        Button(self.frame, text='Guardar Automata', command=lambda: self.guardarJson()).grid(column=3, row=1)
-        Button(self.frame, text='Cargar Automata', command=lambda: self.minimizar()).grid(column=4, row=1)
-        Button(self.frame, text='Determinista', command=lambda: self.pasarADeterminista()).grid(column=5, row=1)
+        #Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
+        #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarJson()).grid(column=3, row=1)
+        #Button(self.frame, text='Cargar Automata', command=lambda: self.minimizar()).grid(column=4, row=1)
+        #Button(self.frame, text='Determinista', command=lambda: self.pasarADeterminista()).grid(column=5, row=1)
         Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
-        Button(self.frame, text='Verificar', command=lambda: self.verificarCadena()).grid(column=2, row=51,
-                                                                                          sticky=(W, E))
+        #Button(self.frame, text='Verificar', command=lambda: self.verificarCadena()).grid(column=2, row=51, sticky=(W, E))
         Label(self.frame, text='Zoom').grid(column=3, row=51)
         self.canvas.grid(column=1, row=2, columnspan=50, rowspan=50, sticky=E + W)
         self.canvas.bind('<Button-1>', self.onClickCanvas)
@@ -46,47 +45,47 @@ class Ventana(object):
 
     def onClickCanvas(self, event):
         if self.modoOperacion == 1:
-            listaTransiciones = []
-
             #estado = clsEstado(event.x, event.y, 'q' + str(len(self.automata.diccionarioEstados.keys())))
             #self.automata.nuevoEstado(estado)
             self.automata.crearEstado('q' + str(len(self.automata.listaEstados)), event.x, event.y, False, False)
-        """"
+
         elif self.modoOperacion == 2:
-            anterior = self.automata.buscar(event.x, event.y)
-            if anterior is not None:
+            finalseleccionado = self.automata.buscarEstado(event.x, event.y)
+
+            if finalseleccionado is not None:
                 self.menuTransicion = Menu(self.ventanaPrincipal, tearoff=0)
-                for e in self.automata.alfabeto:
+
+                """"for e in self.automata.alfabeto:
                     if e == 'E':
                         continue
                     self.menuTransicion.add_command(label=e,
-                                                    command=lambda c=e, ant=anterior, sel=self.seleccionar: self.crearTransicion(sel,
+                                                    command=lambda c=e, ant=finalseleccionado, sel=self.inicialseleccionado: self.crearTransicion(sel,
                                                                                                                                  ant,
                                                                                                                                  c))
                 self.menuTransicion.add_separator()
                 self.menuTransicion.add_command(label='E',
-                                                command=lambda c='E', ant=anterior, sel=self.seleccionar: self.crearTransicion(sel,
+                                                command=lambda c='E', ant=finalseleccionado, sel=self.inicialseleccionado: self.crearTransicion(sel,
                                                                                                                                ant,
                                                                                                                                c))
                 self.menuTransicion.add_separator
-                self.menuTransicion.add_command(label='Cancelar', command=lambda: self.cancelar())
+                self.menuTransicion.add_command(label='Cancelar', command=lambda: self.cancelar())"""
                 try:
                     self.menuTransicion.tk_popup(event.x_root + 20, event.y_root + 20, 0)
                     self.menuTransicion.grab_set()
                 finally:
                     self.menuTransicion.grab_release()
         else:
-            pass"""
+            pass
         self.modoOperacion = 0
         self.actualizarScreen()
 
     def doubleClickCanvas(self, event):
 
-        if self.automata.buscar(event.x, event.y) is None:
+        if self.automata.buscarEstado(event.x, event.y) is None:
             self.modoOperacion = 0
             return
         self.modoOperacion = 2
-        self.seleccionar = self.automata.buscar(event.x, event.y)
+        self.inicialseleccionado = self.automata.buscarEstado(event.x, event.y)
         self.actualizarScreen()
 
     def crearEstado(self):
@@ -151,7 +150,7 @@ class Ventana(object):
         pass
 
     def moverEstado(self, event):
-        sel = self.automata.buscar(event.x, event.y)
+        sel = self.automata.buscarEstado(event.x, event.y)
         if sel is None:
             return
         sel.x, sel.y = event.x, event.y
@@ -182,8 +181,9 @@ class Ventana(object):
     def actualizarScreen(self):
         self.canvas.delete('all');
         tam = self.automata.tam
+
         if self.modoOperacion == 2:
-            self.canvas.create_line(self.seleccionar.getX(), self.seleccionar.getY(), self.posX, self.posY)
+            self.canvas.create_line(self.inicialseleccionado.getX(), self.inicialseleccionado.getY(), self.posX, self.posY)
         for a in self.automata.listaEstados:
             # pintar transiciones
             """"for c in self.automata.alfabeto:
