@@ -52,7 +52,6 @@ class Ventana(object):
         self.canvas.bind('<B1-Motion>', self.moverEstado)
         self.ventanaPrincipal.mainloop()
 
-
     def onClickCanvas(self, event):
         if self.modoOperacion == 1:
             #estado = clsEstado(event.x, event.y, 'q' + str(len(self.automata.diccionarioEstados.keys())))

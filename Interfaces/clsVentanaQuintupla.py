@@ -36,7 +36,7 @@ class Ventana(object):
         self.modoOperacion = 0
         self.canvas.grid(column=1, row=2, columnspan=50, rowspan=50, sticky=E + W)
         Button(self.frame, text='Crear Estado', command=lambda: self.crearEstado()).grid(column=1, row=1)
-        Button(self.frame, text='Crear Transicion', command=lambda: self.crearEstado()).grid(column=2, row=1)
+        Button(self.frame, text='Crear Transicion', command=lambda: self.crearTransicion()).grid(column=2, row=1)
         """" #Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
         #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
         Button(self.frame, text='Guardar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
@@ -97,7 +97,7 @@ class Ventana(object):
         self.posY = self.posY + 50
 
 
-    def crearTransicion(self, origen, destino, simbolo):
+    def crearTransicion(self):
         estadoOrigen = None
         estadoDestino = None
         numestados = len(self.automata.listaEstados)
