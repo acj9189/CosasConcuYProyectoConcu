@@ -1,5 +1,6 @@
 
 from Clases.Automata import *
+from Interfaces.clsVentanaQuintupla import*
 
 """"class P():
 	def __init__(self):
@@ -34,7 +35,7 @@ import Tkinter, Tkconstants, tkFileDialog
 
 root = Tk()
 root.filename = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")), defaultextension=".acj")
-print (root.filename)"""
+print (root.filename)
 
 from Tkinter import *
 import Tkinter, Tkconstants, tkFileDialog
@@ -43,4 +44,6 @@ root = Tk()
 #root.filename = tkFileDialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
 arhivo = tkFileDialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
 #print (root.filename)
-print(arhivo)
+print(arhivo)"""
+
+H = Ventana("quintupla")

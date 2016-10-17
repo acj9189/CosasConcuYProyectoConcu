@@ -15,7 +15,7 @@ from Clases.clsArchivo import*
 
 class Ventana(object):
 
-    def __init__(self):
+    def __init__(self, tipo):
         #self.automata = clsAutomata(['0', '1'])
         self.automata = Automata()
         self.archivo = None
@@ -25,15 +25,16 @@ class Ventana(object):
         #self.op = ''
         self.ventanaPrincipal = Tk()
         self.frame = Frame(self.ventanaPrincipal)
-        self.canvas = Canvas(self.frame, bd=6, bg='white', width=1200, height=800)
-        self.ventanaPrincipal.title("Realizar Automata")
-        self.ventanaPrincipal.geometry("700x700+0+0")
+        self.canvas = Canvas(self.frame, bd=6, bg='white', width=400, height=300)
+        self.ventanaPrincipal.title("Realizar " + tipo)
+        self.ventanaPrincipal.geometry("400x300+0+0")
         self.canvas.place(x=0, y=0)
         self.frame.grid(column=0, row=0)
         self.frame.columnconfigure(0, weight=1)
         self.frame.rowconfigure(0, weight=1)
         self.txtCadena = StringVar()
         self.modoOperacion = 0
+        self.canvas.grid(column=1, row=2, columnspan=50, rowspan=50, sticky=E + W)
         Button(self.frame, text='Crear Estado', command=lambda: self.crearEstado()).grid(column=1, row=1)
         Button(self.frame, text='Crear Transicion', command=lambda: self.crearEstado()).grid(column=2, row=1)
         """" #Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
@@ -97,10 +98,48 @@ class Ventana(object):
 
 
     def crearTransicion(self, origen, destino, simbolo):
-        self.automata.crearTransicion(origen, destino, simbolo)
-        self.actualizarScreen()
+        estadoOrigen = None
+        estadoDestino = None
+        numestados = len(self.automata.listaEstados)
 
-    def mostrarMenu(self, event):
+        if(numestados > 0):
+
+            if(numestados == 1):
+                result = tkMessageBox.askquestion("Almacenar transicion", "Solo existe un estado, por lo tanto se creara una transicion a si mismo", icon='warning')
+                if result == 'yes':
+                    estadoOrigen = self.automata.listaEstados[0]
+                    estadoDestino = estadoOrigen
+                else:
+                    tkMessageBox.showinfo("Almacenar transicion","Ingrece un nuevo estado")
+            else:
+                while(estadoOrigen == None):
+                    nombreestadoOrigen = tkSimpleDialog.askstring("Almacenar transicion","Ingrece el nombre del estado que quiere asignar como origen recuerde que los estados empiezan q y terminan con un numero")
+                    for a in self.automata.listaEstados:
+                        if(a.getestadoNombre == nombreestadoOrigen):
+                             estadoOrigen = a
+                    if(estadoOrigen == None):
+                        #tkMessageBox.showinfo("Almacenar transicion","No se encontro ningun estado con ese nombre, por lo cual se repetria el pro")
+                        result = tkMessageBox.askquestion("Almacenar transicion", "No se encontro ningun estado con ese nombre, desea repetir el proceso", icon='warning')
+                        if result == 'No':
+                             break
+
+                while(estadoDestino == None):
+                    nombreestadoDestino = tkSimpleDialog.askstring("Almacenar transicion","Ingrece el nombre del estado que quiere asignar como destino recuerde que los estados empiezan q y terminan con un numero")
+                    for a in self.automata.listaEstados:
+                        if(a.getestadoNombre == nombreestadoDestino):
+                             estadoDestino = a
+                    if(estadoDestino == None):
+                        #tkMessageBox.showinfo("Almacenar transicion","No se encontro ningun estado con ese nombre, por lo cual se repetria el pro")
+                        result = tkMessageBox.askquestion("Almacenar transicion", "No se encontro ningun estado con ese nombre, desea repetir el proceso", icon='warning')
+                        if result == 'No':
+                             break
+
+
+            simbolo = tkSimpleDialog.askstring("Ingresar","Ingrece el simbolo de la transicion")
+            self.automata.crearTransicion(estadoOrigen, estadoDestino, simbolo)
+            #self.actualizarScreen()
+
+    """"def mostrarMenu(self, event):
         estado = self.automata.buscarEstado(event.x, event.y)
         if estado is not None:
             self.menuEstado = Menu(self.ventanaPrincipal, tearoff=0)
@@ -125,7 +164,7 @@ class Ventana(object):
             finally:
                 self.menuEstado.grab_release()
 
-    """"def guardarArchivo(self):
+    def guardarArchivo(self):
         #nombreArchivo = tkSimpleDialog.askstring("Ingresar","Ingrece el nombre del archivo que desea almacenar")
         #nombreArchivo = nombreArchivo + ".acj"
         #file_path_string = tkFileDialog.asksaveasfile(mode='w',defaultextension=".acj")
@@ -221,5 +260,6 @@ class Ventana(object):
 
 
 if __name__ == '__main__':
-    H = Ventana()
-    print(H.devolver())
+    H = Ventana("quintupla")
+    #print(H.devolver())
+
