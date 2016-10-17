@@ -16,7 +16,7 @@ class Ventana(object):
     def __init__(self):
         #self.automata = clsAutomata(['0', '1'])
         self.automata = Automata()
-        
+
         self.archivo = None
         self.inicialseleccionado = None
         self.posX = 0
@@ -167,9 +167,12 @@ class Ventana(object):
 
     def moverEstado(self, event):
         sel = self.automata.buscarEstado(event.x, event.y)
+        #print(sel)
         if sel is None:
             return
-        sel.x, sel.y = event.x, event.y
+        sel.setX(event.x)
+        sel.setY(event.y)
+        #sel.x, sel.y = event.x, event.y
         self.actualizarScreen()
 
     def minimizar(self):

@@ -49,3 +49,9 @@ class Estado(object):
 
 	def getlistaTransiciones(self):
 		return self.listaTransiciones
+
+	def setX(self, posx):
+		self.posX = posx
+
+	def setY(self, posy):
+		self.posY = posy

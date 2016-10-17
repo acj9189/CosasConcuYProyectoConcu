@@ -121,7 +121,7 @@ class Automata(object):
 	def buscarEstado(self, x, y):
 		for es in self.listaEstados:
 			if(es.contains(x, y)):
-				print(es.getX())
+				print(es.contains(x,y))
 				return es
 		return None
 
