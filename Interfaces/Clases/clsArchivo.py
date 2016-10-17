@@ -4,13 +4,14 @@ from Estado import *
 
 class Archivo(object):
 
-	def __init__(self, automata):
+	def __init__(self):
 
-		self.automata = automata
+		self.automata = None
 		self.archivo = None
 
-	def guardarArchivoRutaNombre(self, ruta, nombreArchivo):
+	def guardarArchivoRutaNombre(self, ruta, nombreArchivo,  automata):
 
+		self.automata = automata
 		self.archivo = open(ruta + nombreArchivo, "w")
 		pickle.dump(self.automata, self.archivo)
 		self.archivo.close()
@@ -23,8 +24,9 @@ class Archivo(object):
 		self.archivo.close()
 		return self.automata
 
-	def guardarArchivo(self, ruta):
+	def guardarArchivo(self, ruta,  automata):
 
+		self.automata = automata
 		self.archivo = open(ruta, "w")
 		pickle.dump(self.automata, self.archivo)
 		self.archivo.close()

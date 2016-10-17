@@ -36,7 +36,8 @@ class Ventana(object):
         self.modoOperacion = 0
         Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=1, row=1)
         #Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
-        Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
+        #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
+        Button(self.frame, text='Guardar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.minimizar()).grid(column=4, row=1)
         #Button(self.frame, text='Determinista', command=lambda: self.pasarADeterminista()).grid(column=5, row=1)
         Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
@@ -117,9 +118,19 @@ class Ventana(object):
         file_path_string = tkFileDialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
         #print(file_path_string, nombreArchivo)
         print(file_path_string)
-        self.archivo = Archivo(self.automata)
-        self.archivo.guardarArchivo(file_path_string)
+        self.archivo = Archivo()
+        self.archivo.guardarArchivo(file_path_string, self.automata)
         #self.automata.exportarJSON()
+
+    def cargarArchivo(self):
+
+        file_path_string = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
+        print(file_path_string)
+        self.archivo = Archivo()
+        self.automata = self.archivo.cargarArchivo(file_path_string)
+        self.actualizarScreen()
+
+
 
     def cambiarAceptador(self, estado):
         if(estado.esEstadoAceptador == True):

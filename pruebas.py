@@ -33,7 +33,7 @@ from Tkinter import *
 import Tkinter, Tkconstants, tkFileDialog
 
 root = Tk()
-root.filename = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+root.filename = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")), defaultextension=".acj")
 print (root.filename)"""
 
 from Tkinter import *
