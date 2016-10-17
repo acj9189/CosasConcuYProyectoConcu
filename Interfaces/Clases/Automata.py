@@ -20,6 +20,7 @@ class Automata(object):
 			#print(self.listaEstados[0])
 			listaTransiciones = []
 			self.listaEstados.append(Estado(estadoNombre, listaTransiciones, posX, posY, esEstadoInicial, esEstadoAceptador))
+			#print("Cree estado... Automata y no clsAutomata")
 			#self.listaEstados.append(Estado(estadoNombre, [], posX, posY, esEstadoInicial, esEstadoAceptador))
 
 		elif(self.tipodeAutomata == "MME"):
@@ -120,6 +121,7 @@ class Automata(object):
 	def buscarEstado(self, x, y):
 		for es in self.listaEstados:
 			if(es.contains(x, y)):
+				print(es.getX())
 				return es
 		return None
 
