@@ -202,7 +202,7 @@ class Automata(object):
 		return self.esDeterminista
 
 	def setesDeterminista(self, estado):
-		SELF.esDeterminista = estado
+		self.esDeterminista = estado
 
 	def getListaEstados(self):
 		return self.listaEstados
