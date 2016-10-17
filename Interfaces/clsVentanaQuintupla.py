@@ -1,6 +1,6 @@
 from Tkinter import*
 import tkSimpleDialog
-import Tkinter, Tkconstants, tkFileDialog
+import Tkinter, Tkconstants, tkFileDialog, tkMessageBox
 from ttk import *
 from Clases.clsAutomata import *
 from Clases.clsEstado import *
@@ -20,22 +20,23 @@ class Ventana(object):
         self.automata = Automata()
         self.archivo = None
         self.inicialseleccionado = None
-        self.posX = 0
-        self.posY = 0
+        self.posX = 20
+        self.posY = 20
         #self.op = ''
         self.ventanaPrincipal = Tk()
         self.frame = Frame(self.ventanaPrincipal)
         self.canvas = Canvas(self.frame, bd=6, bg='white', width=1200, height=800)
         self.ventanaPrincipal.title("Realizar Automata")
-        self.ventanaPrincipal.geometry("1140x700+0+0")
+        self.ventanaPrincipal.geometry("700x700+0+0")
         self.canvas.place(x=0, y=0)
         self.frame.grid(column=0, row=0)
         self.frame.columnconfigure(0, weight=1)
         self.frame.rowconfigure(0, weight=1)
         self.txtCadena = StringVar()
         self.modoOperacion = 0
-        Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=1, row=1)
-        #Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
+        Button(self.frame, text='Crear Estado', command=lambda: self.crearEstado()).grid(column=1, row=1)
+        Button(self.frame, text='Crear Transicion', command=lambda: self.crearEstado()).grid(column=2, row=1)
+        """" #Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
         #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
         Button(self.frame, text='Guardar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.minimizar()).grid(column=4, row=1)
@@ -47,12 +48,12 @@ class Ventana(object):
         self.canvas.bind('<Button-1>', self.onClickCanvas)
         self.canvas.bind('<Double-1>', self.doubleClickCanvas)
         self.canvas.bind('<Button-3>', self.mostrarMenu)
-        self.canvas.bind('<Motion>', self.moviendo)
-        self.canvas.bind('<B1-Motion>', self.moverEstado)
+        #self.canvas.bind('<Motion>', self.moviendo)
+        #self.canvas.bind('<B1-Motion>', self.moverEstado)"""
         self.ventanaPrincipal.mainloop()
 
 
-    def onClickCanvas(self, event):
+    """"def onClickCanvas(self, event):
         if self.modoOperacion == 1:
             #estado = clsEstado(event.x, event.y, 'q' + str(len(self.automata.diccionarioEstados.keys())))
             #self.automata.nuevoEstado(estado)
@@ -77,10 +78,23 @@ class Ventana(object):
             return
         self.modoOperacion = 2
         self.inicialseleccionado = self.automata.buscarEstado(event.x, event.y)
-        self.actualizarScreen()
+        self.actualizarScreen() """
 
     def crearEstado(self):
-        self.modoOperacion = 1
+        inicial = False
+        final = False
+        result = tkMessageBox.askquestion("Estado", "Es este estado inicial?", icon='warning')
+        if result == 'yes':
+            inicial = True
+
+        result = tkMessageBox.askquestion("Estado", "Es este estado Aceptador?", icon='warning')
+        if result == 'yes':
+            final = True
+
+        self.automata.crearEstado('q' + str(len(self.automata.listaEstados)), self.posX, self.posY, inicial, final)
+        self.posX = self.posX + 50
+        self.posY = self.posY + 50
+
 
     def crearTransicion(self, origen, destino, simbolo):
         self.automata.crearTransicion(origen, destino, simbolo)
@@ -111,7 +125,7 @@ class Ventana(object):
             finally:
                 self.menuEstado.grab_release()
 
-    def guardarArchivo(self):
+    """"def guardarArchivo(self):
         #nombreArchivo = tkSimpleDialog.askstring("Ingresar","Ingrece el nombre del archivo que desea almacenar")
         #nombreArchivo = nombreArchivo + ".acj"
         #file_path_string = tkFileDialog.asksaveasfile(mode='w',defaultextension=".acj")
@@ -147,43 +161,6 @@ class Ventana(object):
             estado.setesEstadoInicial(True)
             self.automata.settieneEstadoInicial(True)
         self.actualizarScreen()
-
-    def moviendo(self, event):
-        self.posX, self.posY = event.x, event.y
-        if self.modoOperacion == 2:
-            self.actualizarScreen()
-
-    def cancelar(self):
-        pass
-
-    def moverEstado(self, event):
-        sel = self.automata.buscarEstado(event.x, event.y)
-        if sel is None:
-            return
-        sel.x, sel.y = event.x, event.y
-        self.actualizarScreen()
-
-    def minimizar(self):
-        self.automata = self.automata.minimizar()
-        self.actualizarScreen()
-
-    def pasarADeterminista(self):
-        self.automata = self.automata.convertirADeterminista()
-        self.actualizarScreen()
-
-    def verificarCadena(self):
-
-        cadena = self.txtCadena.get()
-        actual = self.automata.inicial
-        for c in cadena:
-            if c not in self.automata.alfabeto:
-                print 'El caracter ' + c + ' no esta dentro del alfabeto'
-                return
-            actual = self.automata.diccionarioEstados[actual][c][0]
-        if actual.esAceptador():
-            print 'La cadena ' + cadena + ' es aceptada'
-        else:
-            print 'La cadena ' + cadena + ' no es aceptada'
 
     def actualizarScreen(self):
         self.canvas.delete('all');
@@ -227,7 +204,7 @@ class Ventana(object):
                          self.canvas.create_line(a.getX(), a.getY(), pm, d.getestadoDestino().getX(), d.getestadoDestino().getY() + tam, arrow=LAST,
                                                     smooth=True)
 
-            # pintar estados """
+            # pintar estados
 
             self.canvas.create_oval(a.getX() - tam, a.getY() - tam, a.getX() + tam, a.getY() + tam, fill='red',
                                     activeoutline='blue', outline='white', width=2)
@@ -236,8 +213,13 @@ class Ventana(object):
 
             if a.esEstadoInicial == True:
                 self.canvas.create_line(a.getX() - tam * 2, a.getY(), a.getX() - tam, a.getY(), arrow=LAST)
-            self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre())
+            self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre())"""
+
+    def retornarAutomata(self):
+        return self.automata
+
 
 
 if __name__ == '__main__':
-    Ventana()
+    H = Ventana()
+    print(H.devolver())
