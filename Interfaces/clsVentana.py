@@ -1,18 +1,24 @@
 from Tkinter import*
-import tkMessageBox
 import tkSimpleDialog
+import Tkinter, Tkconstants, tkFileDialog
 from ttk import *
 from Clases.clsAutomata import *
 from Clases.clsEstado import *
 
 from Clases.Automata import *
 from Clases.Estado import *
+from Clases.clsArchivo import*
+
+
+
 
 
 class Ventana(object):
+
     def __init__(self):
         #self.automata = clsAutomata(['0', '1'])
         self.automata = Automata()
+        self.archivo = None
         self.inicialseleccionado = None
         self.posX = 0
         self.posY = 0
@@ -30,7 +36,7 @@ class Ventana(object):
         self.modoOperacion = 0
         Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=1, row=1)
         #Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
-        #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarJson()).grid(column=3, row=1)
+        Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.minimizar()).grid(column=4, row=1)
         #Button(self.frame, text='Determinista', command=lambda: self.pasarADeterminista()).grid(column=5, row=1)
         Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
@@ -104,8 +110,16 @@ class Ventana(object):
             finally:
                 self.menuEstado.grab_release()
 
-    def guardarJson(self):
-        self.automata.exportarJSON()
+    def guardarArchivo(self):
+        #nombreArchivo = tkSimpleDialog.askstring("Ingresar","Ingrece el nombre del archivo que desea almacenar")
+        #nombreArchivo = nombreArchivo + ".acj"
+        #file_path_string = tkFileDialog.asksaveasfile(mode='w',defaultextension=".acj")
+        file_path_string = tkFileDialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
+        #print(file_path_string, nombreArchivo)
+        print(file_path_string)
+        self.archivo = Archivo(self.automata)
+        self.archivo.guardarArchivo(file_path_string)
+        #self.automata.exportarJSON()
 
     def cambiarAceptador(self, estado):
         if(estado.esEstadoAceptador == True):

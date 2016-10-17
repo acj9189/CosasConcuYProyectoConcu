@@ -1,7 +1,7 @@
 
 from Clases.Automata import *
 
-class P():
+""""class P():
 	def __init__(self):
 		self.AutomataAnalisis = Automata()
 
@@ -28,3 +28,19 @@ P.llamarCrearEstado("q0", 0, 0, False, False)
 #P.llamarCrearEstado("q1", 0, 0, False, False)
 print(P.llamarCrearTransicion())
 #hola
+
+from Tkinter import *
+import Tkinter, Tkconstants, tkFileDialog
+
+root = Tk()
+root.filename = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+print (root.filename)"""
+
+from Tkinter import *
+import Tkinter, Tkconstants, tkFileDialog
+
+root = Tk()
+#root.filename = tkFileDialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+arhivo = tkFileDialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
+#print (root.filename)
+print(arhivo)
