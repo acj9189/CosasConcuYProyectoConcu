@@ -9,7 +9,7 @@ class clsAutomata:
             self.alfabeto = alfabeto
         self.inicial = None
         self.determinista = False
-        self.tam = 20
+        self.tam = 30
 
     def nuevoEstado(self, estado):
         self.diccionarioEstados[estado] = {}
