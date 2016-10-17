@@ -8,9 +8,7 @@ from Clases.clsEstado import *
 from Clases.Automata import *
 from Clases.Estado import *
 from Clases.clsArchivo import*
-
-
-
+from clsVentanaQuintupla import *
 
 
 class Ventana(object):
@@ -18,6 +16,7 @@ class Ventana(object):
     def __init__(self):
         #self.automata = clsAutomata(['0', '1'])
         self.automata = Automata()
+        
         self.archivo = None
         self.inicialseleccionado = None
         self.posX = 0
@@ -34,13 +33,17 @@ class Ventana(object):
         self.frame.rowconfigure(0, weight=1)
         self.txtCadena = StringVar()
         self.modoOperacion = 0
-        Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=1, row=1)
+        Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=5, row=1)
         #Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
         #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
-        Button(self.frame, text='Cargar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
-        Button(self.frame, text='Leer Cadena', command=lambda: self.verificarCadena()).grid(column=4, row=1)
+        #Button(self.frame, text='Cargar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
+        #Button(self.frame, text='Leer Cadena', command=lambda: self.verificarCadena()).grid(column=4, row=1)
+        #Button(self.frame, text='Quintupla', command=lambda: self.minimizar()).grid(column=2, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.minimizar()).grid(column=4, row=1)
         #Button(self.frame, text='Determinista', command=lambda: self.pasarADeterminista()).grid(column=5, row=1)
+        OptionMenu(self.frame, self.txtCadena, 'Funciones Automata', 'Minimizar Automata', 'Union', 'Complemento', 'Reverso', 'Concatenacion', 'Cierre de Kleene').grid(column=3, row =1)
+        OptionMenu(self.frame, self.txtCadena, 'Archivo',  'Guardar Automata', 'Cargar Automata').grid(column=1, row =1)
+        Button(self.frame, text='Realizar Quintupla', command=lambda : self.pasarAQuintupla()).grid(column=4, row=1)
         Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
         #Button(self.frame, text='Verificar', command=lambda: self.verificarCadena()).grid(column=2, row=51, sticky=(W, E))
         Label(self.frame, text='Zoom').grid(column=3, row=51)
@@ -51,6 +54,12 @@ class Ventana(object):
         self.canvas.bind('<Motion>', self.moviendo)
         self.canvas.bind('<B1-Motion>', self.moverEstado)
         self.ventanaPrincipal.mainloop()
+
+    def pasarAQuintupla(self):
+        ventanita = Tk()
+
+        ventanita.mainloop()
+
 
     def onClickCanvas(self, event):
         if self.modoOperacion == 1:
