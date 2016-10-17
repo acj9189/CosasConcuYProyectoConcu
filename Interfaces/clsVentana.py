@@ -37,7 +37,8 @@ class Ventana(object):
         Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=1, row=1)
         #Button(self.frame, text='Minimizar Automata', command=lambda: self.minimizar()).grid(column=2, row=1)
         #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
-        Button(self.frame, text='Guardar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
+        Button(self.frame, text='Cargar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
+        Button(self.frame, text='Leer Cadena', command=lambda: self.verificarCadena()).grid(column=4, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.minimizar()).grid(column=4, row=1)
         #Button(self.frame, text='Determinista', command=lambda: self.pasarADeterminista()).grid(column=5, row=1)
         Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
@@ -172,18 +173,10 @@ class Ventana(object):
         self.actualizarScreen()
 
     def verificarCadena(self):
+        cadena = tkSimpleDialog.askstring("Cadenas","Ingrece la cadena que quiere analizar")
+        self.automata.leerCadena(cadena)
 
-        cadena = self.txtCadena.get()
-        actual = self.automata.inicial
-        for c in cadena:
-            if c not in self.automata.alfabeto:
-                print 'El caracter ' + c + ' no esta dentro del alfabeto'
-                return
-            actual = self.automata.diccionarioEstados[actual][c][0]
-        if actual.esAceptador():
-            print 'La cadena ' + cadena + ' es aceptada'
-        else:
-            print 'La cadena ' + cadena + ' no es aceptada'
+
 
     def actualizarScreen(self):
         self.canvas.delete('all');
@@ -240,4 +233,5 @@ class Ventana(object):
 
 
 if __name__ == '__main__':
-    Ventana()
+    V = Ventana()
+    #V.verificarCadena()

@@ -38,5 +38,14 @@ class Estado(object):
 	def setesEstadoAceptador(self, estado):
 		self.esEstadoAceptador = estado
 
+	def getesEstadoAceptador(self):
+		return self.esEstadoAceptador
+
 	def contains(self, x, y):
 		return self.posX - self.tam <= x and self.posX + self.tam >= x and self.posY - self.tam <= y and self.posY + self.tam >= y
+
+	def setListaTransiciones(self ,lista):
+		self.listaTransiciones = Lista
+
+	def getlistaTransiciones(self):
+		return self.listaTransiciones
