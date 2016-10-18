@@ -9,6 +9,7 @@ from Clases.Automata import *
 from Clases.Estado import *
 from Clases.clsArchivo import*
 from clsVentanaQuintupla import *
+from
 
 
 class Ventana(object):
@@ -34,7 +35,7 @@ class Ventana(object):
         self.txtCadena = StringVar()
         self.modoOperacion = 0
         Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=5, row=1)
-        Button(self.frame, text='Pruebas', command=lambda: self.realizarComplemento()).grid(column=6, row=1)
+        Button(self.frame, text='Pruebas', command=lambda: self.cierreKleen()).grid(column=6, row=1)
         #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
         #Button(self.frame, text='Leer Cadena', command=lambda: self.verificarCadena()).grid(column=4, row=1)
@@ -148,7 +149,7 @@ class Ventana(object):
     def cargarArchivo(self):
 
         file_path_string = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
-        print(file_path_string)
+        #print(file_path_string)
         self.archivo = Archivo()
         self.automata = self.archivo.cargarArchivo(file_path_string)
         self.actualizarScreen()
@@ -196,17 +197,6 @@ class Ventana(object):
     def pasarADeterminista(self):
         self.automata = self.automata.convertirADeterminista()
         self.actualizarScreen()
-
-    def verificarCadena(self):
-        cadena = tkSimpleDialog.askstring("Cadenas","Ingrece la cadena que quiere analizar")
-        print(self.automata.leerCadena(cadena))
-
-    def realizarComplemento(self):
-        self.automata.realizarComplemento()
-        self.actualizarScreen()
-
-    def realizarReversa(self):
-        self.automata
 
     def actualizarScreen(self):
         self.canvas.delete('all');
@@ -260,6 +250,38 @@ class Ventana(object):
             if a.esEstadoInicial == True:
                 self.canvas.create_line(a.getX() - tam * 2, a.getY(), a.getX() - tam, a.getY(), arrow=LAST)
             self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre())
+
+    #Desde aqui...
+    def verificarCadena(self):
+        cadena = tkSimpleDialog.askstring("Cadenas","Ingrece la cadena que quiere analizar")
+        print(self.automata.leerCadena(cadena))
+
+    def complemento(self):
+        self.automata.realizarComplemento()
+        self.actualizarScreen()
+
+    def reverso(self):
+        self.automata.realizarReversa()
+        self.actualizarScreen()
+
+    def cierreKleen(self):
+        self.automata.realizarCierredeKleen()
+        self.actualizarScreen()
+
+    def union(self):
+        numes = len(self.automata.getListaEstados())
+        if(numes > 0):
+            Auto1 = self.automata
+            file_path_string = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
+            #print(file_path_string)
+            self.archivo = Archivo()
+            Auto2 = self.archivo.cargarArchivo(file_path_string)
+
+
+        else:
+            pass
+
+
 
 
 if __name__ == '__main__':

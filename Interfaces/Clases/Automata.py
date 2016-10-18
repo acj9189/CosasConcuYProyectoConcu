@@ -73,11 +73,11 @@ class Automata(object):
 		# Organizar para crera una posiocion
 
 	def crearEstadoSiExisteMasdeUnAcept(self):
-		ListaFinalesRe = encontrarFinal
+		ListaFinalesRe = self.encontrarFinal()
 		numEstadosFini = len(ListaFinalesRe)
 		if(numEstadosFini > 1):
-			listaTransiciones = []
-			tempEs = Estado("fi", listaTransiciones, 0, 0,False,True)
+			#listaTransiciones = []
+			tempEs = Estado("q" + len(self.listaEstados), [], 0, 0,False,True)
 			for es in self.listaEstados:
 				if(es.esEstadoAceptador == True):
 					es.esEstadoAceptador = False
@@ -102,11 +102,12 @@ class Automata(object):
 					es.listaTransiciones.remove(tranTemp2)
 					estadoT.listaTransiciones.append(tranTemp1)
 
+
 			if(es.esEstadoInicial == True):
 				es.esEstadoInicial = False
 				es.esEstadoAceptador = True
 
-			if(es.esEstadoAceptador == True):
+			if((es.esEstadoAceptador == True) and ( es != tempEs)):
 				es.esEstadoInicial = True
 				es.esEstadoAceptador = False
 
@@ -167,42 +168,59 @@ class Automata(object):
 	def leerCadenaNODet(self, cadena):
 		pass
 
-	def realizarCierredeClene(self):
+	def realizarCierredeKleen(self):
 		self.esDeterminista = False
 		self.crearEstadoSiExisteMasdeUnAcept()
-		tam = len(listaEstados)
-		EstadoT1 = Estado(tam + 1, None, 0, 0, True, False)
-		EstadoT2 = Estado(tam + 2, None, 0, 0, False, False)
-		EstadoT3 = Estado(tam + 3, None, 0, 0, False, False)
-		EstadoT4 = Estado(tam + 4, None, 0, 0, False, True)
+		tam = len(self.listaEstados)
+		EstadoT1 = Estado("q" + str(tam + 1), [], 50, 50, True, False)
+		EstadoT2 = Estado("q" + str(tam + 2), [], 50, 50, False, False)
+		EstadoT3 = Estado("q" + str(tam + 3), [], 50, 50, False, False)
+		EstadoT4 = Estado("q" + str(tam + 4), [], 50, 50, False, True)
 
 		ListaT1 =[]
 		ListaT2 =[]
 		ListaT3 =[]
 
-		ListaT1.append(Transicion(EstadoT1, EstadoT2, "-"))
-		ListaT1.append(Transicion(EstadoT1, EstadoT4, "-"))
-		ListaT2.append(Transicion(EstadoT2, self.encontrarInicial(), "-"))
+		T1 = Transicion()
+		T1.crearTransicion(EstadoT1, EstadoT2, "-")
+		T2 = Transicion()
+		T2.crearTransicion(EstadoT1, EstadoT4, "-")
+		T3 = Transicion()
+		T3.crearTransicion(EstadoT2, self.encontrarInicial(), "-")
+
+		ListaT1.append(T1)
+		ListaT1.append(T2)
+		ListaT2.append(T3)
 
 		EstadoT1.setListaTransiciones(ListaT1)
 		EstadoT2.setListaTransiciones(ListaT2)
 
 		EstadoIni = self.encontrarInicial()
 		EstadoIni.setesEstadoInicial(False)
-		ListaT3.append(Transicion(EstadoT3, EstadoT4, "-"))
-		ListaT3.append(Transicion(EstadoT3, EstadoT2, "-"))
+
+		T4 = Transicion()
+		T4.crearTransicion(EstadoT3, EstadoT4, "-")
+		T5 = Transicion()
+		T5.crearTransicion(EstadoT3, EstadoT2, "-")
+
+		ListaT3.append(T4)
+		ListaT3.append(T5)
 
 		EstadoT3.setListaTransiciones(ListaT3)
 
 		listafi = self.encontrarFinal()
 		estadofi = listafi[0]
-		estadofi.getlistaTransiciones().append(Transicion(estadofi, EstadoT3, "-"))
+
+		T6 = Transicion()
+		T6.crearTransicion(estadofi,EstadoT3, "-")
+
+		estadofi.getlistaTransiciones().append(T6)
 		estadofi.setesEstadoAceptador(False)
 
 		self.listaEstados.insert(0, EstadoT1)
 		self.listaEstados.append(EstadoT2)
 		self.listaEstados.append(EstadoT3)
-		self.listaEstados.insert(len(self.listaEstados) - 1, EstadoT1)
+		self.listaEstados.insert(len(self.listaEstados) - 1, EstadoT4)
 
 	def getesDeterminista(self):
 		return self.esDeterminista
