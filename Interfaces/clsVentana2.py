@@ -34,7 +34,7 @@ class Ventana(object):
         self.txtCadena = StringVar()
         self.modoOperacion = 0
         Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=5, row=1)
-        Button(self.frame, text='Pruebas', command=lambda: self.verificarCadena()).grid(column=6, row=1)
+        Button(self.frame, text='Pruebas', command=lambda: self.realizarComplemento()).grid(column=6, row=1)
         #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
         #Button(self.frame, text='Leer Cadena', command=lambda: self.verificarCadena()).grid(column=4, row=1)
@@ -201,6 +201,13 @@ class Ventana(object):
         cadena = tkSimpleDialog.askstring("Cadenas","Ingrece la cadena que quiere analizar")
         print(self.automata.leerCadena(cadena))
 
+    def realizarComplemento(self):
+        self.automata.realizarComplemento()
+        self.actualizarScreen()
+
+    def realizarReversa(self):
+        self.automata
+
     def actualizarScreen(self):
         self.canvas.delete('all');
         tam = self.automata.tam
@@ -223,10 +230,10 @@ class Ventana(object):
                          #print("entro origen mayor que destino")
                          if (a.getY() <= d.getestadoDestino().getY()):
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, a.getY())
-                             pt = (pm[0] + 30, pm[1] + 30)
+                             pt = (pm[0] + 30, pm[1] + 50)
                          else:
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2,d.getestadoDestino().getY())
-                             pt = (pm[0] + 30, pm[1] - 30)
+                             pt = (pm[0] + 30, pm[1] - 50)
                          self.canvas.create_text(pt, text = d.getSimbolo())
                          self.canvas.create_line(a.getX(), a.getY(), pm, d.getestadoDestino().getX(), d.getestadoDestino().getY() - tam, arrow=LAST,
                                                     smooth=True)
@@ -235,10 +242,10 @@ class Ventana(object):
                          if (a.getY() <= d.getestadoDestino().getY()):
                             # print("entro origen menor o igual q destino")
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, d.getestadoDestino().getY())
-                             pt = (pm[0] + 10, pm[1] + 50)
+                             pt = (pm[0] + 30, pm[1] + 50)
                          else:
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, a.getY())
-                             pt = (pm[0] + 10, pm[1] - 50)
+                             pt = (pm[0] + 30, pm[1] - 50)
                          self.canvas.create_text(pt, text = d.getSimbolo())
                          self.canvas.create_line(a.getX(), a.getY(), pm, d.getestadoDestino().getX(), d.getestadoDestino().getY() + tam, arrow=LAST,
                                                     smooth=True)

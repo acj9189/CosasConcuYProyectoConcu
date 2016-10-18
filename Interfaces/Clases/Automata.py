@@ -134,9 +134,9 @@ class Automata(object):
 	def leerCadena(self, cadena):
 
 		if(self.esDeterminista == True):
-			self.leerCadenaDet(cadena)
+			return self.leerCadenaDet(cadena)
 		else:
-			self.leerCadenaNODet(cadena)
+			return self.leerCadenaNODet(cadena)
 
 	def leerCadenaDet(self,cadena):
 		pila = []
@@ -154,9 +154,12 @@ class Automata(object):
 					break
 
 		tam = len(pila)
-		print(tam)
+		#print(tam)
 		estadoA = pila[tam-1]
+
 		if(estadoA.getesEstadoAceptador() == True):
+			print(estadoA)
+			print("La cadena fue aceptada")
 			return "La cadena fue aceptada"
 		else:
 			return "La cadena no fue aceptada"
