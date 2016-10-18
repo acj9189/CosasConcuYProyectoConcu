@@ -74,17 +74,19 @@ class Ventana(object):
                 simbolo = tkSimpleDialog.askstring("Ingresar","Ingrece el simbolo de la transicion")
                 #print(simbolo)
                 if(simbolo == "-"):
+                    #print("entre -")
                     self.automata.setesDeterminista(False)
 
                 self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo)
 
-                i = 1
+                """i = 1
                 for e in self.inicialseleccionado.getlistaTransiciones():
                     if(e.getSimbolo() == simbolo):
                         i = i + 1
+                        print("entre doble simbolo")
 
                 if(i > 1):
-                    self.automata.setesDeterminista(False)
+                    self.automata.setesDeterminista(False)"""
 
                 #self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo)
 
@@ -197,7 +199,7 @@ class Ventana(object):
 
     def verificarCadena(self):
         cadena = tkSimpleDialog.askstring("Cadenas","Ingrece la cadena que quiere analizar")
-        self.automata.leerCadena(cadena)
+        print(self.automata.leerCadena(cadena))
 
     def actualizarScreen(self):
         self.canvas.delete('all');
@@ -218,7 +220,7 @@ class Ventana(object):
                 else:
                     # Destino mayor que origen
                     if (d.getestadoDestino().getX() > a.getX()):
-                         print("entro origen mayor que destino")
+                         #print("entro origen mayor que destino")
                          if (a.getY() <= d.getestadoDestino().getY()):
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, a.getY())
                              pt = (pm[0] + 30, pm[1] + 30)
@@ -231,7 +233,7 @@ class Ventana(object):
                     else:
                         # Origen mayor que Destino
                          if (a.getY() <= d.getestadoDestino().getY()):
-                             print("entro origen menor o igual q destino")
+                            # print("entro origen menor o igual q destino")
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, d.getestadoDestino().getY())
                              pt = (pm[0] + 10, pm[1] + 50)
                          else:

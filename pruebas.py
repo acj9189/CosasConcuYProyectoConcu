@@ -46,4 +46,9 @@ arhivo = tkFileDialog.asksaveasfilename(initialdir = "/",title = "Select file",f
 #print (root.filename)
 print(arhivo)"""
 
-H = Ventana("quintupla")
+#H = Ventana("quintupla")
+
+string = "aaaa"
+
+for a in string:
+	print(a)
