@@ -14,6 +14,7 @@ import clsVentanaQuintupla
 from Clases.clsAutomatas import *
 from Tkinter import *
 from ttk import *
+from Clases.Estado import *
 
 
 
@@ -61,9 +62,9 @@ class Ventana(object):
         self.menuFunciones.add_command(label='Reverso', command=lambda: self.reverso())
         self.menuFunciones.add_command(label='Concatenacion', command=lambda: self.concatenacion())
         self.menuFunciones.add_command(label='Cierre de Kleen', command=lambda: self.cierreKleen())
-        self.menuFunciones.add_command(label='Pasar a Determinista', command=lambda: self.pasarADeterminista())
-        self.menuFunciones.add_command(label='Crear a partir de Expresion Regular', command=lambda: self.nada())
-        self.menuFunciones.add_command(label='Crear a partir de Automata', command=lambda: self.nada())
+        #self.menuFunciones.add_command(label='Pasar a Determinista', command=lambda: self.pasarADeterminista())
+        #self.menuFunciones.add_command(label='Crear a partir de Expresion Regular', command=lambda: self.nada())
+        #self.menuFunciones.add_command(label='Crear a partir de Automata', command=lambda: self.nada())
 
         #Agregamos un modo de operacion para los eventos
         self.modoOperacion = 0
@@ -87,6 +88,7 @@ class Ventana(object):
         self.iniciales = []
         self.estados = []
         self.lista = StringVar()
+        self.alfabeto = []
         for es in self.automata.listaEstados:
             if (es.esEstadoAceptador == True):
                 self.aceptadores.append(es.getestadoNombre())
@@ -95,15 +97,8 @@ class Ventana(object):
             if (ini.esEstadoInicial == True):
                 self.iniciales.append(ini.getestadoNombre())
 
-        '''for esini in self.automata.listaEstados:
-            if (esini.esEstadoInicial == True):
-                self.iniciales.append(esini.getEstadoNombre())'''
 
 
-
-                
-
-        #self.canvas2.create_text(20, 30, anchor=W, font="Purisa", text="Aceptadores:")
         self.canvas2.create_text(20, 60, anchor=W, font="Purisa",
                                  text= 'F: ' + str(self.aceptadores) + '  (Aceptadores)')
 
@@ -112,6 +107,11 @@ class Ventana(object):
 
         self.canvas2.create_text(20, 90, anchor=W, font="Purisa",
                                  text='S: ' + str(self.iniciales) + '  (Inicial)')
+
+        self.canvas2.create_text(20, 120, anchor=W, font="Purisa",
+                                 text='Alfabeto: [0,1]')
+
+
 
 
     def clearCanvas(self):
@@ -129,7 +129,7 @@ class Ventana(object):
 
             if finalseleccionado is not None:
                 #var = tkMessageBox.askyesno("Title", "Your question goes here?")
-                simbolo = tkSimpleDialog.askstring("Ingresar","Ingrece el simbolo de la transicion")
+                simbolo = tkSimpleDialog.askstring("Ingresar","Ingrese el simbolo de la transicion")
                 #print(simbolo)
                 if(simbolo == "-"):
                     self.automata.setesDeterminista(False)
