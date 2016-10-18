@@ -114,5 +114,49 @@ class Automatas(object):
 			if(e.getesEstadoAceptador() == True):
 				return e
 
-	def realizarInterseccionEntreAutomatas(self, Auto1, Auto2):
-		pass
+	""""def realizarInterseccionEntreAutomatas(self, Auto1, Auto2):
+		AutomataRes = Automata()
+		ListaN =[]
+
+		for i in Auto1.getListaEstados:
+			for j in Auto2.getListaEstados:
+				h = i.getestadoNombre() + j.getestadoNombre()
+
+				hjj = Estado(h, [], 0, 0, False, True)
+				if((i.esEstadoInicial == True) and (j.esEstadoInicial == True)):
+					hjj.encontrarInicial = True
+
+				if((i.esEstadoAceptador == True) and (j.esEstadoAceptador == True)):
+					hjj.esEstadoAceptador = True
+
+                AutomataRes.getListaEstados().append(hjj)
+                ListaN.append([h,hjj])
+
+        for i in Auto1.getListaEstados:
+			for j in Auto2.getListaEstados:
+				h = i.getestadoNombre() + j.getestadoNombre()
+
+				for ii in i.getlistaTransiciones():
+					for jj in j.getlistaTransiciones():
+						if(ii.getSimbolo() == jj.getSimbolo()):
+							H2 = ii.getestadoDestino().getestadoNombre() + jj.getestadoDestino().getestadoNombre()
+							H = ListaN[h]
+							Res = AutomataRes.getListaEstados().index(H)
+							H22 = ListaN[H2]
+							Ti = Transicion()
+							Ti.crearTransicion(H, H22, jj.getSimbolo())
+							H.getlistaTransiciones().append(Ti)
+							AutomataRes.getListaEstados().insert(Res,H)
+		a = []
+		for j in AutomataRes.getListaEstados():
+			for tr in AutomataRes.getListaEstados()[j].getlistaTransiciones():
+				if(AutomataRes.getListaEstados()[j].esEstadoInicial == False):
+					if(AutomataRes.getListaEstados()[j] == tr.getestadoDestino()):
+						a.insert[j] = a.insert[j] + 1
+
+	    for au in AutomataRes.getListaEstados():
+	    	if(AutomataRes.getListaEstados()[au].esEstadoInicial == False):
+	    		if(a[au] == 0):
+	    			AutomataRes.getListaEstados().remove(au)
+
+	   return AutomataRes"""

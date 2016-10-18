@@ -35,7 +35,7 @@ class Ventana(object):
         self.txtCadena = StringVar()
         self.modoOperacion = 0
         Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=5, row=1)
-        Button(self.frame, text='Pruebas', command=lambda: self.union()).grid(column=6, row=1)
+        Button(self.frame, text='Pruebas', command=lambda: self.interseccion()).grid(column=6, row=1)
         Button(self.frame, text='cargar', command=lambda: self.cargarArchivo()).grid(column=7, row=1)
         #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
@@ -307,6 +307,23 @@ class Ventana(object):
                 Auto2 = self.cargaMasUnautomata()
                 AutomatasPP = Automatas()
                 self.automata = AutomatasPP.realizarConcatenacionEntreAutomatas(Auto1, Auto2)
+
+        self.actualizarScreen()
+
+    def interseccion(self):
+        numes = len(self.automata.getListaEstados())
+        if(numes > 0):
+            Auto1 = self.automata
+            Auto2 = self.cargaMasUnautomata()
+            AutomatasPP = Automatas()
+            self.automata = AutomatasPP.realizarInterseccionEntreAutomatas(Auto1, Auto2)
+        else:
+            result = tkMessageBox.askquestion("Union", "Desea Cargar los dos Automatas o prefiere realizar uno", icon='warning')
+            if result == 'yes':
+                Auto1 = self.cargaMasUnautomata()
+                Auto2 = self.cargaMasUnautomata()
+                AutomatasPP = Automatas()
+                self.automata = AutomatasPP.realizarInterseccionEntreAutomatas(Auto1, Auto2)
 
         self.actualizarScreen()
 
