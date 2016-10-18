@@ -36,7 +36,7 @@ class Ventana(object):
         self.frame.rowconfigure(0, weight=1)
         #self.txtCadena = StringVar()
         self.canvas2 = Canvas(self.frame, bg = 'gray', width=350, height=250)
-        self.canvas2.place(x=950, y=0)
+        self.canvas2.place(x=850, y=0)
 
 
         #Agregamos un menu
@@ -83,20 +83,35 @@ class Ventana(object):
 
 
     def pasarAQuintupla(self):
-        self.aceptadores = StringVar()
+        self.aceptadores = []
+        self.iniciales = []
+        self.estados = []
         self.lista = StringVar()
         for es in self.automata.listaEstados:
             if (es.esEstadoAceptador == True):
-                self.aceptadores = str(es.getestadoNombre())
-                print (self.aceptadores)
+                self.aceptadores.append(es.getestadoNombre())
+            self.estados.append(es.getestadoNombre())
+        for ini in self.automata.listaEstados:
+            if (ini.esEstadoInicial == True):
+                self.iniciales.append(ini.getestadoNombre())
+
+        '''for esini in self.automata.listaEstados:
+            if (esini.esEstadoInicial == True):
+                self.iniciales.append(esini.getEstadoNombre())'''
+
+
+
                 
-        for a in self.automata.listaEstados:
-            self.lista = str(a.listaEstados)
-            print(self.lista)
+
+        #self.canvas2.create_text(20, 30, anchor=W, font="Purisa", text="Aceptadores:")
+        self.canvas2.create_text(20, 60, anchor=W, font="Purisa",
+                                 text= 'F: ' + str(self.aceptadores) + '  (Aceptadores)')
+
         self.canvas2.create_text(20, 30, anchor=W, font="Purisa",
-                           text="Aceptadores: \n")
-        self.canvas2.create_text(90, 30, anchor=W, font="Purisa",
-                                 text= str(self.aceptadores))
+                                 text='Q: ' + str(self.estados) + '  (Estados)')
+
+        self.canvas2.create_text(20, 90, anchor=W, font="Purisa",
+                                 text='S: ' + str(self.iniciales) + '  (Inicial)')
 
 
     def clearCanvas(self):
