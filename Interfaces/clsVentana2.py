@@ -9,7 +9,7 @@ from Clases.Automata import *
 from Clases.Estado import *
 from Clases.clsArchivo import*
 from clsVentanaQuintupla import *
-from
+from Clases.clsAutomatas import*
 
 
 class Ventana(object):
