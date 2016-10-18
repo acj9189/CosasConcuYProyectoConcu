@@ -84,16 +84,19 @@ class Ventana(object):
 
     def pasarAQuintupla(self):
         self.aceptadores = StringVar()
+        self.lista = StringVar()
         for es in self.automata.listaEstados:
             if (es.esEstadoAceptador == True):
                 self.aceptadores = str(es.getestadoNombre())
                 print (self.aceptadores)
                 
-
+        for a in self.automata.listaEstados:
+            self.lista = str(a.listaEstados)
+            print(self.lista)
         self.canvas2.create_text(20, 30, anchor=W, font="Purisa",
-                           text="Aceptadores: ")
+                           text="Aceptadores: \n")
         self.canvas2.create_text(90, 30, anchor=W, font="Purisa",
-                                 text= str(self.aceptadores)'\n')
+                                 text= str(self.aceptadores))
 
 
     def clearCanvas(self):
