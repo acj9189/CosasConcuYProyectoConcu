@@ -293,6 +293,24 @@ class Ventana(object):
         self.archivo = Archivo()
         return self.archivo.cargarArchivo(file_path_string)
 
+    def concatenacion(self):
+        numes = len(self.automata.getListaEstados())
+        if(numes > 0):
+            Auto1 = self.automata
+            Auto2 = self.cargaMasUnautomata()
+            AutomatasPP = Automatas()
+            self.automata = AutomatasPP.realizarConcatenacionEntreAutomatas(Auto1, Auto2)
+        else:
+            result = tkMessageBox.askquestion("Union", "Desea Cargar los dos Automatas o prefiere realizar uno", icon='warning')
+            if result == 'yes':
+                Auto1 = self.cargaMasUnautomata()
+                Auto2 = self.cargaMasUnautomata()
+                AutomatasPP = Automatas()
+                self.automata = AutomatasPP.realizarConcatenacionEntreAutomatas(Auto1, Auto2)
+
+        self.actualizarScreen()
+
+
 
 
 
