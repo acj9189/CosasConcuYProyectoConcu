@@ -9,6 +9,9 @@ from Clases.Automata import *
 from Clases.Estado import *
 from Clases.clsArchivo import*
 from clsVentanaQuintupla import *
+from Tkinter import *
+from ttk import *
+
 
 
 class Ventana(object):
@@ -32,8 +35,37 @@ class Ventana(object):
         self.frame.columnconfigure(0, weight=1)
         self.frame.rowconfigure(0, weight=1)
         self.txtCadena = StringVar()
+        #self.listaOpciones = ('Minimizar', 'Union', 'Complemento', 'Reverso', 'Concatenacion', 'Cierre de Kleene')
+        #self.variableOpciones = StringVar()
+        #self.variableOpciones.set(self.listaOpciones[0])
+
+        #Agregamos un menu
+        self.menu = Menu(self.ventanaPrincipal)
+        self.ventanaPrincipal.config(menu=self.menu)
+        self.subMenu = Menu(self.menu)
+        self.menu.add_cascade(label='Archivo', menu=self.subMenu)
+        self.subMenu.add_command(label='Cargar Archivo', command=lambda: self.cargarArchivo())
+        self.subMenu.add_command(label='Guardar Archivo', command=lambda: self.guardarArchivo())
+        self.subMenu.add_separator()
+        self.subMenu.add_command(label='Salir', command=lambda: self.ventanaPrincipal.quit())
+
+        #Agregamos un menu para las funciones
+        self.menuFunciones = Menu(self.menu)
+        self.menu.add_cascade(label="Funciones", menu= self.menuFunciones)
+        self.menuFunciones.add_command(label='Minimizacion', command=lambda: self.minimizar())
+        self.menuFunciones.add_command(label='Complemento', command=lambda: self.complemento())
+        self.menuFunciones.add_command(label='Union', command=lambda: self.union())
+        self.menuFunciones.add_command(label='Interseccion', command=lambda: self.interseccion())
+        self.menuFunciones.add_command(label='Reverso', command=lambda: self.reverso())
+        self.menuFunciones.add_command(label='Concatenacion', command=lambda: self.concatenacion())
+        self.menuFunciones.add_command(label='Cierre de Kleen', command=lambda: self.cierreKleen())
+        self.menuFunciones.add_command(label='Pasar a Determinista', command=lambda: self.pasarADeterminista())
+        self.menuFunciones.add_command(label='Crear a partir de Expresion Regular', command=lambda: self.nada())
+        self.menuFunciones.add_command(label='Crear a partir de Automata', command=lambda: self.nada())
+
+
         self.modoOperacion = 0
-        Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=5, row=1)
+        Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=10, row=1)
         Button(self.frame, text='Pruebas', command=lambda: self.verificarCadena()).grid(column=6, row=1)
         #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
@@ -41,8 +73,9 @@ class Ventana(object):
         #Button(self.frame, text='Quintupla', command=lambda: self.minimizar()).grid(column=2, row=1)
         #Button(self.frame, text='Cargar Automata', command=lambda: self.minimizar()).grid(column=4, row=1)
         #Button(self.frame, text='Determinista', command=lambda: self.pasarADeterminista()).grid(column=5, row=1)
-        OptionMenu(self.frame, self.txtCadena, 'Funciones Automata', 'Minimizar Automata', 'Union', 'Complemento', 'Reverso', 'Concatenacion', 'Cierre de Kleene').grid(column=3, row =1)
-        OptionMenu(self.frame, self.txtCadena, 'Archivo',  'Guardar Automata', 'Cargar Automata').grid(column=1, row =1)
+        #OptionMenu(self.frame, self.variableOpciones, 'Funciones Automata', 'Minimizar Automata', 'Union', 'Complemento', 'Reverso', 'Concatenacion', 'Cierre de Kleene').grid(column=3, row =1)
+        #OptionMenu(self.frame, self.variableOpciones, *self.listaOpciones, command=self.opcionesLista()).grid(column=3, row =1)
+        #OptionMenu(self.frame, self.txtCadena, 'Archivo',  'Guardar Automata', 'Cargar Automata').grid(column=1, row =1)
         Button(self.frame, text='Realizar Quintupla', command=lambda : self.pasarAQuintupla()).grid(column=4, row=1)
         Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
         #Button(self.frame, text='Verificar', command=lambda: self.verificarCadena()).grid(column=2, row=51, sticky=(W, E))
@@ -54,6 +87,9 @@ class Ventana(object):
         self.canvas.bind('<Motion>', self.moviendo)
         self.canvas.bind('<B1-Motion>', self.moverEstado)
         self.ventanaPrincipal.mainloop()
+
+    def nada(self):
+        print "Hola pipe"
 
     def pasarAQuintupla(self):
         ventanita = Tk()
@@ -133,23 +169,23 @@ class Ventana(object):
                 self.menuEstado.grab_release()
 
     def guardarArchivo(self):
-        #nombreArchivo = tkSimpleDialog.askstring("Ingresar","Ingrece el nombre del archivo que desea almacenar")
-        #nombreArchivo = nombreArchivo + ".acj"
-        #file_path_string = tkFileDialog.asksaveasfile(mode='w',defaultextension=".acj")
-        file_path_string = tkFileDialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
-        #print(file_path_string, nombreArchivo)
-        print(file_path_string)
-        self.archivo = Archivo()
-        self.archivo.guardarArchivo(file_path_string, self.automata)
-        #self.automata.exportarJSON()
+            #nombreArchivo = tkSimpleDialog.askstring("Ingresar","Ingrece el nombre del archivo que desea almacenar")
+            #nombreArchivo = nombreArchivo + ".acj"
+            #file_path_string = tkFileDialog.asksaveasfile(mode='w',defaultextension=".acj")
+            file_path_string = tkFileDialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
+            #print(file_path_string, nombreArchivo)
+            print(file_path_string)
+            self.archivo = Archivo()
+            self.archivo.guardarArchivo(file_path_string, self.automata)
+            #self.automata.exportarJSON()
 
     def cargarArchivo(self):
 
-        file_path_string = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
-        print(file_path_string)
-        self.archivo = Archivo()
-        self.automata = self.archivo.cargarArchivo(file_path_string)
-        self.actualizarScreen()
+            file_path_string = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
+            print(file_path_string)
+            self.archivo = Archivo()
+            self.automata = self.archivo.cargarArchivo(file_path_string)
+            self.actualizarScreen()
 
     def cambiarAceptador(self, estado):
         if(estado.esEstadoAceptador == True):
@@ -255,4 +291,6 @@ class Ventana(object):
 
 if __name__ == '__main__':
     V = Ventana()
+
+
     #V.verificarCadena()
