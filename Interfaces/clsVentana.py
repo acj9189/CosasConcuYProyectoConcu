@@ -1,4 +1,7 @@
+import tkMessageBox
 from Tkinter import*
+import tkSimpleDialog
+import Tkinter, Tkconstants, tkFileDialog
 import tkSimpleDialog
 import Tkinter, Tkconstants, tkFileDialog
 from ttk import *
@@ -8,7 +11,7 @@ from Clases.Automata import *
 from Clases.Estado import *
 from Clases.clsArchivo import*
 import clsVentanaQuintupla
-
+from Clases.clsAutomatas import *
 from Tkinter import *
 from ttk import *
 
@@ -51,7 +54,7 @@ class Ventana(object):
         #Agregamos un menu para las funciones
         self.menuFunciones = Menu(self.menu)
         self.menu.add_cascade(label="Funciones", menu= self.menuFunciones)
-        self.menuFunciones.add_command(label='Minimizacion', command=lambda: self.minimizar())
+        #self.menuFunciones.add_command(label='Minimizacion', command=lambda: self.minimizar())
         self.menuFunciones.add_command(label='Complemento', command=lambda: self.complemento())
         self.menuFunciones.add_command(label='Union', command=lambda: self.union())
         self.menuFunciones.add_command(label='Interseccion', command=lambda: self.interseccion())
@@ -84,12 +87,13 @@ class Ventana(object):
         for es in self.automata.listaEstados:
             if (es.esEstadoAceptador == True):
                 self.aceptadores = str(es.getestadoNombre())
+                print (self.aceptadores)
                 
 
         self.canvas2.create_text(20, 30, anchor=W, font="Purisa",
                            text="Aceptadores: ")
         self.canvas2.create_text(90, 30, anchor=W, font="Purisa",
-                                 text= str(self.aceptadores))
+                                 text= str(self.aceptadores)'\n')
 
 
     def clearCanvas(self):
@@ -288,6 +292,79 @@ class Ventana(object):
                 self.canvas.create_line(a.getX() - tam * 2, a.getY(), a.getX() - tam, a.getY(), arrow=LAST)
             self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre())
 
+    def verificarCadena(self):
+        cadena = tkSimpleDialog.askstring("Cadenas","Ingrece la cadena que quiere analizar")
+        print(self.automata.leerCadena(cadena))
+
+    def complemento(self):
+        self.automata.realizarComplemento()
+        self.actualizarScreen()
+
+    def reverso(self):
+        self.automata.realizarReversa()
+        self.actualizarScreen()
+
+    def cierreKleen(self):
+        self.automata.realizarCierredeKleen()
+        self.actualizarScreen()
+
+    def union(self):
+        numes = len(self.automata.getListaEstados())
+        if(numes > 0):
+            Auto1 = self.automata
+            Auto2 = self.cargaMasUnautomata()
+            AutomatasPP = Automatas()
+            self.automata = AutomatasPP.realizarUnionEntreAutomatasNoDeterminista(Auto1, Auto2)
+        else:
+            result = tkMessageBox.askquestion("Union", "Desea Cargar los dos Automatas o prefiere realizar uno", icon='warning')
+            if result == 'yes':
+                Auto1 = self.cargaMasUnautomata()
+                Auto2 = self.cargaMasUnautomata()
+                AutomatasPP = Automatas()
+                self.automata = AutomatasPP.realizarUnionEntreAutomatasNoDeterminista(Auto1, Auto2)
+
+        self.actualizarScreen()
+
+    def cargaMasUnautomata(self):
+
+        file_path_string = tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("acj files","*.acj"),("all files","*.*")), defaultextension=".acj")
+        #print(file_path_string)
+        self.archivo = Archivo()
+        return self.archivo.cargarArchivo(file_path_string)
+
+    def concatenacion(self):
+        numes = len(self.automata.getListaEstados())
+        if(numes > 0):
+            Auto1 = self.automata
+            Auto2 = self.cargaMasUnautomata()
+            AutomatasPP = Automatas()
+            self.automata = AutomatasPP.realizarConcatenacionEntreAutomatas(Auto1, Auto2)
+        else:
+            result = tkMessageBox.askquestion("Union", "Desea Cargar los dos Automatas o prefiere realizar uno", icon='warning')
+            if result == 'yes':
+                Auto1 = self.cargaMasUnautomata()
+                Auto2 = self.cargaMasUnautomata()
+                AutomatasPP = Automatas()
+                self.automata = AutomatasPP.realizarConcatenacionEntreAutomatas(Auto1, Auto2)
+
+        self.actualizarScreen()
+
+    def interseccion(self):
+        numes = len(self.automata.getListaEstados())
+        if(numes > 0):
+            Auto1 = self.automata
+            Auto2 = self.cargaMasUnautomata()
+            AutomatasPP = Automatas()
+            self.automata = AutomatasPP.realizarInterseccionEntreAutomatas(Auto1, Auto2)
+        else:
+            result = tkMessageBox.askquestion("Union", "Desea Cargar los dos Automatas o prefiere realizar uno", icon='warning')
+            if result == 'yes':
+                Auto1 = self.cargaMasUnautomata()
+                Auto2 = self.cargaMasUnautomata()
+                AutomatasPP = Automatas()
+                self.automata = AutomatasPP.realizarInterseccionEntreAutomatas(Auto1, Auto2)
+
+        self.actualizarScreen()
 
 if __name__ == '__main__':
     V = Ventana()
