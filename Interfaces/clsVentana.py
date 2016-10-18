@@ -84,7 +84,7 @@ class Ventana(object):
         for es in self.automata.listaEstados:
             if (es.esEstadoAceptador == True):
                 self.aceptadores = str(es.getestadoNombre())
-                print self.aceptadores
+                
 
         self.canvas2.create_text(20, 30, anchor=W, font="Purisa",
                            text="Aceptadores: ")
