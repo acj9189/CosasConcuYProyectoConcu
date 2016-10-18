@@ -36,7 +36,7 @@ class Ventana(object):
         self.frame.columnconfigure(0, weight=1)
         self.frame.rowconfigure(0, weight=1)
         #self.txtCadena = StringVar()
-        self.canvas2 = Canvas(self.frame, bg = 'gray', width=350, height=250)
+        self.canvas2 = Canvas(self.frame, bg = 'gray', width=350, height=150)
         self.canvas2.place(x=850, y=0)
 
 
@@ -68,8 +68,8 @@ class Ventana(object):
 
         #Agregamos un modo de operacion para los eventos
         self.modoOperacion = 0
-        Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=10, row=1)
-        Button(self.frame, text='Pruebas', command=lambda: self.verificarCadena()).grid(column=14, row=1)
+        Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=12, row=1)
+        Button(self.frame, text='Verificar Cadena', command=lambda: self.verificarCadena()).grid(column=14, row=1)
         Button(self.frame, text='Borrar Todo', command=lambda : self.clearCanvas()).grid(column=13, row=1)
         #Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
         Label(self.frame, text='Zoom').grid(column=3, row=51)
@@ -254,7 +254,7 @@ class Ventana(object):
         self.actualizarScreen()
 
     def verificarCadena(self):
-        cadena = tkSimpleDialog.askstring("Cadenas","Ingrece la cadena que quiere analizar")
+        cadena = tkSimpleDialog.askstring("Cadenas","Ingrese la cadena que quiere analizar")
         self.automata.leerCadena(cadena)
 
     def actualizarScreen(self):
@@ -311,8 +311,9 @@ class Ventana(object):
             self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre())
 
     def verificarCadena(self):
-        cadena = tkSimpleDialog.askstring("Cadenas","Ingrece la cadena que quiere analizar")
+        cadena = tkSimpleDialog.askstring("Cadenas","Ingrese la cadena que quiere analizar")
         print(self.automata.leerCadena(cadena))
+        print (cadena)
 
     def complemento(self):
         self.automata.realizarComplemento()
