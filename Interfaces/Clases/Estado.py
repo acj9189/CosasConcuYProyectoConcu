@@ -45,7 +45,7 @@ class Estado(object):
 		return self.posX - self.tam <= x and self.posX + self.tam >= x and self.posY - self.tam <= y and self.posY + self.tam >= y
 
 	def setListaTransiciones(self ,lista):
-		self.listaTransiciones = Lista
+		self.listaTransiciones = lista
 
 	def getlistaTransiciones(self):
 		return self.listaTransiciones
