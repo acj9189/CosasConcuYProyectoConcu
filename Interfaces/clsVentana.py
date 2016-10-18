@@ -4,11 +4,11 @@ import Tkinter, Tkconstants, tkFileDialog
 from ttk import *
 from Clases.clsAutomata import *
 from Clases.clsEstado import *
-
 from Clases.Automata import *
 from Clases.Estado import *
 from Clases.clsArchivo import*
-from clsVentanaQuintupla import *
+import clsVentanaQuintupla
+
 from Tkinter import *
 from ttk import *
 
@@ -17,14 +17,11 @@ from ttk import *
 class Ventana(object):
 
     def __init__(self):
-        #self.automata = clsAutomata(['0', '1'])
         self.automata = Automata()
-
         self.archivo = None
         self.inicialseleccionado = None
         self.posX = 0
         self.posY = 0
-        #self.op = ''
         self.ventanaPrincipal = Tk()
         self.frame = Frame(self.ventanaPrincipal)
         self.canvas = Canvas(self.frame, bd=6, bg='white', width=1200, height=800)
@@ -34,16 +31,18 @@ class Ventana(object):
         self.frame.grid(column=0, row=0)
         self.frame.columnconfigure(0, weight=1)
         self.frame.rowconfigure(0, weight=1)
-        self.txtCadena = StringVar()
-        #self.listaOpciones = ('Minimizar', 'Union', 'Complemento', 'Reverso', 'Concatenacion', 'Cierre de Kleene')
-        #self.variableOpciones = StringVar()
-        #self.variableOpciones.set(self.listaOpciones[0])
+        #self.txtCadena = StringVar()
+        self.canvas2 = Canvas(self.frame, bg = 'gray', width=350, height=250)
+        self.canvas2.place(x=950, y=0)
+
 
         #Agregamos un menu
         self.menu = Menu(self.ventanaPrincipal)
         self.ventanaPrincipal.config(menu=self.menu)
         self.subMenu = Menu(self.menu)
         self.menu.add_cascade(label='Archivo', menu=self.subMenu)
+        self.subMenu.add_command(label='Modo Quintupla', command=lambda: self.pasarAQuintupla())
+        self.subMenu.add_command(label='Modo Tabla', command=lambda: self.pasarAQuintupla())
         self.subMenu.add_command(label='Cargar Archivo', command=lambda: self.cargarArchivo())
         self.subMenu.add_command(label='Guardar Archivo', command=lambda: self.guardarArchivo())
         self.subMenu.add_separator()
@@ -63,22 +62,12 @@ class Ventana(object):
         self.menuFunciones.add_command(label='Crear a partir de Expresion Regular', command=lambda: self.nada())
         self.menuFunciones.add_command(label='Crear a partir de Automata', command=lambda: self.nada())
 
-
+        #Agregamos un modo de operacion para los eventos
         self.modoOperacion = 0
         Button(self.frame, text='Colocar Estado', command=lambda: self.crearEstado()).grid(column=10, row=1)
-        Button(self.frame, text='Pruebas', command=lambda: self.verificarCadena()).grid(column=6, row=1)
-        #Button(self.frame, text='Guardar Automata', command=lambda: self.guardarArchivo()).grid(column=3, row=1)
-        #Button(self.frame, text='Cargar Automata', command=lambda: self.cargarArchivo()).grid(column=3, row=1)
-        #Button(self.frame, text='Leer Cadena', command=lambda: self.verificarCadena()).grid(column=4, row=1)
-        #Button(self.frame, text='Quintupla', command=lambda: self.minimizar()).grid(column=2, row=1)
-        #Button(self.frame, text='Cargar Automata', command=lambda: self.minimizar()).grid(column=4, row=1)
-        #Button(self.frame, text='Determinista', command=lambda: self.pasarADeterminista()).grid(column=5, row=1)
-        #OptionMenu(self.frame, self.variableOpciones, 'Funciones Automata', 'Minimizar Automata', 'Union', 'Complemento', 'Reverso', 'Concatenacion', 'Cierre de Kleene').grid(column=3, row =1)
-        #OptionMenu(self.frame, self.variableOpciones, *self.listaOpciones, command=self.opcionesLista()).grid(column=3, row =1)
-        #OptionMenu(self.frame, self.txtCadena, 'Archivo',  'Guardar Automata', 'Cargar Automata').grid(column=1, row =1)
-        Button(self.frame, text='Realizar Quintupla', command=lambda : self.pasarAQuintupla()).grid(column=4, row=1)
-        Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
-        #Button(self.frame, text='Verificar', command=lambda: self.verificarCadena()).grid(column=2, row=51, sticky=(W, E))
+        Button(self.frame, text='Pruebas', command=lambda: self.verificarCadena()).grid(column=14, row=1)
+        Button(self.frame, text='Borrar Todo', command=lambda : self.clearCanvas()).grid(column=13, row=1)
+        #Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
         Label(self.frame, text='Zoom').grid(column=3, row=51)
         self.canvas.grid(column=1, row=2, columnspan=50, rowspan=50, sticky=E + W)
         self.canvas.bind('<Button-1>', self.onClickCanvas)
@@ -88,13 +77,24 @@ class Ventana(object):
         self.canvas.bind('<B1-Motion>', self.moverEstado)
         self.ventanaPrincipal.mainloop()
 
-    def nada(self):
-        print "Hola pipe"
+
 
     def pasarAQuintupla(self):
-        ventanita = Tk()
+        self.aceptadores = StringVar()
+        for es in self.automata.listaEstados:
+            if (es.esEstadoAceptador == True):
+                self.aceptadores = str(es.getestadoNombre())
+                print self.aceptadores
 
-        ventanita.mainloop()
+        self.canvas2.create_text(20, 30, anchor=W, font="Purisa",
+                           text="Aceptadores: ")
+        self.canvas2.create_text(90, 30, anchor=W, font="Purisa",
+                                 text= str(self.aceptadores))
+
+
+    def clearCanvas(self):
+        self.canvas.delete("all")
+        self.automata.listaEstados = []
 
     def onClickCanvas(self, event):
         if self.modoOperacion == 1:

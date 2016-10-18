@@ -144,14 +144,17 @@ class Automata(object):
 		#print(len(cadena))
 		for caracter in cadena:
 			#print(a)
-			for t in EstadoT.self.listaTransiciones:
+			for t in EstadoT.getlistaTransiciones():
 				f = caracter
+				#print(f)
+				#print(t.getSimbolo(),f)
 				if(t.getSimbolo() == f):
 					pila.append(t.getestadoDestino())
 					EstadoT = t.getestadoDestino()
 					break
 
 		tam = len(pila)
+		print(tam)
 		estadoA = pila[tam-1]
 		if(estadoA.getesEstadoAceptador() == True):
 			return "La cadena fue aceptada"
