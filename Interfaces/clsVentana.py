@@ -28,16 +28,16 @@ class Ventana(object):
         self.posY = 0
         self.ventanaPrincipal = Tk()
         self.frame = Frame(self.ventanaPrincipal)
-        self.canvas = Canvas(self.frame, bd=6, bg='white', width=1200, height=800, borderwidth=5, relief='sunken')
+        self.canvas = Canvas(self.frame, bd=6, bg='white', width=700, height=500, borderwidth=5, relief='sunken')
         self.ventanaPrincipal.title("Realizar Automata")
-        self.ventanaPrincipal.geometry("1140x700+0+0")
+        self.ventanaPrincipal.geometry("800x600+0+0")
         self.canvas.place(x=0, y=0)
         self.frame.grid(column=0, row=0)
         self.frame.columnconfigure(0, weight=1)
         self.frame.rowconfigure(0, weight=1)
         #self.txtCadena = StringVar()
         self.canvas2 = Canvas(self.ventanaPrincipal, bg = 'gray', width=350, height=150, borderwidth = 5, relief='raised')
-        self.canvas2.place(x=950, y=500)
+        self.canvas2.place(x=450, y=300)
 
 
         #Agregamos un menu
@@ -68,9 +68,9 @@ class Ventana(object):
 
         #Agregamos un modo de operacion para los eventos
         self.modoOperacion = 0
-        Button(self.ventanaPrincipal, text='Colocar Estado', command=lambda: self.crearEstado()).place(x=1250, y=100)
-        Button(self.ventanaPrincipal, text='Verificar Cadena', command=lambda: self.verificarCadena()).place(x=1250, y=200)
-        Button(self.ventanaPrincipal, text='Borrar Todo', command=lambda : self.clearCanvas()).place(x=1250, y=300)
+        Button(self.ventanaPrincipal, text='Colocar Estado', command=lambda: self.crearEstado()).place(x=650, y=100)
+        Button(self.ventanaPrincipal, text='Verificar Cadena', command=lambda: self.verificarCadena()).place(x=650, y=200)
+        Button(self.ventanaPrincipal, text='Borrar Todo', command=lambda : self.clearCanvas()).place(x=650, y=300)
         #Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
         Label(self.frame, text='Zoom').grid(column=3, row=51)
         self.canvas.grid(column=1, row=2, columnspan=50, rowspan=50, sticky=E + W)
