@@ -135,8 +135,10 @@ class Automata(object):
 	def leerCadena(self, cadena):
 
 		if(self.esDeterminista == True):
+			print("Determinista")
 			return self.leerCadenaDet(cadena)
 		else:
+			print("No Determinista")
 			return self.leerCadenaNODet(cadena)
 
 	def leerCadenaDet(self,cadena):
@@ -144,6 +146,7 @@ class Automata(object):
 		EstadoT = self.encontrarInicial()
 		#print(len(cadena))
 		for caracter in cadena:
+			print(caracter)
 			#print(a)
 			for t in EstadoT.getlistaTransiciones():
 				f = caracter
@@ -167,6 +170,22 @@ class Automata(object):
 
 	def leerCadenaNODet(self, cadena):
 		pass
+
+	def verificarsiDeterminista(self, simbolo):
+		 self.setesDeterminista(True)
+		 ListaF = []
+		 for es in self.listaEstados:
+		 	i = 0
+		 	for tran in es.listaTransiciones:
+		 		if((tran.getSimbolo() == simbolo) or ((simbolo == "-") and (tran.getSimbolo() == simbolo))):
+		 			i = i + 1
+		 	ListaF.append(i)
+
+		 	for a in ListaF:
+		 		if(a > 1):
+		 			self.setesDeterminista(False)
+		 			break
+
 
 	def realizarCierredeKleen(self):
 		self.esDeterminista = False

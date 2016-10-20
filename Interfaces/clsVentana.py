@@ -133,20 +133,10 @@ class Ventana(object):
                 #var = tkMessageBox.askyesno("Title", "Your question goes here?")
                 simbolo = tkSimpleDialog.askstring("Ingresar","Ingrese el simbolo de la transicion")
                 #print(simbolo)
-                if(simbolo == "-"):
-                    self.automata.setesDeterminista(False)
 
                 self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo)
+                self.automata.verificarsiDeterminista(simbolo)
 
-                i = 1
-                for e in self.inicialseleccionado.getlistaTransiciones():
-                    if(e.getSimbolo() == simbolo):
-                        i = i + 1
-
-                if(i > 1):
-                    self.automata.setesDeterminista(False)
-
-                #self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo)
 
         self.modoOperacion = 0
         self.actualizarScreen()
@@ -255,10 +245,6 @@ class Ventana(object):
         self.automata = self.automata.convertirADeterminista()
         self.actualizarScreen()
 
-    def verificarCadena(self):
-        cadena = tkSimpleDialog.askstring("Cadenas","Ingrese la cadena que quiere analizar")
-        self.automata.leerCadena(cadena)
-
     def actualizarScreen(self):
         self.canvas.delete('all');
         tam = self.automata.tam
@@ -278,7 +264,7 @@ class Ventana(object):
                 else:
                     # Destino mayor que origen
                     if (d.getestadoDestino().getX() > a.getX()):
-                         print("entro origen mayor que destino")
+                         #print("entro origen mayor que destino")
                          if (a.getY() <= d.getestadoDestino().getY()):
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, a.getY())
                              pt = (pm[0] + 30, pm[1] + 30)
@@ -291,7 +277,7 @@ class Ventana(object):
                     else:
                         # Origen mayor que Destino
                          if (a.getY() <= d.getestadoDestino().getY()):
-                             print("entro origen menor o igual q destino")
+                            # print("entro origen menor o igual q destino")
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, d.getestadoDestino().getY())
                              pt = (pm[0] + 10, pm[1] + 50)
                          else:
@@ -314,8 +300,11 @@ class Ventana(object):
 
     def verificarCadena(self):
         cadena = tkSimpleDialog.askstring("Cadenas","Ingrese la cadena que quiere analizar")
-        print(self.automata.leerCadena(cadena))
+        Res = self.automata.leerCadena(cadena)
+        #print(Res)
         print (cadena)
+
+        tkMessageBox.showwarning("Verificacion de cadenas", Res)
 
     def complemento(self):
         self.automata.realizarComplemento()
