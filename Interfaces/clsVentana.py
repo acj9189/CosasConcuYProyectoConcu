@@ -195,9 +195,13 @@ class Ventana(object):
                 #var = tkMessageBox.askyesno("Title", "Your question goes here?")
                 simbolo = tkSimpleDialog.askstring("Ingresar","Ingrese el simbolo de la transicion")
                 #print(simbolo)
-                simboloMME = ""
+                simboloMME = None
                 if(self.tipoAuto == 2):
                     simboloMME = tkSimpleDialog.askstring("Ingresar","Ingrese la salida de la transicion")
+                elif(self.tipoAuto == 4):
+                    TipoAD = tkSimpleDialog.askstring("Ingresar","Que tipo de Operacion va a realizar")
+                    InfoPila = tkSimpleDialog.askstring("Ingresar","Ingrece lo que se encuentra en la Pila")
+                    simboloMME = [TipoAD, InfoPila]
 
                 self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo, simboloMME)
                 self.automata.verificarsiDeterminista(simbolo)

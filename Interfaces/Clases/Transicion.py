@@ -9,6 +9,8 @@ class Transicion(object):
 		self.estadoDestino = None
 		self.simboloT = None
 		self.simboloSalida = None
+		self.tablaSalidaTransicion = None
+		self.tablaOperacion = None
 
 
 	""""def __init__(self, estadoOrigen, estadoDestino,simboloT):
@@ -26,6 +28,16 @@ class Transicion(object):
 		self.estadoDestino = estadoDestino
 		self.simboloT = simboloT
 		self.simboloSalida = simboloSalida
+		self.tablaSalidaTransicion = []
+		self.tablaSalidaTransicion.append([simboloT, simboloSalida])
+
+	def crearTransicionPILA(self, estadoOrigen, estadoDestino, simboloT, operacion):
+		self.estadoOrigen = estadoOrigen
+		self.estadoDestino = estadoDestino
+		self.simboloT = simboloT
+		self.simboloSalida = simboloSalida
+		self.tablaOperacion = []
+		self.tablaOperacion.append([operacion, simboloT])
 
 	def getSimboloSalida(self):
 		return self.simboloSalida

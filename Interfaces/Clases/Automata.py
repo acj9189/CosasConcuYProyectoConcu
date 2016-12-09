@@ -28,7 +28,7 @@ class Automata(object):
 			self.listaEstados.append(Estado(estadoNombre, listaTransiciones, posX, posY, esEstadoInicial, esEstadoAceptador))
 		elif(self.tipodeAutomata == "MM0"):
 			listaTransiciones = []
-			print("HOLA")
+			#print("HOLA")
 			e = Estado(estadoNombre, listaTransiciones, posX, posY, esEstadoInicial, esEstadoAceptador)
 			self.listaEstados.append(e)
 			e.setSimboloMMO(simboloMMO)
@@ -47,9 +47,14 @@ class Automata(object):
 			nuevaTransicion.crearTransicionMME(estadoOrigen, estadoDestino, simbolo, simboloMME)
 			estadoOrigen.listaTransiciones.append(nuevaTransicion)
 		elif(self.tipodeAutomata == "MMO"):
-			pass
+			nuevaTransicion = Transicion()
+			nuevaTransicion.crearTransicion(estadoOrigen, estadoDestino,simbolo)
+			estadoOrigen.listaTransiciones.append(nuevaTransicion)
+			print("se creo")
 		elif(self.tipodeAutomata == "PILA"):
-			pass
+			nuevaTransicion = Transicion()
+			nuevaTransicion.crearTransicionPILA(estadoOrigen, estadoDestino, simbolo, simboloMME)
+			estadoOrigen.listaTransiciones.append(nuevaTransicion)
 
 	# Desde Aca tengo que revisar que funione correctmante.... todos y cada uno de los metodos que hay de aqui para abajo....
 	def encontrarInicial(self):
