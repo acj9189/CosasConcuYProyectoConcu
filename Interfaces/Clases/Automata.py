@@ -24,7 +24,8 @@ class Automata(object):
 			#self.listaEstados.append(Estado(estadoNombre, [], posX, posY, esEstadoInicial, esEstadoAceptador))
 
 		elif(self.tipodeAutomata == "MME"):
-			pass
+			listaTransiciones = []
+			self.listaEstados.append(Estado(estadoNombre, listaTransiciones, posX, posY, esEstadoInicial, esEstadoAceptador))
 		elif(self.tipodeAutomata == "MM0"):
 			listaTransiciones = []
 			print("HOLA")
@@ -35,14 +36,16 @@ class Automata(object):
 		elif(self.tipodeAutomata == "PILA"):
 			pass
 
-	def crearTransicion(self, estadoOrigen, estadoDestino, simbolo):
+	def crearTransicion(self, estadoOrigen, estadoDestino, simbolo, simboloMME):
 		if(self.tipodeAutomata == "AFD-AFN"):
 			nuevaTransicion = Transicion()
 			nuevaTransicion.crearTransicion(estadoOrigen, estadoDestino,simbolo)
 			estadoOrigen.listaTransiciones.append(nuevaTransicion)
 			print("se creo")
 		elif(self.tipodeAutomata == "MME"):
-			pass
+			nuevaTransicion = Transicion()
+			nuevaTransicion.crearTransicionMME(estadoOrigen, estadoDestino, simbolo, simboloMME)
+			estadoOrigen.listaTransiciones.append(nuevaTransicion)
 		elif(self.tipodeAutomata == "MMO"):
 			pass
 		elif(self.tipodeAutomata == "PILA"):

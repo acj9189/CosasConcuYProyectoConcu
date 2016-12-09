@@ -173,20 +173,20 @@ class Ventana(object):
         self.modoOperacion = 0
         self.actualizarScreen()
 
-    #Me Falta
+    #Me Falta funcionamianto logico para que al recorrer funcione...
 
     def Operacion(self, event):
         if self.modoOperacion == 1:
             #estado = clsEstado(event.x, event.y, 'q' + str(len(self.automata.diccionarioEstados.keys())))
             #self.automata.nuevoEstado(estado)
 
-            simboloMME = ""
+            simboloMMO = ""
 
             if(self.tipoAuto == 3):
                 print(event.x)
-                simboloMME =  tkSimpleDialog.askstring("Ingresar","Ingrese el simbolo de salida del estado")
+                simboloMMO =  tkSimpleDialog.askstring("Ingresar","Ingrese el simbolo de salida del estado")
             print(event.x)
-            self.automata.crearEstado('q' + str(len(self.automata.listaEstados)), event.x, event.y, False, False, simboloMME)
+            self.automata.crearEstado('q' + str(len(self.automata.listaEstados)), event.x, event.y, False, False, simboloMMO)
 
         elif self.modoOperacion == 2:
             finalseleccionado = self.automata.buscarEstado(event.x, event.y)
@@ -195,8 +195,11 @@ class Ventana(object):
                 #var = tkMessageBox.askyesno("Title", "Your question goes here?")
                 simbolo = tkSimpleDialog.askstring("Ingresar","Ingrese el simbolo de la transicion")
                 #print(simbolo)
+                simboloMME = ""
+                if(self.tipoAuto == 2):
+                    simboloMME = tkSimpleDialog.askstring("Ingresar","Ingrese la salida de la transicion")
 
-                self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo)
+                self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo, simboloMME)
                 self.automata.verificarsiDeterminista(simbolo)
 
     def doubleClickCanvas(self, event):
@@ -211,8 +214,8 @@ class Ventana(object):
     def crearEstado(self):
         self.modoOperacion = 1
 
-    def crearTransicion(self, origen, destino, simbolo):
-        self.automata.crearTransicion(origen, destino, simbolo)
+    def crearTransicion(self, origen, destino, simbolo, simboloMME):
+        self.automata.crearTransicion(origen, destino, simbolo, simboloMME)
         self.actualizarScreen()
 
     def mostrarMenu(self, event):
@@ -316,7 +319,11 @@ class Ventana(object):
             for d in a.listaTransiciones:
                 if(d.getestadoOrigen() == d.getestadoDestino()):
                      # lazo
-                        self.canvas.create_text(d.getestadoOrigen().getX(), d.getestadoOrigen().getY() - 70, text = d.getSimbolo())
+                        if(self.tipoAuto == 2):
+                             self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "/" + d.getSimboloSalida())
+                        else:
+                             self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo())
+
                         self.canvas.create_line(a.getX() + tam, a.getY() + tam / 4, d.getestadoOrigen().getX(), d.getestadoOrigen().getY() - (tam * 5),
                                                 d.getestadoOrigen().getX() - tam, d.getestadoOrigen().getY() - tam / 2, arrow=LAST, smooth=True)
                 else:
@@ -329,7 +336,12 @@ class Ventana(object):
                          else:
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2,d.getestadoDestino().getY())
                              pt = (pm[0] + 30, pm[1] - 30)
-                         self.canvas.create_text(pt, text = d.getSimbolo())
+
+                         if(self.tipoAuto == 2):
+                             self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "/" + d.getSimboloSalida())
+                         else:
+                             self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo())
+
                          self.canvas.create_line(a.getX(), a.getY(), pm, d.getestadoDestino().getX(), d.getestadoDestino().getY() - tam, arrow=LAST,
                                                     smooth=True)
                     else:
@@ -341,7 +353,12 @@ class Ventana(object):
                          else:
                              pm = (d.getestadoDestino().getX() - (d.getestadoDestino().getX() - a.getX()) / 2, a.getY())
                              pt = (pm[0] + 10, pm[1] - 50)
-                         self.canvas.create_text(pt, text = d.getSimbolo())
+
+                         if(self.tipoAuto == 2):
+                             self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "/" + d.getSimboloSalida())
+                         else:
+                             self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo())
+
                          self.canvas.create_line(a.getX(), a.getY(), pm, d.getestadoDestino().getX(), d.getestadoDestino().getY() + tam, arrow=LAST,
                                                     smooth=True)
 
