@@ -24,20 +24,22 @@ class Ventana(object):
         self.automata = Automata()
         self.archivo = None
         self.inicialseleccionado = None
+        self.tipoAuto = None
+        self.modoOperacion = 0
         self.posX = 0
         self.posY = 0
         self.ventanaPrincipal = Tk()
         self.frame = Frame(self.ventanaPrincipal)
         self.canvas = Canvas(self.frame, bd=6, bg='white', width=700, height=500, borderwidth=5, relief='sunken')
         self.ventanaPrincipal.title("Realizar Automata")
-        self.ventanaPrincipal.geometry("800x600+0+0")
+        self.ventanaPrincipal.geometry("1024x768+0+0")
         self.canvas.place(x=0, y=0)
         self.frame.grid(column=0, row=0)
         self.frame.columnconfigure(0, weight=1)
         self.frame.rowconfigure(0, weight=1)
         #self.txtCadena = StringVar()
         self.canvas2 = Canvas(self.ventanaPrincipal, bg = 'gray', width=350, height=150, borderwidth = 5, relief='raised')
-        self.canvas2.place(x=450, y=300)
+        self.canvas2.place(x=650, y=550)
 
 
         #Agregamos un menu
@@ -66,11 +68,22 @@ class Ventana(object):
         #self.menuFunciones.add_command(label='Crear a partir de Expresion Regular', command=lambda: self.nada())
         #self.menuFunciones.add_command(label='Crear a partir de Automata', command=lambda: self.nada())
 
+        #Agregamos un mode de operacion tipo de maquina
+
+        self.menuTipo = Menu(self.menu)
+        self.menu.add_cascade(label="`Tipo de Automata", menu= self.menuTipo)
+        self.menuTipo.add_command(label='AFD-NAFD', command=lambda: self.tipoAuto1())
+        self.menuTipo.add_command(label='MME', command=lambda: self.tipoAuto2())
+        self.menuTipo.add_command(label='MMO', command=lambda: self.tipoAuto3())
+        self.menuTipo.add_command(label='PILA', command=lambda: self.tipoAuto4())
+
+
         #Agregamos un modo de operacion para los eventos
-        self.modoOperacion = 0
-        Button(self.ventanaPrincipal, text='Colocar Estado', command=lambda: self.crearEstado()).place(x=650, y=100)
-        Button(self.ventanaPrincipal, text='Verificar Cadena', command=lambda: self.verificarCadena()).place(x=650, y=200)
-        Button(self.ventanaPrincipal, text='Borrar Todo', command=lambda : self.clearCanvas()).place(x=650, y=300)
+
+        #Button(self.ventanaPrincipal, text='Tipo Automata', command=lambda: self.crearEstado()).place(x=850, y=100)
+        Button(self.ventanaPrincipal, text='Colocar Estado', command=lambda: self.crearEstado()).place(x=850, y=200)
+        Button(self.ventanaPrincipal, text='Verificar Cadena', command=lambda: self.verificarCadena()).place(x=850, y=300)
+        Button(self.ventanaPrincipal, text='Borrar Todo', command=lambda : self.clearCanvas()).place(x=850, y=400)
         #Entry(self.frame, textvariable=self.txtCadena).grid(column=1, row=51, sticky=(W, E))
         Label(self.frame, text='Zoom').grid(column=3, row=51)
         self.canvas.grid(column=1, row=2, columnspan=50, rowspan=50, sticky=E + W)
@@ -80,7 +93,6 @@ class Ventana(object):
         self.canvas.bind('<Motion>', self.moviendo)
         self.canvas.bind('<B1-Motion>', self.moverEstado)
         self.ventanaPrincipal.mainloop()
-
 
 
     def pasarAQuintupla(self):
@@ -112,19 +124,69 @@ class Ventana(object):
         self.canvas2.create_text(20, 120, anchor=W, font="Purisa",
                                  text='Alfabeto: [0,1]')
 
-
-
-
     def clearCanvas(self):
         self.canvas2.delete('all')
         self.canvas.delete("all")
         self.automata.listaEstados = []
 
+    def tipoAuto1(self):
+        #tipo = tkSimpleDialog.askstring("Ingresar","Ingrese el tipo de Automata 0")
+
+        self.tipoAuto = 1
+        print(self.tipoAuto)
+
+    def tipoAuto2(self):
+        #tipo = tkSimpleDialog.askstring("Ingresar","Ingrese el tipo de Automata 0")
+
+        self.tipoAuto = 2
+        print(self.tipoAuto)
+
+    def tipoAuto3(self):
+        #tipo = tkSimpleDialog.askstring("Ingresar","Ingrese el tipo de Automata 0")
+
+        self.tipoAuto = 3
+        print(self.tipoAuto)
+
+    def tipoAuto4(self):
+        #tipo = tkSimpleDialog.askstring("Ingresar","Ingrese el tipo de Automata 0")
+
+        self.tipoAuto = 4
+        print(self.tipoAuto)
+
+
     def onClickCanvas(self, event):
+
+        if(self.tipoAuto == 1):
+            self.automata.tipodeAutomata = "AFD-AFN"
+            #self.tipoAuto = "AFD-AFN"
+        elif(self.tipoAuto == 2):
+            self.automata.tipodeAutomata = "MME"
+            #self.tipoAuto = "MME"
+        elif(self.tipoAuto == 3):
+            self.automata.tipodeAutomata = "MM0"
+            #self.tipoAuto = "MM0"
+        else:
+            self.automata.tipodeAutomata = "PILA"
+            #self.tipoAuto = "PILA"
+
+        self.Operacion(event)
+        self.modoOperacion = 0
+        self.actualizarScreen()
+
+    #Me Falta
+
+    def Operacion(self, event):
         if self.modoOperacion == 1:
             #estado = clsEstado(event.x, event.y, 'q' + str(len(self.automata.diccionarioEstados.keys())))
             #self.automata.nuevoEstado(estado)
-            self.automata.crearEstado('q' + str(len(self.automata.listaEstados)), event.x, event.y, False, False)
+
+            simboloMME = ""
+
+            if(self.tipoAuto == 3):
+                print(event.x)
+                simboloMME =  tkSimpleDialog.askstring("Ingresar","Ingrese el simbolo de salida del estado")
+            print(event.x)
+            self.automata.crearEstado('q' + str(len(self.automata.listaEstados)), event.x, event.y, False, False, simboloMME)
 
         elif self.modoOperacion == 2:
             finalseleccionado = self.automata.buscarEstado(event.x, event.y)
@@ -136,10 +198,6 @@ class Ventana(object):
 
                 self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo)
                 self.automata.verificarsiDeterminista(simbolo)
-
-
-        self.modoOperacion = 0
-        self.actualizarScreen()
 
     def doubleClickCanvas(self, event):
 
@@ -289,6 +347,7 @@ class Ventana(object):
 
             # pintar estados """
 
+            print(a.getestadoNombre())
             self.canvas.create_oval(a.getX() - tam, a.getY() - tam, a.getX() + tam, a.getY() + tam, fill='red',
                                     activeoutline='blue', outline='white', width=2)
             if a.esEstadoAceptador == True:
@@ -296,7 +355,11 @@ class Ventana(object):
 
             if a.esEstadoInicial == True:
                 self.canvas.create_line(a.getX() - tam * 2, a.getY(), a.getX() - tam, a.getY(), arrow=LAST)
-            self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre())
+
+            if(self.tipoAuto == 3):
+                self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre() + "/" + a.getSimboloMMO())
+            else:
+                self.canvas.create_text(a.getX(), a.getY(), fill = 'white', text = a.getestadoNombre())
 
     def verificarCadena(self):
         cadena = tkSimpleDialog.askstring("Cadenas","Ingrese la cadena que quiere analizar")

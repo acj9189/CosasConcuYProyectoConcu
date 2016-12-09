@@ -22,6 +22,13 @@ class Estado(object):
 		self.esEstadoInicial = esEstadoInicial
 		self.esEstadoAceptador = esEstadoAceptador
 		self.tam = 30
+		self.simboloMMO = None
+
+	def setSimboloMMO(self, simbolo):
+		self.simboloMMO = simbolo
+
+	def getSimboloMMO(self):
+		return self.simboloMMO
 
 	def getX(self):
 		return self.posX

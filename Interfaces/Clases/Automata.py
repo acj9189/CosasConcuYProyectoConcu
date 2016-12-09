@@ -8,12 +8,12 @@ class Automata(object):
 		self.esDeterminista = True
 		self.tieneEstadoInicial = False
 		self.tieneEstadoFinal = False
-		self.tipodeAutomata = "AFD-AFN"
+		self.tipodeAutomata = None
 		self.tam = 20
+		#print(self.tipodeAutomata)
+
+	def crearEstado(self, estadoNombre, posX, posY, esEstadoInicial, esEstadoAceptador,simboloMMO):
 		print(self.tipodeAutomata)
-
-	def crearEstado(self, estadoNombre, posX, posY, esEstadoInicial, esEstadoAceptador):
-
 		if(self.tipodeAutomata == "AFD-AFN"):
 			#print(self.tipodeAutomata)
 			#self.listaEstados.append("hola")
@@ -25,8 +25,13 @@ class Automata(object):
 
 		elif(self.tipodeAutomata == "MME"):
 			pass
-		elif(self.tipodeAutomata == "MMO"):
-			pass
+		elif(self.tipodeAutomata == "MM0"):
+			listaTransiciones = []
+			print("HOLA")
+			e = Estado(estadoNombre, listaTransiciones, posX, posY, esEstadoInicial, esEstadoAceptador)
+			self.listaEstados.append(e)
+			e.setSimboloMMO(simboloMMO)
+
 		elif(self.tipodeAutomata == "PILA"):
 			pass
 
