@@ -62,3 +62,6 @@ class Transicion(object):
 
 	def setSimbolo(self, simbolo):
 		self.simboloT = simbolo
+
+	def getTablaSalidaTransicion(self):
+		return self.tablaSalidaTransicion

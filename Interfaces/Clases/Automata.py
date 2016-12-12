@@ -184,6 +184,71 @@ class Automata(object):
 	def leerCadenaNODet(self, cadena):
 		pass
 
+	def leerCadenaMMO(self, cadena):
+		Salida = ""
+		EstadoT = self.encontrarInicial()
+		for a in cadena:
+			for t in EstadoT.getlistaTransiciones():
+				f = a
+				if(t.getSimbolo() == f):
+					Salida = Salida + EstadoT.getSimboloMMO()
+					EstadoT = t.getestadoDestino()
+					break
+
+		return Salida
+
+	def leerCadenaMME(self, cadena):
+		Salida = ""
+		EstadoT = self.encontrarInicial()
+		for a in cadena:
+			for t in EstadoT.getlistaTransiciones():
+				f = a
+				if(t.getSimbolo() == f):
+					Salida = Salida + t.getSimboloSalida()
+					EstadoT = t.getestadoDestino()
+					break
+
+		return Salida
+
+	def leerCadenaPila(self, cadena):
+		Salida = "El automata No acepto la cadena"
+		Pila = []
+		EstadoT = self.encontrarInicial()
+		a = False
+		b = False
+
+		for f in cadena:
+			for t in EstadoT.getlistaTransiciones():
+				for key in t.getTablaSalidaTransicion()[0]:
+					if(t.getTablaSalidaTransicion()[1] == "apilar"):
+						if(len(Pila) == 0):
+							Pila.append("z")
+							Pila.append(key[1])
+						else:
+							Pila.append(key[1])
+
+						EstadoT = t.getestadoDestino()
+						a = True
+						break
+					elif(t.getTablaSalidaTransicion()[1] == "Desapilar"):
+						if(len(Pila) == 0):
+							a = True
+							break
+						else:
+							Pila.pop()
+							EstadoT = t.getestadoDestino()
+							a = True
+							break
+				if(a == True):
+					a = False
+					break
+
+
+
+
+
+
+
 	def verificarsiDeterminista(self, simbolo):
 		 self.setesDeterminista(True)
 		 ListaF = []

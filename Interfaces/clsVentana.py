@@ -64,9 +64,9 @@ class Ventana(object):
         self.menuFunciones.add_command(label='Reverso', command=lambda: self.reverso())
         self.menuFunciones.add_command(label='Concatenacion', command=lambda: self.concatenacion())
         self.menuFunciones.add_command(label='Cierre de Kleen', command=lambda: self.cierreKleen())
-        #self.menuFunciones.add_command(label='Pasar a Determinista', command=lambda: self.pasarADeterminista())
-        #self.menuFunciones.add_command(label='Crear a partir de Expresion Regular', command=lambda: self.nada())
-        #self.menuFunciones.add_command(label='Crear a partir de Automata', command=lambda: self.nada())
+        self.menuFunciones.add_command(label='Recorrer MME', command=lambda: self.recorrerMME())
+        self.menuFunciones.add_command(label='Recorrer MMO', command=lambda: self.recorrerMMO())
+        self.menuFunciones.add_command(label='Recorrer PILA', command=lambda: self.recorrePILA())
 
         #Agregamos un mode de operacion tipo de maquina
 
@@ -152,7 +152,6 @@ class Ventana(object):
 
         self.tipoAuto = 4
         print(self.tipoAuto)
-
 
     def onClickCanvas(self, event):
 
@@ -389,6 +388,19 @@ class Ventana(object):
         print (cadena)
 
         tkMessageBox.showwarning("Verificacion de cadenas", Res)
+
+    def recorrerMME(self):
+        entrada = tkSimpleDialog.askstring("Ingresar","Ingrese la cadena a analizar")
+        sal = self.automata.leerCadenaMME(entrada)
+        print(sal)
+
+    def recorrerMMO(self):
+        entrada = tkSimpleDialog.askstring("Ingresar","Ingrese la cadena a analizar")
+        sal = self.automata.leerCadenaMMO(entrada)
+        print(sal)
+
+    def recorrePILA(self):
+        pass
 
     def complemento(self):
         self.automata.realizarComplemento()
