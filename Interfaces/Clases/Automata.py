@@ -218,36 +218,49 @@ class Automata(object):
 		b = False
 
 		for f in cadena:
-			for t in EstadoT.getlistaTransiciones():
-				for key in t.getTablaSalidaTransicion()[0]:
-					if(t.getTablaSalidaTransicion()[1] == "apilar"):
-						if(len(Pila) == 0):
-							Pila.append("z")
-							Pila.append(key[1])
-						else:
-							Pila.append(key[1])
+			if(f == "-"):
+				for t in EstadoT.getlistaTransiciones():
+					for key in t.getTablaSalidaTransicion()[0]:
+						if(t.getTablaSalidaTransicion()[1] == "apilar"):
+							if(len(Pila) == 0):
+								Pila.append("z")
+								Pila.append(key[1])
+							else:
+								Pila.append(key[1])
 
-						EstadoT = t.getestadoDestino()
-						a = True
-						break
-					elif(t.getTablaSalidaTransicion()[1] == "Desapilar"):
-						if(len(Pila) == 0):
-							a = True
-							break
-						else:
-							Pila.pop()
 							EstadoT = t.getestadoDestino()
 							a = True
 							break
-				if(a == True):
-					a = False
-					break
+						elif(t.getTablaSalidaTransicion()[1] == "Desapilar"):
+							if(len(Pila) == 0):
+								a = True
+								break
+							else:
+								Pila.pop()
+								EstadoT = t.getestadoDestino()
+								a = True
+								break
+					if(a == True):
+						a = False
+						break
+			else:
+				if(len(cadena)== 1):
+					Pila.append("z")
 
+				if((f == "-") and (len(Pila)>0)):
+					for t in EstadoT.getlistaTransiciones():
+						for key in t.getTablaSalidaTransicion()[0]:
+							if(f == t.getTablaSalidaTransicion()[1]):
+								EstadoT = t.getestadoDestino()
+								if(len(Pila)== 0):
+									Pila.pop()
+									b = True
+									break
+						if(b == True):
+							break
 
-
-
-
-
+		if((EstadoT.getesEstadoAceptador() ) and (len(Pila) == 0)):
+			return "El automata acepto la cadena"
 
 	def verificarsiDeterminista(self, simbolo):
 		 self.setesDeterminista(True)
@@ -263,7 +276,6 @@ class Automata(object):
 		 		if(a > 1):
 		 			self.setesDeterminista(False)
 		 			break
-
 
 	def realizarCierredeKleen(self):
 		self.esDeterminista = False
