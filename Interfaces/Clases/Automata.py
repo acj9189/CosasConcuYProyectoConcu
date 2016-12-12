@@ -331,6 +331,9 @@ class Automata(object):
 		self.listaEstados.append(EstadoT3)
 		self.listaEstados.insert(len(self.listaEstados) - 1, EstadoT4)
 
+	def transformarMMOenMME(self):
+		pass
+
 	def getesDeterminista(self):
 		return self.esDeterminista
 
