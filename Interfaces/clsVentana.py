@@ -194,14 +194,22 @@ class Ventana(object):
                 #var = tkMessageBox.askyesno("Title", "Your question goes here?")
                 simbolo = tkSimpleDialog.askstring("Ingresar","Ingrese el simbolo de la transicion")
                 #print(simbolo)
-                simboloMME = None
+                simboloMME = ""
                 if(self.tipoAuto == 2):
+
                     simboloMME = tkSimpleDialog.askstring("Ingresar","Ingrese la salida de la transicion")
+
                 elif(self.tipoAuto == 4):
-                    TipoAD = tkSimpleDialog.askstring("Ingresar","Que tipo de Operacion va a realizar")
+
+                    TipoAD = tkSimpleDialog.askstring("Ingresar","Que tipo de Operacion va a realizar: a para apilar y d para desapilar")
+                    if(TipoAD == "A" or TipoAD == "a"):
+                        TipoAD = "apilar"
+                    elif(TipoAD == "D" or TipoAD == "d"):
+                        TipoAD = "desapilar"
+
                     InfoPila = tkSimpleDialog.askstring("Ingresar","Ingrece lo que se encuentra en la Pila")
                     simboloMME = [TipoAD, InfoPila]
-
+                print("ENTROTODO")
                 self.crearTransicion(self.inicialseleccionado, finalseleccionado, simbolo, simboloMME)
                 self.automata.verificarsiDeterminista(simbolo)
 
@@ -218,6 +226,7 @@ class Ventana(object):
         self.modoOperacion = 1
 
     def crearTransicion(self, origen, destino, simbolo, simboloMME):
+        #print("ENTROTODO")
         self.automata.crearTransicion(origen, destino, simbolo, simboloMME)
         self.actualizarScreen()
 
@@ -324,6 +333,14 @@ class Ventana(object):
                      # lazo
                         if(self.tipoAuto == 2):
                              self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "/" + d.getSimboloSalida())
+                        elif(self.tipoAuto == 4):
+                            if(len(a.listaTransiciones) == 1):
+                                self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "," + "z" +"/z"+ d.getSimbolo())
+                            else:
+                                if(d.getTablaOperacion()[0] == "apilar"):
+                                    self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "," + d.getTablaOperacion()[1] +"/"+ d.getTablaOperacion()[1] + d.getSimbolo())
+                                else:
+                                    self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "," + d.getTablaOperacion()[1] +"/D")
                         else:
                              self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo())
 
@@ -342,6 +359,14 @@ class Ventana(object):
 
                          if(self.tipoAuto == 2):
                              self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "/" + d.getSimboloSalida())
+                         elif(self.tipoAuto == 4):
+                            if(len(a.listaTransiciones) == 1):
+                                self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "," + "z" +"/z"+ d.getSimbolo())
+                            else:
+                                if(d.getTablaOperacion()[0] == "apilar"):
+                                    self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "," + d.getTablaOperacion()[1] +"/"+ d.getTablaOperacion()[1] + d.getSimbolo())
+                                else:
+                                    self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "," + d.getTablaOperacion()[1] +"/D")
                          else:
                              self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo())
 
@@ -359,6 +384,14 @@ class Ventana(object):
 
                          if(self.tipoAuto == 2):
                              self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "/" + d.getSimboloSalida())
+                         elif(self.tipoAuto == 4):
+                            if(len(a.listaTransiciones) == 1):
+                                self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "," + "z" +"/z"+ d.getSimbolo())
+                            else:
+                                if(d.getTablaOperacion()[0] == "apilar"):
+                                    self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "," + d.getTablaOperacion()[1] +"/"+ d.getTablaOperacion()[1] + d.getSimbolo())
+                                else:
+                                    self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo() + "," + d.getTablaOperacion()[1] +"/D")
                          else:
                              self.canvas.create_text(d.getestadoOrigen().getX() + 100, d.getestadoOrigen().getY() - 35, text = d.getSimbolo())
 

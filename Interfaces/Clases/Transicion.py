@@ -19,6 +19,13 @@ class Transicion(object):
 		self.simboloT = simboloT"""
 
 	def crearTransicion(self, estadoOrigen, estadoDestino, simboloT):
+		print("ENTROTODO")
+		self.estadoOrigen = estadoOrigen
+		self.estadoDestino = estadoDestino
+		self.simboloT = simboloT
+
+	def crearTransicionMMO(self, estadoOrigen, estadoDestino, simboloT):
+
 		self.estadoOrigen = estadoOrigen
 		self.estadoDestino = estadoDestino
 		self.simboloT = simboloT
@@ -35,9 +42,15 @@ class Transicion(object):
 		self.estadoOrigen = estadoOrigen
 		self.estadoDestino = estadoDestino
 		self.simboloT = simboloT
-		self.simboloSalida = simboloSalida
+		#self.simboloSalida = simboloSalida
 		self.tablaOperacion = []
 		self.tablaOperacion.append([operacion, simboloT])
+
+	def getTablaOperacion(self):
+		return self.tablaOperacion
+
+	def setTablaOperacion(self, dato):
+		self.tablaOperacion = dato
 
 	def getSimboloSalida(self):
 		return self.simboloSalida

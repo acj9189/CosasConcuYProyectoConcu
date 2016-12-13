@@ -34,10 +34,11 @@ class Automata(object):
 			e.setSimboloMMO(simboloMMO)
 
 		elif(self.tipodeAutomata == "PILA"):
-			pass
+			listaTransiciones = []
+			self.listaEstados.append(Estado(estadoNombre, listaTransiciones, posX, posY, esEstadoInicial, esEstadoAceptador))
 
 	def crearTransicion(self, estadoOrigen, estadoDestino, simbolo, simboloMME):
-		if(self.tipodeAutomata == "AFD-AFN"):
+		if(self.tipodeAutomata == "AFD-AFN" or self.tipodeAutomata == "MM0"):
 			nuevaTransicion = Transicion()
 			nuevaTransicion.crearTransicion(estadoOrigen, estadoDestino,simbolo)
 			estadoOrigen.listaTransiciones.append(nuevaTransicion)
@@ -46,11 +47,7 @@ class Automata(object):
 			nuevaTransicion = Transicion()
 			nuevaTransicion.crearTransicionMME(estadoOrigen, estadoDestino, simbolo, simboloMME)
 			estadoOrigen.listaTransiciones.append(nuevaTransicion)
-		elif(self.tipodeAutomata == "MMO"):
-			nuevaTransicion = Transicion()
-			nuevaTransicion.crearTransicion(estadoOrigen, estadoDestino,simbolo)
-			estadoOrigen.listaTransiciones.append(nuevaTransicion)
-			print("se creo")
+
 		elif(self.tipodeAutomata == "PILA"):
 			nuevaTransicion = Transicion()
 			nuevaTransicion.crearTransicionPILA(estadoOrigen, estadoDestino, simbolo, simboloMME)
@@ -231,7 +228,7 @@ class Automata(object):
 							EstadoT = t.getestadoDestino()
 							a = True
 							break
-						elif(t.getTablaSalidaTransicion()[1] == "Desapilar"):
+						elif(t.getTablaSalidaTransicion()[1] == "desapilar"):
 							if(len(Pila) == 0):
 								a = True
 								break
