@@ -45,3 +45,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+/proyectoChatTelnet/nbproject/private/
+/proyectoChatTelnet/build/
+/proyectoChatTelnet/dist/

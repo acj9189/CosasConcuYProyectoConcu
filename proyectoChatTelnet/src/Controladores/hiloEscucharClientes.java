@@ -31,11 +31,17 @@ public class hiloEscucharClientes implements Runnable{
    private BufferedReader theIn;
    private JFCliente cliente;
 
-    public hiloEscucharClientes(Socket SoketAnalisis, JList ListaMostrar , JFCliente cliente) throws IOException {
-        this.SoketAnalisis = SoketAnalisis;
-        this.ListaMostrar = ListaMostrar;
-        this.theOut = new PrintWriter(this.SoketAnalisis.getOutputStream(),true);
-        this.theIn = new BufferedReader(new InputStreamReader(this.SoketAnalisis.getInputStream(), "UTF-8"));
+    public hiloEscucharClientes(Socket SoketAnalisis, JList ListaMostrar , JFCliente cliente){
+        
+        try {
+            this.SoketAnalisis = SoketAnalisis;
+            this.ListaMostrar = ListaMostrar;
+            this.theOut = new PrintWriter(this.SoketAnalisis.getOutputStream(),true);
+            this.theIn = new BufferedReader(new InputStreamReader(this.SoketAnalisis.getInputStream(), "UTF-8"));
+            this.cliente = cliente;
+       } catch (IOException ex) {
+           Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
+       }
         this.cliente = cliente;
         
     }

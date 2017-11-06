@@ -167,7 +167,7 @@ public class JFCliente extends javax.swing.JFrame {
             
             // faltan cositas...
             
-            this.HiLoClientes = new hiloEscucharClientes(this.socketConeccion,this.jLstUsuariosConectados);
+            this.HiLoClientes = new hiloEscucharClientes(this.socketConeccion,this.jLstUsuariosConectados, this);
         } catch (IOException ex) {
             Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
