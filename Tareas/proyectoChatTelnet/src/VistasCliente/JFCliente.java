@@ -238,9 +238,9 @@ public class JFCliente extends javax.swing.JFrame {
                     Thread Hilo = new Thread(this.getHiLoClientes());
                     Hilo.start();  
                     
-                    this.HiloMensajes = new hiloEscucharMensajes(this.getSocketConeccion(), this.jLstMensajesEnviados, this);
-                    Thread Hilo2 = new Thread(this.HiloMensajes);
-                    Hilo2.start();
+//                    this.HiloMensajes = new hiloEscucharMensajes(this.getSocketConeccion(), this.jLstMensajesEnviados, this);
+//                    Thread Hilo2 = new Thread(this.HiloMensajes);
+//                    Hilo2.start();
                     
                     
                     this.getTxtName().setEditable(false);

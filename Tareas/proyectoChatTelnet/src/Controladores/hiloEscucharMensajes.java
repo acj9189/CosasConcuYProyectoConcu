@@ -112,10 +112,22 @@ public class hiloEscucharMensajes implements Runnable{
           
            try {
                String Datos = this.getTheIn().readLine();
-               if(!modelo.contains(Datos)){
-                   this.modelo.addElement(Datos);
-                   this.ListaMostrar.setModel(this.modelo);
+               if(Datos.equals("100 MENSAJE ENVIADO CON EXITO A TODOS")){
+                    String Datos2 = this.getTheIn().readLine();
+                    if(!modelo.contains(Datos)){
+                        this.modelo.addElement(Datos);
+                        this.ListaMostrar.setModel(this.modelo);
+                    }
                }
+               else{if(Datos.equals("100 MENSAJE ENVIADO CON EXITO Al USUARIO ELEJIDO")){
+                    String Datos2 = this.getTheIn().readLine();
+                    if(!modelo.contains(Datos)){
+                        this.modelo.addElement(Datos);
+                        this.ListaMostrar.setModel(this.modelo);
+                    }
+                   }
+               }
+              
                
            } catch (IOException ex) {
                Logger.getLogger(hiloEscucharMensajes.class.getName()).log(Level.SEVERE, null, ex);

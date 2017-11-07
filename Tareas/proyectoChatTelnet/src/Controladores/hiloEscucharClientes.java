@@ -77,10 +77,12 @@ public class hiloEscucharClientes implements Runnable{
     
     private void agregarLista(){
        try { 
-//          this.theOut.println("NUMOFUSERS");
-//          String Res = this.theIn.readLine().substring(23);
-//          int temp = Integer.valueOf(Res);
-//          if(this.numeroConectadosActual != temp){
+          this.theOut.println("NUMOFUSERS");
+          String Res = this.theIn.readLine().substring(23);
+          String[] c = Res.split(":");
+          int temp2 = (Integer.valueOf(c[0]));
+          int temp = Integer.valueOf(Res);
+          if(this.numeroConectadosActual != temp){
                 this.getTheOut().println("GETUSERS");  
                 String Datos = this.getTheIn().readLine();
                 // " id:nombre ; id nombre"
@@ -97,9 +99,9 @@ public class hiloEscucharClientes implements Runnable{
                          noRepetidos = noRepetidos + b[1];    
                      } 
                  }
-//                 this.numeroConectadosActual = a.length;
+                 this.numeroConectadosActual = a.length;
                  this.ListaMostrar.setModel(modelo);
-//          }  
+          }  
        } catch (IOException ex) {
            Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
        }

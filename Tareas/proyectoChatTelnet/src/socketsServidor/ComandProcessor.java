@@ -80,7 +80,7 @@ public class ComandProcessor {
 
         if (aCommand.startsWith("SENDALL ")) {
             if (writeTextAll(sender, aCommand.substring(8))) {
-                response = "100 MENSAJE ENVIADO CON EXITO";
+                response = "100 MENSAJE ENVIADO CON EXITO A TODOS";
             } else {
                 response = "200 MENSAJE SIN ENVIAR";
             }
@@ -96,7 +96,7 @@ public class ComandProcessor {
             String userName = aCommand.substring(5).substring(0, aCommand.substring(5).indexOf(" "));
             String msg = aCommand.substring(5 + userName.length());
             if (writeText(userName, getSocket().getName() + "->" + msg)) {
-                response = "100 MENSAJE ENVIADO CON EXITO";
+                response = "100 MENSAJE ENVIADO CON EXITO Al USUARIO ELEJIDO";
             } else {
                 response = "200 MENSAJE SIN ENVIAR";
             }
