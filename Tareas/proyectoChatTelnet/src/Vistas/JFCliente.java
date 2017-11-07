@@ -181,7 +181,9 @@ public class JFCliente extends javax.swing.JFrame {
                     JOptionPane.showInputDialog(this, "Usted se ha conectado con exito al servidor");
                     this.HiLoClientes = new hiloEscucharClientes(this.socketConeccion, this.jLstUsuariosConectados, this);
                     Thread Hilo = new Thread(this.HiLoClientes);
-                    Hilo.start();   
+                    Hilo.start();  
+                    this.txtName.setEditable(false);
+                    this.btnConectarce.setEnabled(false);
                 }
                 else{
                     if(this.cont == 3){
