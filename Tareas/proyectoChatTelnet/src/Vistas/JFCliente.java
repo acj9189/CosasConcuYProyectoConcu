@@ -7,6 +7,7 @@ package Vistas;
 import Controladores.*;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -26,6 +27,7 @@ public class JFCliente extends javax.swing.JFrame {
     private hiloEscucharClientes HiLoClientes;
     private Socket socketConeccion;
     private JFCliente inCliente;
+    private String nombreUsuario;
     
     private PrintWriter theOut;
     private BufferedReader theIn;
@@ -60,7 +62,7 @@ public class JFCliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         label5 = new java.awt.Label();
         txtHost = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnEnviarMensaje = new javax.swing.JButton();
         btnConectarce = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -86,7 +88,12 @@ public class JFCliente extends javax.swing.JFrame {
 
         txtHost.setName("txtHost"); // NOI18N
 
-        jButton1.setText("jButton1");
+        btnEnviarMensaje.setText("Enviar Mensaje");
+        btnEnviarMensaje.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEnviarMensajeMouseClicked(evt);
+            }
+        });
 
         btnConectarce.setText("Conectarce");
         btnConectarce.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,14 +110,14 @@ public class JFCliente extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnConectarce)
-                    .addComponent(jButton1)
                     .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEnviarMensaje)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2)
@@ -130,7 +137,7 @@ public class JFCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -139,13 +146,13 @@ public class JFCliente extends javax.swing.JFrame {
                             .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConectarce)
-                .addGap(15, 15, 15)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -154,8 +161,8 @@ public class JFCliente extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addGap(16, 16, 16))
+                .addComponent(btnEnviarMensaje)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
@@ -167,14 +174,15 @@ public class JFCliente extends javax.swing.JFrame {
             
             String ip = this.txtHost.getText();
             int puerto = Integer.valueOf(this.txtPort.getText());
-            String nombreUsuario = this.txtName.getText();
+            this.nombreUsuario = this.txtName.getText();
             
             if(this.cont == 0){
                 this.socketConeccion = new Socket(ip, puerto);
+                this.theOut = new PrintWriter(this.socketConeccion.getOutputStream(),true);
+                this.theIn = new BufferedReader(new InputStreamReader(this.socketConeccion.getInputStream(), "UTF-8"));
             }
             if(this.cont < 3){
-                
-                this.theOut.print("REGISTER " + nombreUsuario );
+                this.theOut.print("REGISTER " + this.nombreUsuario );
                 this.cont++;
                 String Res = this.theIn.readLine();
                 if(Res.startsWith("100")){
@@ -189,24 +197,29 @@ public class JFCliente extends javax.swing.JFrame {
                     if(this.cont == 3){
                         JOptionPane.showInputDialog(this, "El numero maximo de intentos para el nombre de usuario es 3");
                         this.txtName.setText("");
-                        this.socketConeccion = null;    
+                        this.socketConeccion = null; 
+                        this.cont = 0;
+                        this.nombreUsuario = "";
+                        this.theIn = null;
+                        this.theOut = null;
                     }
                     else{
                         JOptionPane.showInputDialog(this, "Porfavor Ingrece un nuevo nombre de usuario que el que escribio ya existe");
                         this.txtName.setText("");
                     }
                 }
-            }
-            
-             
-            
-            
-            
+            }  
             
         } catch (IOException ex) {
             Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnConectarceMouseClicked
+
+    private void btnEnviarMensajeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeMouseClicked
+       
+        
+        
+    }//GEN-LAST:event_btnEnviarMensajeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -245,7 +258,7 @@ public class JFCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConectarce;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnEnviarMensaje;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jLstUsuariosConectados;
