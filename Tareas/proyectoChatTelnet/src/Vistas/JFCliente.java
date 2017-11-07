@@ -67,7 +67,7 @@ public class JFCliente extends javax.swing.JFrame {
         txtHost = new javax.swing.JTextField();
         btnEnviarMensaje = new javax.swing.JButton();
         btnConectarce = new javax.swing.JButton();
-        txtEnviar = new javax.swing.JTextField();
+        txtEnviarMensaje = new javax.swing.JTextField();
         label6 = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -145,7 +145,7 @@ public class JFCliente extends javax.swing.JFrame {
                         .addContainerGap(402, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtEnviar, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEnviarMensaje, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
@@ -186,7 +186,7 @@ public class JFCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEnviarMensaje)
                 .addGap(28, 28, 28))
@@ -251,7 +251,8 @@ public class JFCliente extends javax.swing.JFrame {
        int dialogButton = JOptionPane.YES_NO_OPTION;
        int dialogResult = JOptionPane.showConfirmDialog (null, "Desea a enviar a todos los usuarios conectados ?","Warning",dialogButton);
        if(dialogResult == JOptionPane.YES_OPTION){
-          sendAll();
+           String Mensaje = this.txtEnviarMensaje.getText();
+           sendAll(Mensaje);
        }
        else{
           JOptionPane.showInputDialog(this, "Debio de seleccionar al usuario que quiere enviarle");
@@ -281,12 +282,28 @@ public class JFCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLstUsuariosConectadosValueChanged
 
     
-    private void sendAll(){
-        System.out.println("Entro por enviar a todos..");
+    private void sendAll(String Mensaje){
+        try {
+            System.out.println("Entro por enviar a todos..");
+            this.theOut.print("SENDALL " + Mensaje);
+            String res = this.theIn.readLine();
+            if(res.startsWith("100")){
+                JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito");
+            }
+            else{
+                JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
+            
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+        
     
     }
     
-    private void sendPersonal(){
+    private void sendPersonal(String Mensaje, String Destinatario){
     
     }
     /**
@@ -338,7 +355,7 @@ public class JFCliente extends javax.swing.JFrame {
     private java.awt.Label label4;
     private java.awt.Label label5;
     private java.awt.Label label6;
-    private javax.swing.JTextField txtEnviar;
+    private javax.swing.JTextField txtEnviarMensaje;
     private javax.swing.JTextField txtHost;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPort;
