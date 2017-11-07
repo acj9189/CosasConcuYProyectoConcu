@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 package Controladores;
-import Vistas.JFCliente;
+import VistasCliente.JFCliente;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import sockets.*;
 import java.net.Socket;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
 /**
@@ -65,18 +65,19 @@ public class hiloEscucharClientes implements Runnable{
  
     @Override
     public void run() {
-        String Datos="";
+        
         this.getTheOut().println("GETUSERS");
            
        try {
-           Datos =  this.getTheIn().readLine();
+          String Datos = this.getTheIn().readLine();
           // " id:nombre ; id nombre"
           String [] a = Datos.split(";");
-          
+          DefaultListModel modelo = new DefaultListModel();
            for (int i = 0; i < a.length; i++) {
                String[]  b = a[i].split(" ");
-               this.getListaMostrar().add(b[1], this.getCliente());
-           }  
+               modelo.addElement(b[1]);
+           } 
+           this.ListaMostrar.setModel(modelo);
        } catch (IOException ex) {
            Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
        }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vistas;
+package VistasCliente;
 import Controladores.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -219,12 +219,13 @@ public class JFCliente extends javax.swing.JFrame {
                 this.setTheIn(new BufferedReader(new InputStreamReader(this.getSocketConeccion().getInputStream(), "UTF-8")));
             }
             if(this.getCont() < 3){
-                this.getTheOut().print("REGISTER " + this.getNombreUsuario() );
+                String ResEs = this.getTheIn().readLine();
+               // System.out.println("REDLINEI... "+ ResEs);
+                this.getTheOut().println("REGISTER " + this.getNombreUsuario() );
                 this.setCont(this.getCont() + 1);
-                this.getTheIn().readLine();
                 String Res = this.getTheIn().readLine();
-                System.out.println("REDLINE... "+ Res);
-                if(Res.startsWith("100 ")){
+                //System.err.println("REDLINE... "+ Res);
+                if(Res.startsWith("100")){
                     JOptionPane.showMessageDialog(this, "Usted se ha conectado con exito al servidor");
                     this.setHiLoClientes(new hiloEscucharClientes(this.getSocketConeccion(), this.getjLstUsuariosConectados(), this));
                     Thread Hilo = new Thread(this.getHiLoClientes());
@@ -264,9 +265,7 @@ public class JFCliente extends javax.swing.JFrame {
        else{
            JOptionPane.showInputDialog(this, "Debio previamnte seleccionar al usuario que quiere enviarle el mensaje");
            sendPersonal(Mensaje , this.getUsuAEnviar());
-       }
-        
-        
+       }   
     }//GEN-LAST:event_btnEnviarMensajeMouseClicked
 
     private void jLstUsuariosConectadosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosKeyPressed
@@ -302,7 +301,7 @@ public class JFCliente extends javax.swing.JFrame {
     private void sendAll(String Mensaje){
         try {
             System.out.println("Entro por enviar a todos..");
-            this.getTheOut().print("SENDALL " + Mensaje);
+            this.getTheOut().println("SENDALL " + Mensaje);
             String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
                 JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito");
@@ -318,7 +317,7 @@ public class JFCliente extends javax.swing.JFrame {
     
     private void sendPersonal(String Mensaje, String Destinatario){
         try {
-            this.getTheOut().print("SEND " + Destinatario + " " + Mensaje);
+            this.getTheOut().println("SEND " + Destinatario + " " + Mensaje);
             String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
                 JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);

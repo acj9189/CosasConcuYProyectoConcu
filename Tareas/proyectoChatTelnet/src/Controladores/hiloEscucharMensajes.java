@@ -5,7 +5,7 @@
  */
 package Controladores;
 
-import Vistas.JFCliente;
+import VistasCliente.JFCliente;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

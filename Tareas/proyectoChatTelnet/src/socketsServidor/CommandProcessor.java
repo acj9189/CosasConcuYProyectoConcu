@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sockets;
+package socketsServidor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
