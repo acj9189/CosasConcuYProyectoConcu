@@ -125,6 +125,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtPort">
       <Properties>
+        <Property name="text" type="java.lang.String" value="1107"/>
         <Property name="name" type="java.lang.String" value="txtPort" noResource="true"/>
       </Properties>
     </Component>
@@ -203,6 +204,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtHost">
       <Properties>
+        <Property name="text" type="java.lang.String" value="localhost"/>
         <Property name="name" type="java.lang.String" value="txtHost" noResource="true"/>
       </Properties>
     </Component>

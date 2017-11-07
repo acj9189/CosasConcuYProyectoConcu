@@ -74,6 +74,7 @@ public class JFCliente extends javax.swing.JFrame {
 
         label1.setText("Cliente");
 
+        txtPort.setText("1107");
         txtPort.setName("txtPort"); // NOI18N
 
         label2.setText("Ingrese el Puerto");
@@ -106,6 +107,7 @@ public class JFCliente extends javax.swing.JFrame {
         label5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label5.setText("Enviar");
 
+        txtHost.setText("localhost");
         txtHost.setName("txtHost"); // NOI18N
 
         btnEnviarMensaje.setText("Enviar Mensaje");

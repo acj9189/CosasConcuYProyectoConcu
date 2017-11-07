@@ -115,8 +115,11 @@ public class SocketController implements Runnable {
                     timeout--;
                     if (command.toUpperCase().startsWith("REGISTER ")) {
                         setName(command.substring(9).toUpperCase());
+                        
                         if (getTheCommandProcessor().checkName(getName())) {
+                            
                             writeText("100 USUARIO REGISTRADO CON EXITO");
+                            //System.out.println(getName());
                             timeout++;
                             clients.add(this);
                             this.setId((Integer) clients.size());
