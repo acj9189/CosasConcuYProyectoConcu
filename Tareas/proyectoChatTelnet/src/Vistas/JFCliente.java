@@ -59,7 +59,7 @@ public class JFCliente extends javax.swing.JFrame {
         label3 = new java.awt.Label();
         label4 = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jLstMensajesEnviados = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jLstUsuariosConectados = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
@@ -82,7 +82,12 @@ public class JFCliente extends javax.swing.JFrame {
 
         label4.setText("Mensajes Recibidos");
 
-        jScrollPane1.setViewportView(jList1);
+        jLstMensajesEnviados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jLstMensajesEnviadosValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jLstMensajesEnviados);
 
         jLstUsuariosConectados.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -216,9 +221,11 @@ public class JFCliente extends javax.swing.JFrame {
             if(this.getCont() < 3){
                 this.getTheOut().print("REGISTER " + this.getNombreUsuario() );
                 this.setCont(this.getCont() + 1);
+                this.getTheIn().readLine();
                 String Res = this.getTheIn().readLine();
-                if(Res.startsWith("100")){
-                    JOptionPane.showInputDialog(this, "Usted se ha conectado con exito al servidor");
+                System.out.println("REDLINE... "+ Res);
+                if(Res.startsWith("100 ")){
+                    JOptionPane.showMessageDialog(this, "Usted se ha conectado con exito al servidor");
                     this.setHiLoClientes(new hiloEscucharClientes(this.getSocketConeccion(), this.getjLstUsuariosConectados(), this));
                     Thread Hilo = new Thread(this.getHiLoClientes());
                     Hilo.start();  
@@ -227,7 +234,7 @@ public class JFCliente extends javax.swing.JFrame {
                 }
                 else{
                     if(this.getCont() == 3){
-                        JOptionPane.showInputDialog(this, "El numero maximo de intentos para el nombre de usuario es 3");
+                        JOptionPane.showMessageDialog(this, "El numero maximo de intentos para el nombre de usuario es 3");
                         this.getTxtName().setText("");
                         this.setSocketConeccion(null); 
                         this.setCont(0);
@@ -236,7 +243,7 @@ public class JFCliente extends javax.swing.JFrame {
                         this.setTheOut(null);
                     }
                     else{
-                        JOptionPane.showInputDialog(this, "Porfavor Ingrece un nuevo nombre de usuario que el que escribio ya existe");
+                        JOptionPane.showMessageDialog(this, "Porfavor Ingrece un nuevo nombre de usuario que el que escribio ya existe");
                         this.getTxtName().setText("");
                     }
                 }
@@ -280,6 +287,17 @@ public class JFCliente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jLstUsuariosConectadosValueChanged
 
+    private void jLstMensajesEnviadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosValueChanged
+      
+        String mensajeCompletoAEliminar = this.jLstMensajesEnviados.getSelectedValue();
+        eliminarMensaje(mensajeCompletoAEliminar);    
+    }//GEN-LAST:event_jLstMensajesEnviadosValueChanged
+
+    
+    private void eliminarMensaje(String MensajeCompletoSinSeparar){
+        
+    
+    }
     
     private void sendAll(String Mensaje){
         try {
@@ -288,6 +306,7 @@ public class JFCliente extends javax.swing.JFrame {
             String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
                 JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito");
+                this.jLstMensajesEnviados.add(this, "->: " + Mensaje);
             }
             else{
                 JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
@@ -303,6 +322,7 @@ public class JFCliente extends javax.swing.JFrame {
             String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
                 JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
+                this.jLstMensajesEnviados.add(this, Destinatario + "->: " + Mensaje);
             }
             else{
                 JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
@@ -350,7 +370,7 @@ public class JFCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnConectarce;
     private javax.swing.JButton btnEnviarMensaje;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jLstMensajesEnviados;
     private javax.swing.JList<String> jLstUsuariosConectados;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -538,14 +558,14 @@ public class JFCliente extends javax.swing.JFrame {
      * @return the jList1
      */
     public javax.swing.JList<String> getjList1() {
-        return jList1;
+        return jLstMensajesEnviados;
     }
 
     /**
      * @param jList1 the jList1 to set
      */
     public void setjList1(javax.swing.JList<String> jList1) {
-        this.jList1 = jList1;
+        this.jLstMensajesEnviados = jList1;
     }
 
     /**
