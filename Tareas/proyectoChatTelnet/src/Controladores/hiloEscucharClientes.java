@@ -30,7 +30,11 @@ public class hiloEscucharClientes implements Runnable{
    private PrintWriter theOut;
    private BufferedReader theIn;
    private JFCliente cliente;
-
+   
+   private int numeroConectadosActual = 0;
+   
+   
+   
     public hiloEscucharClientes(Socket SoketAnalisis, JList ListaMostrar , JFCliente cliente){
         
         try {
@@ -60,45 +64,46 @@ public class hiloEscucharClientes implements Runnable{
     public void setSoketAnalisis(Socket SoketAnalisis) {
         this.SoketAnalisis = SoketAnalisis;
     }
-   
-   
  
     @Override
     public void run() {
         
-        this.getTheOut().println("GETUSERS");
-           
-       try {
-          String Datos = this.getTheIn().readLine();
-          // " id:nombre ; id nombre"
-           System.out.println(Datos);
-           Datos = Datos.substring(22);
-           System.out.println(Datos);
-          String [] a = Datos.split(";");
-          DefaultListModel modelo = new DefaultListModel();
-          String noRepetidos = "";
-           for (int i = 0; i < a.length; i++) {
-               String[]  b = a[i].split(" ");
-               if(!noRepetidos.contains(b[1])){
-                    modelo.addElement(b[1]);
-                    noRepetidos = noRepetidos + b[1];
-               }
-              
-              // System.out.println(b[1]);
-           } 
-           this.ListaMostrar.setModel(modelo);
+        while(true){
+           agregarLista();
+        }
+        
+        
+    }
+    
+    private void agregarLista(){
+       try { 
+          this.theOut.println("NUMOFUSERS");
+          String Res = this.theIn.readLine().substring(23);
+          int temp = Integer.valueOf(Res);
+          if(this.numeroConectadosActual != temp){
+                this.getTheOut().println("GETUSERS");  
+                String Datos = this.getTheIn().readLine();
+                // " id:nombre ; id nombre"
+//                System.out.println(Datos);
+                Datos = Datos.substring(22);
+//                System.out.println(Datos);
+                String [] a = Datos.split(";");
+                DefaultListModel modelo = new DefaultListModel();
+                String noRepetidos = "";
+                 for (int i = 0; i < a.length; i++) {
+                     String[]  b = a[i].split(" ");
+                     if(!noRepetidos.contains(b[1])){
+                         modelo.addElement(b[1]);
+                         noRepetidos = noRepetidos + b[1];    
+                     } 
+                 }
+                 this.numeroConectadosActual = a.length;
+                 this.ListaMostrar.setModel(modelo);
+          }  
        } catch (IOException ex) {
            Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
        }
-           
-           
-           
-     
-       
-        
-        
-                
-        
+    
     }
 
     /**

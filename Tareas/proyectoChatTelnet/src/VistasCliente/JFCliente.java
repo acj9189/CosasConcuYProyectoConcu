@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,6 +36,8 @@ public class JFCliente extends javax.swing.JFrame {
     
     private boolean seleUsuEnviar = false;
     private String usuAEnviar = "";
+    
+     DefaultListModel modelo = new DefaultListModel();
     
     
     public JFCliente() {
@@ -306,8 +309,12 @@ public class JFCliente extends javax.swing.JFrame {
             this.getTheOut().println("SENDALL " + Mensaje);
             String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
-                JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito");
-                this.jLstMensajesEnviados.add(this, "->: " + Mensaje);
+                JOptionPane.showMessageDialog(this, "Mensaje enviado con exito");
+                this.modelo.addElement("->: " + Mensaje);
+                this.jLstMensajesEnviados.setModel(modelo);
+                //this.jLstMensajesEnviados.add(this, "->: " + Mensaje);
+                
+                
             }
             else{
                 JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
@@ -322,7 +329,7 @@ public class JFCliente extends javax.swing.JFrame {
             this.getTheOut().println("SEND " + Destinatario + " " + Mensaje);
             String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
-                JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
+                JOptionPane.showMessageDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
                 this.jLstMensajesEnviados.add(this, Destinatario + "->: " + Mensaje);
             }
             else{
