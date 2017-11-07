@@ -248,16 +248,15 @@ public class JFCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConectarceMouseClicked
 
     private void btnEnviarMensajeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeMouseClicked
+       String Mensaje = this.txtEnviarMensaje.getText();
        int dialogButton = JOptionPane.YES_NO_OPTION;
        int dialogResult = JOptionPane.showConfirmDialog (null, "Desea a enviar a todos los usuarios conectados ?","Warning",dialogButton);
        if(dialogResult == JOptionPane.YES_OPTION){
-           String Mensaje = this.txtEnviarMensaje.getText();
            sendAll(Mensaje);
        }
        else{
-          JOptionPane.showInputDialog(this, "Debio de seleccionar al usuario que quiere enviarle");
-          
-       
+           JOptionPane.showInputDialog(this, "Debio previamnte seleccionar al usuario que quiere enviarle el mensaje");
+           sendPersonal(Mensaje , this.usuAEnviar);
        }
         
         
@@ -292,19 +291,25 @@ public class JFCliente extends javax.swing.JFrame {
             }
             else{
                 JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
-            
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }
+    
+    private void sendPersonal(String Mensaje, String Destinatario){
+        try {
+            this.theOut.print("SEND " + Destinatario + " " + Mensaje);
+            String res = this.theIn.readLine();
+            if(res.startsWith("100")){
+                JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
+            }
+            else{
+                JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
             }
         } catch (IOException ex) {
             Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
-        
-    
-    }
-    
-    private void sendPersonal(String Mensaje, String Destinatario){
-    
     }
     /**
      * @param args the command line arguments
