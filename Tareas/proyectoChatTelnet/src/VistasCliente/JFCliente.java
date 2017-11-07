@@ -26,6 +26,7 @@ public class JFCliente extends javax.swing.JFrame {
      */
     
     private hiloEscucharClientes HiLoClientes;
+    private hiloEscucharMensajes HiloMensajes;
     private Socket socketConeccion;
     private JFCliente inCliente;
     private String nombreUsuario;
@@ -84,7 +85,7 @@ public class JFCliente extends javax.swing.JFrame {
 
         label3.setText("Ingrese el Host");
 
-        label4.setText("Mensajes Recibidos");
+        label4.setText("Mensajes Enviados y Recibidos");
 
         jLstMensajesEnviados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -232,9 +233,16 @@ public class JFCliente extends javax.swing.JFrame {
                 //System.err.println("REDLINE... "+ Res);
                 if(Res.startsWith("100")){
                     JOptionPane.showMessageDialog(this, "Usted se ha conectado con exito al servidor");
+                   
                     this.setHiLoClientes(new hiloEscucharClientes(this.getSocketConeccion(), this.getjLstUsuariosConectados(), this));
                     Thread Hilo = new Thread(this.getHiLoClientes());
                     Hilo.start();  
+                    
+                    this.HiloMensajes = new hiloEscucharMensajes(this.getSocketConeccion(), this.jLstMensajesEnviados, this);
+                    Thread Hilo2 = new Thread(this.HiloMensajes);
+                    Hilo2.start();
+                    
+                    
                     this.getTxtName().setEditable(false);
                     this.getBtnConectarce().setEnabled(false);
                 }

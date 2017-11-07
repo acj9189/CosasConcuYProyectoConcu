@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
 /**
@@ -27,6 +28,8 @@ public class hiloEscucharMensajes implements Runnable{
    private PrintWriter theOut;
    private BufferedReader theIn;
    private JFCliente cliente;
+   
+   DefaultListModel modelo = new DefaultListModel();
    
    public hiloEscucharMensajes(Socket SoketAnalisis, JList ListaMostrar , JFCliente cliente){
        
@@ -99,5 +102,27 @@ public class hiloEscucharMensajes implements Runnable{
      @Override
     public void run() {
         
+        while(true){
+            agregarListaEntradaSalida();
+        }
+        
     }
+    
+    private void agregarListaEntradaSalida(){
+          
+           try {
+               String Datos = this.getTheIn().readLine();
+               if(!modelo.contains(Datos)){
+                   this.modelo.addElement(Datos);
+                   this.ListaMostrar.setModel(this.modelo);
+               }
+               
+           } catch (IOException ex) {
+               Logger.getLogger(hiloEscucharMensajes.class.getName()).log(Level.SEVERE, null, ex);
+           }
+
+       
+    }
+    
+    
 }

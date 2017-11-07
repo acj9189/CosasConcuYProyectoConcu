@@ -141,7 +141,7 @@
     </Component>
     <Component class="java.awt.Label" name="label4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mensajes Recibidos"/>
+        <Property name="text" type="java.lang.String" value="Mensajes Enviados y Recibidos"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
