@@ -26,12 +26,12 @@ public class JFCliente extends javax.swing.JFrame {
     
     private hiloEscucharClientes HiLoClientes;
     private Socket socketConeccion;
-    public JFCliente inCliente;
+    private JFCliente inCliente;
     private String nombreUsuario;
     
     private PrintWriter theOut;
     private BufferedReader theIn;
-    public int cont = 0;
+    private int cont = 0;
     
     private boolean seleUsuEnviar = false;
     private String usuAEnviar = "";
@@ -204,40 +204,40 @@ public class JFCliente extends javax.swing.JFrame {
       
         try {
             
-            String ip = this.txtHost.getText();
-            int puerto = Integer.valueOf(this.txtPort.getText());
-            this.nombreUsuario = this.txtName.getText();
+            String ip = this.getTxtHost().getText();
+            int puerto = Integer.valueOf(this.getTxtPort().getText());
+            this.setNombreUsuario(this.getTxtName().getText());
             
-            if(this.cont == 0){
-                this.socketConeccion = new Socket(ip, puerto);
-                this.theOut = new PrintWriter(this.socketConeccion.getOutputStream(),true);
-                this.theIn = new BufferedReader(new InputStreamReader(this.socketConeccion.getInputStream(), "UTF-8"));
+            if(this.getCont() == 0){
+                this.setSocketConeccion(new Socket(ip, puerto));
+                this.setTheOut(new PrintWriter(this.getSocketConeccion().getOutputStream(), true));
+                this.setTheIn(new BufferedReader(new InputStreamReader(this.getSocketConeccion().getInputStream(), "UTF-8")));
             }
-            if(this.cont < 3){
-                this.theOut.print("REGISTER " + this.nombreUsuario );
-                this.cont++;
-                String Res = this.theIn.readLine();
+            if(this.getCont() < 3){
+                this.getTheOut().print("REGISTER " + this.getNombreUsuario() );
+                this.setCont(this.getCont() + 1);
+                String Res = this.getTheIn().readLine();
                 if(Res.startsWith("100")){
                     JOptionPane.showInputDialog(this, "Usted se ha conectado con exito al servidor");
-                    this.HiLoClientes = new hiloEscucharClientes(this.socketConeccion, this.jLstUsuariosConectados, this);
-                    Thread Hilo = new Thread(this.HiLoClientes);
+                    this.setHiLoClientes(new hiloEscucharClientes(this.getSocketConeccion(), this.getjLstUsuariosConectados(), this));
+                    Thread Hilo = new Thread(this.getHiLoClientes());
                     Hilo.start();  
-                    this.txtName.setEditable(false);
-                    this.btnConectarce.setEnabled(false);
+                    this.getTxtName().setEditable(false);
+                    this.getBtnConectarce().setEnabled(false);
                 }
                 else{
-                    if(this.cont == 3){
+                    if(this.getCont() == 3){
                         JOptionPane.showInputDialog(this, "El numero maximo de intentos para el nombre de usuario es 3");
-                        this.txtName.setText("");
-                        this.socketConeccion = null; 
-                        this.cont = 0;
-                        this.nombreUsuario = "";
-                        this.theIn = null;
-                        this.theOut = null;
+                        this.getTxtName().setText("");
+                        this.setSocketConeccion(null); 
+                        this.setCont(0);
+                        this.setNombreUsuario("");
+                        this.setTheIn(null);
+                        this.setTheOut(null);
                     }
                     else{
                         JOptionPane.showInputDialog(this, "Porfavor Ingrece un nuevo nombre de usuario que el que escribio ya existe");
-                        this.txtName.setText("");
+                        this.getTxtName().setText("");
                     }
                 }
             }  
@@ -248,7 +248,7 @@ public class JFCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConectarceMouseClicked
 
     private void btnEnviarMensajeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeMouseClicked
-       String Mensaje = this.txtEnviarMensaje.getText();
+       String Mensaje = this.getTxtEnviarMensaje().getText();
        int dialogButton = JOptionPane.YES_NO_OPTION;
        int dialogResult = JOptionPane.showConfirmDialog (null, "Desea a enviar a todos los usuarios conectados ?","Warning",dialogButton);
        if(dialogResult == JOptionPane.YES_OPTION){
@@ -256,7 +256,7 @@ public class JFCliente extends javax.swing.JFrame {
        }
        else{
            JOptionPane.showInputDialog(this, "Debio previamnte seleccionar al usuario que quiere enviarle el mensaje");
-           sendPersonal(Mensaje , this.usuAEnviar);
+           sendPersonal(Mensaje , this.getUsuAEnviar());
        }
         
         
@@ -268,12 +268,12 @@ public class JFCliente extends javax.swing.JFrame {
 
     private void jLstUsuariosConectadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosValueChanged
         
-        this.usuAEnviar = this.jLstUsuariosConectados.getSelectedValue();
+        this.setUsuAEnviar(this.getjLstUsuariosConectados().getSelectedValue());
         if(!this.usuAEnviar.equals(this.nombreUsuario)){
-            this.seleUsuEnviar = true;
+            this.setSeleUsuEnviar(true);
         }
         else{
-            this.usuAEnviar = "";
+            this.setUsuAEnviar("");
         
         }
         
@@ -284,8 +284,8 @@ public class JFCliente extends javax.swing.JFrame {
     private void sendAll(String Mensaje){
         try {
             System.out.println("Entro por enviar a todos..");
-            this.theOut.print("SENDALL " + Mensaje);
-            String res = this.theIn.readLine();
+            this.getTheOut().print("SENDALL " + Mensaje);
+            String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
                 JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito");
             }
@@ -299,8 +299,8 @@ public class JFCliente extends javax.swing.JFrame {
     
     private void sendPersonal(String Mensaje, String Destinatario){
         try {
-            this.theOut.print("SEND " + Destinatario + " " + Mensaje);
-            String res = this.theIn.readLine();
+            this.getTheOut().print("SEND " + Destinatario + " " + Mensaje);
+            String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
                 JOptionPane.showConfirmDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
             }
@@ -365,4 +365,368 @@ public class JFCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPort;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the HiLoClientes
+     */
+    public hiloEscucharClientes getHiLoClientes() {
+        return HiLoClientes;
+    }
+
+    /**
+     * @param HiLoClientes the HiLoClientes to set
+     */
+    public void setHiLoClientes(hiloEscucharClientes HiLoClientes) {
+        this.HiLoClientes = HiLoClientes;
+    }
+
+    /**
+     * @return the socketConeccion
+     */
+    public Socket getSocketConeccion() {
+        return socketConeccion;
+    }
+
+    /**
+     * @param socketConeccion the socketConeccion to set
+     */
+    public void setSocketConeccion(Socket socketConeccion) {
+        this.socketConeccion = socketConeccion;
+    }
+
+    /**
+     * @return the inCliente
+     */
+    public JFCliente getInCliente() {
+        return inCliente;
+    }
+
+    /**
+     * @param inCliente the inCliente to set
+     */
+    public void setInCliente(JFCliente inCliente) {
+        this.inCliente = inCliente;
+    }
+
+    /**
+     * @return the nombreUsuario
+     */
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    /**
+     * @param nombreUsuario the nombreUsuario to set
+     */
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    /**
+     * @return the theOut
+     */
+    public PrintWriter getTheOut() {
+        return theOut;
+    }
+
+    /**
+     * @param theOut the theOut to set
+     */
+    public void setTheOut(PrintWriter theOut) {
+        this.theOut = theOut;
+    }
+
+    /**
+     * @return the theIn
+     */
+    public BufferedReader getTheIn() {
+        return theIn;
+    }
+
+    /**
+     * @param theIn the theIn to set
+     */
+    public void setTheIn(BufferedReader theIn) {
+        this.theIn = theIn;
+    }
+
+    /**
+     * @return the cont
+     */
+    public int getCont() {
+        return cont;
+    }
+
+    /**
+     * @param cont the cont to set
+     */
+    public void setCont(int cont) {
+        this.cont = cont;
+    }
+
+    /**
+     * @return the seleUsuEnviar
+     */
+    public boolean isSeleUsuEnviar() {
+        return seleUsuEnviar;
+    }
+
+    /**
+     * @param seleUsuEnviar the seleUsuEnviar to set
+     */
+    public void setSeleUsuEnviar(boolean seleUsuEnviar) {
+        this.seleUsuEnviar = seleUsuEnviar;
+    }
+
+    /**
+     * @return the usuAEnviar
+     */
+    public String getUsuAEnviar() {
+        return usuAEnviar;
+    }
+
+    /**
+     * @param usuAEnviar the usuAEnviar to set
+     */
+    public void setUsuAEnviar(String usuAEnviar) {
+        this.usuAEnviar = usuAEnviar;
+    }
+
+    /**
+     * @return the btnConectarce
+     */
+    public javax.swing.JButton getBtnConectarce() {
+        return btnConectarce;
+    }
+
+    /**
+     * @param btnConectarce the btnConectarce to set
+     */
+    public void setBtnConectarce(javax.swing.JButton btnConectarce) {
+        this.btnConectarce = btnConectarce;
+    }
+
+    /**
+     * @return the btnEnviarMensaje
+     */
+    public javax.swing.JButton getBtnEnviarMensaje() {
+        return btnEnviarMensaje;
+    }
+
+    /**
+     * @param btnEnviarMensaje the btnEnviarMensaje to set
+     */
+    public void setBtnEnviarMensaje(javax.swing.JButton btnEnviarMensaje) {
+        this.btnEnviarMensaje = btnEnviarMensaje;
+    }
+
+    /**
+     * @return the jLabel1
+     */
+    public javax.swing.JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    /**
+     * @param jLabel1 the jLabel1 to set
+     */
+    public void setjLabel1(javax.swing.JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    /**
+     * @return the jList1
+     */
+    public javax.swing.JList<String> getjList1() {
+        return jList1;
+    }
+
+    /**
+     * @param jList1 the jList1 to set
+     */
+    public void setjList1(javax.swing.JList<String> jList1) {
+        this.jList1 = jList1;
+    }
+
+    /**
+     * @return the jLstUsuariosConectados
+     */
+    public javax.swing.JList<String> getjLstUsuariosConectados() {
+        return jLstUsuariosConectados;
+    }
+
+    /**
+     * @param jLstUsuariosConectados the jLstUsuariosConectados to set
+     */
+    public void setjLstUsuariosConectados(javax.swing.JList<String> jLstUsuariosConectados) {
+        this.jLstUsuariosConectados = jLstUsuariosConectados;
+    }
+
+    /**
+     * @return the jScrollPane1
+     */
+    public javax.swing.JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    /**
+     * @param jScrollPane1 the jScrollPane1 to set
+     */
+    public void setjScrollPane1(javax.swing.JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    /**
+     * @return the jScrollPane2
+     */
+    public javax.swing.JScrollPane getjScrollPane2() {
+        return jScrollPane2;
+    }
+
+    /**
+     * @param jScrollPane2 the jScrollPane2 to set
+     */
+    public void setjScrollPane2(javax.swing.JScrollPane jScrollPane2) {
+        this.jScrollPane2 = jScrollPane2;
+    }
+
+    /**
+     * @return the label1
+     */
+    public java.awt.Label getLabel1() {
+        return label1;
+    }
+
+    /**
+     * @param label1 the label1 to set
+     */
+    public void setLabel1(java.awt.Label label1) {
+        this.label1 = label1;
+    }
+
+    /**
+     * @return the label2
+     */
+    public java.awt.Label getLabel2() {
+        return label2;
+    }
+
+    /**
+     * @param label2 the label2 to set
+     */
+    public void setLabel2(java.awt.Label label2) {
+        this.label2 = label2;
+    }
+
+    /**
+     * @return the label3
+     */
+    public java.awt.Label getLabel3() {
+        return label3;
+    }
+
+    /**
+     * @param label3 the label3 to set
+     */
+    public void setLabel3(java.awt.Label label3) {
+        this.label3 = label3;
+    }
+
+    /**
+     * @return the label4
+     */
+    public java.awt.Label getLabel4() {
+        return label4;
+    }
+
+    /**
+     * @param label4 the label4 to set
+     */
+    public void setLabel4(java.awt.Label label4) {
+        this.label4 = label4;
+    }
+
+    /**
+     * @return the label5
+     */
+    public java.awt.Label getLabel5() {
+        return label5;
+    }
+
+    /**
+     * @param label5 the label5 to set
+     */
+    public void setLabel5(java.awt.Label label5) {
+        this.label5 = label5;
+    }
+
+    /**
+     * @return the label6
+     */
+    public java.awt.Label getLabel6() {
+        return label6;
+    }
+
+    /**
+     * @param label6 the label6 to set
+     */
+    public void setLabel6(java.awt.Label label6) {
+        this.label6 = label6;
+    }
+
+    /**
+     * @return the txtEnviarMensaje
+     */
+    public javax.swing.JTextField getTxtEnviarMensaje() {
+        return txtEnviarMensaje;
+    }
+
+    /**
+     * @param txtEnviarMensaje the txtEnviarMensaje to set
+     */
+    public void setTxtEnviarMensaje(javax.swing.JTextField txtEnviarMensaje) {
+        this.txtEnviarMensaje = txtEnviarMensaje;
+    }
+
+    /**
+     * @return the txtHost
+     */
+    public javax.swing.JTextField getTxtHost() {
+        return txtHost;
+    }
+
+    /**
+     * @param txtHost the txtHost to set
+     */
+    public void setTxtHost(javax.swing.JTextField txtHost) {
+        this.txtHost = txtHost;
+    }
+
+    /**
+     * @return the txtName
+     */
+    public javax.swing.JTextField getTxtName() {
+        return txtName;
+    }
+
+    /**
+     * @param txtName the txtName to set
+     */
+    public void setTxtName(javax.swing.JTextField txtName) {
+        this.txtName = txtName;
+    }
+
+    /**
+     * @return the txtPort
+     */
+    public javax.swing.JTextField getTxtPort() {
+        return txtPort;
+    }
+
+    /**
+     * @param txtPort the txtPort to set
+     */
+    public void setTxtPort(javax.swing.JTextField txtPort) {
+        this.txtPort = txtPort;
+    }
 }

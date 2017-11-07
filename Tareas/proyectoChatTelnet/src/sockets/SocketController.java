@@ -30,14 +30,14 @@ public class SocketController implements Runnable {
     private ComandProcessor theCommandProcessor;
     private String name;
     private boolean register;
-    public final HashMap<String,String> listMsg = new HashMap<>();
+    private HashMap<String,String> listMsg = new HashMap<>();
 
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.setId((Integer) id);
     }
 
     public String getName() {
@@ -52,11 +52,11 @@ public class SocketController implements Runnable {
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
         String time = format.format(new Date()).replace("-", "").replace(":", "").replace(" ", "");
         System.out.println(time);
-        time = id+time;
+        time = getId()+time;
         for (int i = time.length(); i < 17; i++) {
             time = "0"+time;
         }
-        System.err.println("idMessage->"+time+" generado por "+name);
+        System.err.println("idMessage->"+time+" generado por "+getName());
         return time;
     }
     
@@ -66,8 +66,8 @@ public class SocketController implements Runnable {
         theCommandProcessor = new ComandProcessor(this);
         register = false;
         try {
-            theOut = new PrintWriter(theSocket.getOutputStream(), true);
-            theIn = new BufferedReader(new InputStreamReader(theSocket.getInputStream(), "UTF-8"));
+            theOut = new PrintWriter(getTheSocket().getOutputStream(), true);
+            theIn = new BufferedReader(new InputStreamReader(getTheSocket().getInputStream(), "UTF-8"));
         } catch (IOException ex) {
             Logger.getLogger(SocketController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,21 +77,21 @@ public class SocketController implements Runnable {
 
     public void close() {
         try {
-            theOut.close();
-            theIn.close();
-            theSocket.close();
+            getTheOut().close();
+            getTheIn().close();
+            getTheSocket().close();
         } catch (Exception e) {
         }
     }
 
     public void writeText(String text) {
-        theOut.println(text);
+        getTheOut().println(text);
     }
 
     public String readText() {
         String text = null;
         try {
-            text = theIn.readLine();
+            text = getTheIn().readLine();
         } catch (IOException ex) {
             Logger.getLogger(SocketController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,18 +109,18 @@ public class SocketController implements Runnable {
             if (command != null) {
                 if (command.trim().toUpperCase().equals("QUIT")) {
                     quit = true;
-                    theCommandProcessor.remove(this);
+                    getTheCommandProcessor().remove(this);
                     close();
-                } else if (!register) {
+                } else if (!isRegister()) {
                     timeout--;
                     if (command.toUpperCase().startsWith("REGISTER ")) {
-                        name = command.substring(9).toUpperCase();
-                        if (theCommandProcessor.checkName(name)) {
+                        setName(command.substring(9).toUpperCase());
+                        if (getTheCommandProcessor().checkName(getName())) {
                             writeText("100 USUARIO REGISTRADO CON EXITO");
                             timeout++;
                             clients.add(this);
-                            this.id = clients.size();
-                            register = true;
+                            this.setId((Integer) clients.size());
+                            setRegister(true);
                         } else {
                             writeText("200 USUARIO NO SE PUDO REGISTRAR NICKNAME YA EN USO");
                         }
@@ -130,17 +130,122 @@ public class SocketController implements Runnable {
                     if (timeout < 1) {
                         writeText("200 NUMERO DE INTENTOS SUPERADOS");
                         quit = true;
-                        theCommandProcessor.remove(this);
+                        getTheCommandProcessor().remove(this);
                         close();
                     }
                 } else {
-                    writeText(theCommandProcessor.responseCommand(this, command));
+                    writeText(getTheCommandProcessor().responseCommand(this, command));
                 }
             } else {
-                theCommandProcessor.remove(this);
+                getTheCommandProcessor().remove(this);
                 quit = true;
             }
         }
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the theThread
+     */
+    public Thread getTheThread() {
+        return theThread;
+    }
+
+    /**
+     * @param theThread the theThread to set
+     */
+    public void setTheThread(Thread theThread) {
+        this.theThread = theThread;
+    }
+
+    /**
+     * @return the theSocket
+     */
+    public Socket getTheSocket() {
+        return theSocket;
+    }
+
+    /**
+     * @param theSocket the theSocket to set
+     */
+    public void setTheSocket(Socket theSocket) {
+        this.theSocket = theSocket;
+    }
+
+    /**
+     * @return the theOut
+     */
+    public PrintWriter getTheOut() {
+        return theOut;
+    }
+
+    /**
+     * @param theOut the theOut to set
+     */
+    public void setTheOut(PrintWriter theOut) {
+        this.theOut = theOut;
+    }
+
+    /**
+     * @return the theIn
+     */
+    public BufferedReader getTheIn() {
+        return theIn;
+    }
+
+    /**
+     * @param theIn the theIn to set
+     */
+    public void setTheIn(BufferedReader theIn) {
+        this.theIn = theIn;
+    }
+
+    /**
+     * @return the theCommandProcessor
+     */
+    public ComandProcessor getTheCommandProcessor() {
+        return theCommandProcessor;
+    }
+
+    /**
+     * @param theCommandProcessor the theCommandProcessor to set
+     */
+    public void setTheCommandProcessor(ComandProcessor theCommandProcessor) {
+        this.theCommandProcessor = theCommandProcessor;
+    }
+
+    /**
+     * @return the register
+     */
+    public boolean isRegister() {
+        return register;
+    }
+
+    /**
+     * @param register the register to set
+     */
+    public void setRegister(boolean register) {
+        this.register = register;
+    }
+
+    /**
+     * @return the listMsg
+     */
+    public HashMap<String,String> getListMsg() {
+        return listMsg;
+    }
+
+    /**
+     * @param listMsg the listMsg to set
+     */
+    public void setListMsg(HashMap<String,String> listMsg) {
+        this.listMsg = listMsg;
     }
 
 }

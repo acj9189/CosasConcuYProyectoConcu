@@ -36,14 +36,12 @@ public class hiloEscucharClientes implements Runnable{
         try {
             this.SoketAnalisis = SoketAnalisis;
             this.ListaMostrar = ListaMostrar;
-            this.theOut = new PrintWriter(this.SoketAnalisis.getOutputStream(),true);
-            this.theIn = new BufferedReader(new InputStreamReader(this.SoketAnalisis.getInputStream(), "UTF-8"));
+            this.theOut = new PrintWriter(this.getSoketAnalisis().getOutputStream(),true);
+            this.theIn = new BufferedReader(new InputStreamReader(this.getSoketAnalisis().getInputStream(), "UTF-8"));
             this.cliente = cliente;
        } catch (IOException ex) {
            Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
-       }
-        this.cliente = cliente;
-        
+       }   
     }
 
     public JList getListaMostrar() {
@@ -68,16 +66,16 @@ public class hiloEscucharClientes implements Runnable{
     @Override
     public void run() {
         String Datos="";
-           this.theOut.println("GETUSERS");
+        this.getTheOut().println("GETUSERS");
            
        try {
-           Datos =  this.theIn.readLine();
+           Datos =  this.getTheIn().readLine();
           // " id:nombre ; id nombre"
           String [] a = Datos.split(";");
           
            for (int i = 0; i < a.length; i++) {
                String[]  b = a[i].split(" ");
-               this.ListaMostrar.add(b[1],this.cliente);
+               this.getListaMostrar().add(b[1], this.getCliente());
            }  
        } catch (IOException ex) {
            Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,6 +89,48 @@ public class hiloEscucharClientes implements Runnable{
         
                 
         
+    }
+
+    /**
+     * @return the theOut
+     */
+    public PrintWriter getTheOut() {
+        return theOut;
+    }
+
+    /**
+     * @param theOut the theOut to set
+     */
+    public void setTheOut(PrintWriter theOut) {
+        this.theOut = theOut;
+    }
+
+    /**
+     * @return the theIn
+     */
+    public BufferedReader getTheIn() {
+        return theIn;
+    }
+
+    /**
+     * @param theIn the theIn to set
+     */
+    public void setTheIn(BufferedReader theIn) {
+        this.theIn = theIn;
+    }
+
+    /**
+     * @return the cliente
+     */
+    public JFCliente getCliente() {
+        return cliente;
+    }
+
+    /**
+     * @param cliente the cliente to set
+     */
+    public void setCliente(JFCliente cliente) {
+        this.cliente = cliente;
     }
     
 }

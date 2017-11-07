@@ -25,7 +25,7 @@ public class ComandProcessor {
     public boolean writeText(String name, String text) {
         for (SocketController client : clients) {
             if (client.getName().equalsIgnoreCase(name)) {
-                client.listMsg.put(socket.getIdMessage(), text);
+                client.getListMsg().put(getSocket().getIdMessage(), text);
                 client.writeText(text);
                 return true;
             }
@@ -35,8 +35,8 @@ public class ComandProcessor {
 
     public void removeMessage(String idMessage) {
         for (SocketController client : clients) {
-            if (client.listMsg.containsKey(idMessage)) {
-                client.listMsg.remove(idMessage);
+            if (client.getListMsg().containsKey(idMessage)) {
+                client.getListMsg().remove(idMessage);
             }
         }
     }
@@ -58,7 +58,7 @@ public class ComandProcessor {
         if (clients.size() > 1) {
             for (SocketController client : clients) {
                 if (sender != client) {
-                    client.writeText(socket.getName() + "-> " + text);
+                    client.writeText(getSocket().getName() + "-> " + text);
                 }
             }
             return true;
@@ -95,7 +95,7 @@ public class ComandProcessor {
         } else if (aCommand.startsWith("SEND ")) {
             String userName = aCommand.substring(5).substring(0, aCommand.substring(5).indexOf(" "));
             String msg = aCommand.substring(5 + userName.length());
-            if (writeText(userName, socket.getName() + "->" + msg)) {
+            if (writeText(userName, getSocket().getName() + "->" + msg)) {
                 response = "100 MENSAJE ENVIADO CON EXITO";
             } else {
                 response = "200 MENSAJE SIN ENVIAR";
@@ -107,6 +107,20 @@ public class ComandProcessor {
         }
 
         return response;
+    }
+
+    /**
+     * @return the socket
+     */
+    public SocketController getSocket() {
+        return socket;
+    }
+
+    /**
+     * @param socket the socket to set
+     */
+    public void setSocket(SocketController socket) {
+        this.socket = socket;
     }
 
 }
