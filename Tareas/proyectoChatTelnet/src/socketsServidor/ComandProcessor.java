@@ -79,8 +79,9 @@ public class ComandProcessor {
     public String responseCommand(SocketController sender, String aCommand) {
         aCommand = aCommand.trim().toUpperCase();
         String response = "200 COMANDO INVALIDO";
-
+        System.out.println(aCommand);
         if (aCommand.startsWith("SENDALL ")) {
+            
             if (writeTextAll(sender, aCommand.substring(8))) {
                 response = "103 MENSAJE ENVIADO A TODOS CON EXITO";
             } else {

@@ -157,18 +157,15 @@ public class JFCliente extends javax.swing.JFrame {
                             .addComponent(btnEnviarMensaje))
                         .addContainerGap(402, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtEnviarMensaje, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtEnviarMensaje, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)))
                         .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(30, 30, 30)
-                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(627, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +181,9 @@ public class JFCliente extends javax.swing.JFrame {
                             .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
+                .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConectarce)
@@ -203,11 +202,6 @@ public class JFCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEnviarMensaje)
                 .addGap(28, 28, 28))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(110, 110, 110)
-                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(588, Short.MAX_VALUE)))
         );
 
         pack();
@@ -222,30 +216,35 @@ public class JFCliente extends javax.swing.JFrame {
             this.setNombreUsuario(this.getTxtName().getText());
             
             if(this.getCont() == 0){
-                try {
-                    this.semaphore.acquire();
+//                try {
+//                    this.semaphore.acquire();
                     this.setSocketConeccion(new Socket(ip, puerto));
                     this.setTheOut(new PrintWriter(this.getSocketConeccion().getOutputStream(), true));
                     this.setTheIn(new BufferedReader(new InputStreamReader(this.getSocketConeccion().getInputStream(), "UTF-8")));
-                    this.semaphore.release();
-                }catch (InterruptedException ex) {
-                    Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                    this.semaphore.release();
+//                }catch (InterruptedException ex) {
+//                    Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
             if(this.getCont() < 3){
                 String ResEs = this.getTheIn().readLine();
                // System.out.println("REDLINEI... "+ ResEs);
-                this.getTheOut().println("REGISTER " + this.getNombreUsuario() );
+                this.getTheOut().println("REGISTER " + this.getNombreUsuario());
                 this.setCont(this.getCont() + 1);
                 String Res = this.getTheIn().readLine();
-                System.err.println("REDLINE... "+ Res);
+               // System.err.println("REGISTER... "+ Res);
+//                this.getTheOut().println("NUMOFUSERS");
                 if(Res.startsWith("100")){
                     JOptionPane.showMessageDialog(this, "Usted se ha conectado con exito al servidor");
-                   
-//                    this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados, this));
+//                    this.getTheOut().println("NUMOFUSERS");
+//                    String res = this.getTheIn().readLine();
+//                    System.out.println(Res );
+                    
+                    this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados, this));
                     this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados));
                     Thread Hilo = new Thread(this.getHiLoClientes());
                     Hilo.start();
+                    
 //                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.theOut, this.theIn, this.jLstMensajesEnviados);
 //                    Thread Hilo2 = new Thread(this.HiloMensajes);
 //                    Hilo2.start();
@@ -321,19 +320,23 @@ public class JFCliente extends javax.swing.JFrame {
     
     private void sendAll(String Mensaje){
         try {
-            System.out.println("Entro por enviar a todos..");
-            this.getTheOut().println("SENDALL " + Mensaje);
+            String Comando = "SENDALL " + Mensaje;
+            this.getTheOut().println(Comando);
+            System.out.println("Entro por enviar a todos.." + Comando);
             String res = this.getTheIn().readLine();
-            if(res.startsWith("100")){
+            System.out.println("Res: sendall "+ res);
+           
+            if(res.startsWith("103")){
+                System.err.println("Respueata " + res);
                 JOptionPane.showMessageDialog(this, "Mensaje enviado con exito");
                 this.getModelo().addElement("->: " + Mensaje);
                 this.getjLstMensajesEnviados().setModel(getModelo());
-                //this.jLstMensajesEnviados.add(this, "->: " + Mensaje);
-                
-                
+                //this.jLstMensajesEnviados.add(this, "->: " + Mensaje);   
             }
-            else{
-                JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
+            else{if(res.startsWith("203")){
+                JOptionPane.showMessageDialog(this, "Mensaje No se envio  ");
+            }
+                
             }
         } catch (IOException ex) {
             Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);

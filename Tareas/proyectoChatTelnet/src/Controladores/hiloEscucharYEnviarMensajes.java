@@ -110,7 +110,7 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
           
            try {
                String Datos = this.getTheIn().readLine();
-               System.err.println("Observacion de errores "+ Datos);
+              // System.err.println("Observacion de errores "+ Datos);
 //               if(Datos.startsWith("103")){
 //                    String Datos2 = this.getTheIn().readLine();
 //                    if(!modelo.contains(Datos)){
