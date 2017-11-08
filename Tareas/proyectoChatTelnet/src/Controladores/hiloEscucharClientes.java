@@ -38,17 +38,22 @@ public class hiloEscucharClientes implements Runnable{
    
    
    
-    public hiloEscucharClientes(Socket SoketAnalisis, JList ListaMostrar , JFCliente cliente){
+    public hiloEscucharClientes(PrintWriter out, BufferedReader in,  JList<String> ListaMostrar, JFCliente cliente){
         
-        try {
-            this.SoketAnalisis = SoketAnalisis;
-            this.ListaMostrar = ListaMostrar;
-            this.theOut = new PrintWriter(this.getSoketAnalisis().getOutputStream(),true);
-            this.theIn = new BufferedReader(new InputStreamReader(this.getSoketAnalisis().getInputStream(), "UTF-8"));
-            this.cliente = cliente;
-       } catch (IOException ex) {
-           Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
-       }   
+        //this.SoketAnalisis = SoketAnalisis;
+        this.ListaMostrar = ListaMostrar;
+        this.theOut = out;
+        this.theIn = in;
+        this.cliente = cliente;
+    }
+    
+     public hiloEscucharClientes(PrintWriter out, BufferedReader in,  JList<String> ListaMostrar){
+        
+        //this.SoketAnalisis = SoketAnalisis;
+        this.ListaMostrar = ListaMostrar;
+        this.theOut = out;
+        this.theIn = in;
+      //  this.cliente = cliente;
     }
 
     public JList getListaMostrar() {
@@ -81,6 +86,7 @@ public class hiloEscucharClientes implements Runnable{
     public void run() {
         
         while(this.esperaBolean){
+          //  System.out.println("qqqq");
            agregarLista();
         }
         
@@ -91,6 +97,7 @@ public class hiloEscucharClientes implements Runnable{
        try { 
           this.theOut.println("NUMOFUSERS");
           String Res = this.theIn.readLine().substring(23);
+////           System.out.println(Res);
 //          String[] c = Res.split(":");
 //          int temp2 = (Integer.valueOf(c[0]));
           int temp = Integer.valueOf(Res);
@@ -107,7 +114,7 @@ public class hiloEscucharClientes implements Runnable{
                  for (int i = 0; i < a.length; i++) {
                      String[]  b = a[i].split(" ");
 //                     if(!noRepetidos.contains(b[1])){
-                       if(modelo.contains(b[1])){
+                       if(!modelo.contains(b[1])){
                          modelo.addElement(b[1]);
                          noRepetidos = noRepetidos + b[1];    
                      } 

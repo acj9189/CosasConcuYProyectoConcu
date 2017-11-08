@@ -118,7 +118,7 @@ public class SocketController implements Runnable {
                         
                         if (getTheCommandProcessor().checkName(getName())) {
                             
-                            writeText("100 USUARIO REGISTRADO CON EXITO");
+                            writeText("100 USUARIO REGISTRADO CON EXITO A: " + getName());
                             //System.out.println(getName());
                             timeout++;
                             clients.add(this);

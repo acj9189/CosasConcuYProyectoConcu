@@ -14,7 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-
+import java.util.concurrent.locks.*;
+import java.util.concurrent.Semaphore;
 /**
  *
  * @author Andrés
@@ -38,7 +39,8 @@ public class JFCliente extends javax.swing.JFrame {
     private boolean seleUsuEnviar = false;
     private String usuAEnviar = "";
     
-     private DefaultListModel modelo = new DefaultListModel();
+    private DefaultListModel modelo = new DefaultListModel();
+    final Semaphore semaphore = new Semaphore(1);
     
     
     public JFCliente() {
@@ -220,9 +222,15 @@ public class JFCliente extends javax.swing.JFrame {
             this.setNombreUsuario(this.getTxtName().getText());
             
             if(this.getCont() == 0){
-                this.setSocketConeccion(new Socket(ip, puerto));
-                this.setTheOut(new PrintWriter(this.getSocketConeccion().getOutputStream(), true));
-                this.setTheIn(new BufferedReader(new InputStreamReader(this.getSocketConeccion().getInputStream(), "UTF-8")));
+                try {
+                    this.semaphore.acquire();
+                    this.setSocketConeccion(new Socket(ip, puerto));
+                    this.setTheOut(new PrintWriter(this.getSocketConeccion().getOutputStream(), true));
+                    this.setTheIn(new BufferedReader(new InputStreamReader(this.getSocketConeccion().getInputStream(), "UTF-8")));
+                    this.semaphore.release();
+                }catch (InterruptedException ex) {
+                    Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             if(this.getCont() < 3){
                 String ResEs = this.getTheIn().readLine();
@@ -230,22 +238,17 @@ public class JFCliente extends javax.swing.JFrame {
                 this.getTheOut().println("REGISTER " + this.getNombreUsuario() );
                 this.setCont(this.getCont() + 1);
                 String Res = this.getTheIn().readLine();
-                //System.err.println("REDLINE... "+ Res);
+                System.err.println("REDLINE... "+ Res);
                 if(Res.startsWith("100")){
                     JOptionPane.showMessageDialog(this, "Usted se ha conectado con exito al servidor");
                    
-                    this.setHiLoClientes(new hiloEscucharClientes(this.getSocketConeccion(), this.getjLstUsuariosConectados(), this));
+//                    this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados, this));
+                    this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados));
                     Thread Hilo = new Thread(this.getHiLoClientes());
                     Hilo.start();
-                    try {
-                        Hilo.join();
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.getSocketConeccion(), this.jLstMensajesEnviados, this);
-                    Thread Hilo2 = new Thread(this.HiloMensajes);
-                    Hilo2.start();
+//                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.theOut, this.theIn, this.jLstMensajesEnviados);
+//                    Thread Hilo2 = new Thread(this.HiloMensajes);
+//                    Hilo2.start();
                     
                     
                     this.getTxtName().setEditable(false);

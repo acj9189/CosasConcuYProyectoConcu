@@ -31,17 +31,13 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
    
    DefaultListModel modelo = new DefaultListModel();
    
-   public hiloEscucharYEnviarMensajes(Socket SoketAnalisis, JList ListaMostrar , JFCliente cliente){
+   public hiloEscucharYEnviarMensajes(PrintWriter out, BufferedReader in,  JList ListaMostrar){
        
-        try {
-            this.SoketAnalisis = SoketAnalisis;
-            this.ListaMostrar = ListaMostrar;
-            this.theOut = new PrintWriter(this.getSoketAnalisis().getOutputStream(),true);
-            this.theIn = new BufferedReader(new InputStreamReader(this.getSoketAnalisis().getInputStream(), "UTF-8"));
-            this.cliente = cliente;
-       } catch (IOException ex) {
-           Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
-       }  
+       // this.SoketAnalisis = SoketAnalisis;
+       this.ListaMostrar = ListaMostrar;
+       this.theOut = out;
+       this.theIn = in;
+      // this.cliente = cliente;  
    
    }
 
