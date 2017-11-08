@@ -20,7 +20,7 @@ import javax.swing.JList;
  *
  * @author Andres
  */
-public class hiloEscucharMensajes implements Runnable{
+public class hiloEscucharYEnviarMensajes implements Runnable{
     
    private Socket SoketAnalisis;
    private JList<String> ListaMostrar;
@@ -31,7 +31,7 @@ public class hiloEscucharMensajes implements Runnable{
    
    DefaultListModel modelo = new DefaultListModel();
    
-   public hiloEscucharMensajes(Socket SoketAnalisis, JList ListaMostrar , JFCliente cliente){
+   public hiloEscucharYEnviarMensajes(Socket SoketAnalisis, JList ListaMostrar , JFCliente cliente){
        
         try {
             this.SoketAnalisis = SoketAnalisis;
@@ -112,25 +112,26 @@ public class hiloEscucharMensajes implements Runnable{
           
            try {
                String Datos = this.getTheIn().readLine();
-               if(Datos.equals("100 MENSAJE ENVIADO CON EXITO A TODOS")){
-                    String Datos2 = this.getTheIn().readLine();
-                    if(!modelo.contains(Datos)){
-                        this.modelo.addElement(Datos);
-                        this.ListaMostrar.setModel(this.modelo);
-                    }
-               }
-               else{if(Datos.equals("100 MENSAJE ENVIADO CON EXITO Al USUARIO ELEJIDO")){
-                    String Datos2 = this.getTheIn().readLine();
-                    if(!modelo.contains(Datos)){
-                        this.modelo.addElement(Datos);
-                        this.ListaMostrar.setModel(this.modelo);
-                    }
-                   }
-               }
+               System.err.println(Datos);
+//               if(Datos.startsWith("103")){
+//                    String Datos2 = this.getTheIn().readLine();
+//                    if(!modelo.contains(Datos)){
+//                        this.modelo.addElement(Datos);
+//                        this.ListaMostrar.setModel(this.modelo);
+//                    }
+//               }
+//               else{if(Datos.startsWith("102")){
+//                    String Datos2 = this.getTheIn().readLine();
+//                    if(!modelo.contains(Datos)){
+//                        this.modelo.addElement(Datos);
+//                        this.ListaMostrar.setModel(this.modelo);
+//                    }
+//                   }
+//               }
               
                
            } catch (IOException ex) {
-               Logger.getLogger(hiloEscucharMensajes.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(hiloEscucharYEnviarMensajes.class.getName()).log(Level.SEVERE, null, ex);
            }
 
        

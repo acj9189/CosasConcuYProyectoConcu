@@ -30,7 +30,7 @@ public class SocketController implements Runnable {
     private ComandProcessor theCommandProcessor;
     private String name;
     private boolean register;
-    private HashMap<String,String> listMsg = new HashMap<>();
+    public HashMap<String,String> listMsg = new HashMap<>();
 
     public int getId() {
         return id;

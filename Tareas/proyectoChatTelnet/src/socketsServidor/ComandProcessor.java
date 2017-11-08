@@ -25,7 +25,7 @@ public class ComandProcessor {
     public boolean writeText(String name, String text) {
         for (SocketController client : clients) {
             if (client.getName().equalsIgnoreCase(name)) {
-                client.getListMsg().put(getSocket().getIdMessage(), text);
+                client.listMsg.put(socket.getIdMessage(), text);
                 client.writeText(text);
                 return true;
             }
@@ -35,8 +35,8 @@ public class ComandProcessor {
 
     public void removeMessage(String idMessage) {
         for (SocketController client : clients) {
-            if (client.getListMsg().containsKey(idMessage)) {
-                client.getListMsg().remove(idMessage);
+            if (client.listMsg.containsKey(idMessage)) {
+                client.listMsg.remove(idMessage);
             }
         }
     }
@@ -56,9 +56,11 @@ public class ComandProcessor {
 
     public boolean writeTextAll(SocketController sender, String text) {
         if (clients.size() > 1) {
+            String idMessage = socket.getIdMessage();
             for (SocketController client : clients) {
                 if (sender != client) {
-                    client.writeText(getSocket().getName() + "-> " + text);
+                    client.listMsg.put(idMessage, text);
+                    client.writeText(socket.getName() + "-> " + text);
                 }
             }
             return true;
@@ -76,18 +78,18 @@ public class ComandProcessor {
 
     public String responseCommand(SocketController sender, String aCommand) {
         aCommand = aCommand.trim().toUpperCase();
-        String response = "200 CODIGO INVALIDO";
+        String response = "200 COMANDO INVALIDO";
 
         if (aCommand.startsWith("SENDALL ")) {
             if (writeTextAll(sender, aCommand.substring(8))) {
-                response = "100 MENSAJE ENVIADO CON EXITO A TODOS";
+                response = "103 MENSAJE ENVIADO A TODOS CON EXITO";
             } else {
-                response = "200 MENSAJE SIN ENVIAR";
+                response = "203 MENSAJE NO ENVIADO A TODOS";
             }
         } else if (aCommand.equals("NUMOFUSERS")) {
-            response = "100 NUMERO DE USUARIOS:" + this.getNumofUsers();
+            response = "105 NUMERO DE USUARIOS:" + this.getNumofUsers();
         } else if (aCommand.equals("GETUSERS")) {
-            response = "100 LISTA DE USUARIOS:";
+            response = "106 LISTA DE USUARIOS:";
             for (SocketController socket : clients) {
                 response += socket.getId() + " " + socket.getName() + ";";
             }
@@ -95,32 +97,23 @@ public class ComandProcessor {
         } else if (aCommand.startsWith("SEND ")) {
             String userName = aCommand.substring(5).substring(0, aCommand.substring(5).indexOf(" "));
             String msg = aCommand.substring(5 + userName.length());
-            if (writeText(userName, getSocket().getName() + "->" + msg)) {
-                response = "100 MENSAJE ENVIADO CON EXITO Al USUARIO ELEJIDO";
+            if (writeText(userName, socket.getName() + "->" + msg)) {
+                response = "102 MENSAJE ENVIADO CON EXITO";
             } else {
-                response = "200 MENSAJE SIN ENVIAR";
+                response = "202 MENSAJE SIN ENVIAR";
             }
         } else if (aCommand.startsWith("REMOVEMSG ")) {
             String idMessage = aCommand.substring(10);
-            removeMessage(idMessage);
-            response = "100 MENSAJE BORRADO CON EXITO";
+            if (Integer.parseInt(idMessage.substring(0, 3)) == socket.getId()) {
+                removeMessage(idMessage);
+                response = "104 MENSAJE BORRADO CON EXITO";
+            }else{
+                response = "204 MENSAJE NO FUE BORRADO YA QUE NO TIENE PERMISO PARA ESTA OPERACION";
+            }
+
         }
 
         return response;
-    }
-
-    /**
-     * @return the socket
-     */
-    public SocketController getSocket() {
-        return socket;
-    }
-
-    /**
-     * @param socket the socket to set
-     */
-    public void setSocket(SocketController socket) {
-        this.socket = socket;
     }
 
 }

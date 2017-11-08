@@ -79,8 +79,8 @@ public class hiloEscucharClientes implements Runnable{
        try { 
           this.theOut.println("NUMOFUSERS");
           String Res = this.theIn.readLine().substring(23);
-          String[] c = Res.split(":");
-          int temp2 = (Integer.valueOf(c[0]));
+//          String[] c = Res.split(":");
+//          int temp2 = (Integer.valueOf(c[0]));
           int temp = Integer.valueOf(Res);
           if(this.numeroConectadosActual != temp){
                 this.getTheOut().println("GETUSERS");  
@@ -94,7 +94,8 @@ public class hiloEscucharClientes implements Runnable{
                 String noRepetidos = "";
                  for (int i = 0; i < a.length; i++) {
                      String[]  b = a[i].split(" ");
-                     if(!noRepetidos.contains(b[1])){
+//                     if(!noRepetidos.contains(b[1])){
+                       if(modelo.contains(b[1])){
                          modelo.addElement(b[1]);
                          noRepetidos = noRepetidos + b[1];    
                      } 

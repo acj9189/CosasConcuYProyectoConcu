@@ -26,7 +26,7 @@ public class JFCliente extends javax.swing.JFrame {
      */
     
     private hiloEscucharClientes HiLoClientes;
-    private hiloEscucharMensajes HiloMensajes;
+    private hiloEscucharYEnviarMensajes HiloMensajes;
     private Socket socketConeccion;
     private JFCliente inCliente;
     private String nombreUsuario;
@@ -38,7 +38,7 @@ public class JFCliente extends javax.swing.JFrame {
     private boolean seleUsuEnviar = false;
     private String usuAEnviar = "";
     
-     DefaultListModel modelo = new DefaultListModel();
+     private DefaultListModel modelo = new DefaultListModel();
     
     
     public JFCliente() {
@@ -238,9 +238,9 @@ public class JFCliente extends javax.swing.JFrame {
                     Thread Hilo = new Thread(this.getHiLoClientes());
                     Hilo.start();  
                     
-//                    this.HiloMensajes = new hiloEscucharMensajes(this.getSocketConeccion(), this.jLstMensajesEnviados, this);
-//                    Thread Hilo2 = new Thread(this.HiloMensajes);
-//                    Hilo2.start();
+                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.getSocketConeccion(), this.jLstMensajesEnviados, this);
+                    Thread Hilo2 = new Thread(this.HiloMensajes);
+                    Hilo2.start();
                     
                     
                     this.getTxtName().setEditable(false);
@@ -301,7 +301,7 @@ public class JFCliente extends javax.swing.JFrame {
 
     private void jLstMensajesEnviadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosValueChanged
       
-        String mensajeCompletoAEliminar = this.jLstMensajesEnviados.getSelectedValue();
+        String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
         eliminarMensaje(mensajeCompletoAEliminar);    
     }//GEN-LAST:event_jLstMensajesEnviadosValueChanged
 
@@ -318,8 +318,8 @@ public class JFCliente extends javax.swing.JFrame {
             String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
                 JOptionPane.showMessageDialog(this, "Mensaje enviado con exito");
-                this.modelo.addElement("->: " + Mensaje);
-                this.jLstMensajesEnviados.setModel(modelo);
+                this.getModelo().addElement("->: " + Mensaje);
+                this.getjLstMensajesEnviados().setModel(getModelo());
                 //this.jLstMensajesEnviados.add(this, "->: " + Mensaje);
                 
                 
@@ -338,7 +338,7 @@ public class JFCliente extends javax.swing.JFrame {
             String res = this.getTheIn().readLine();
             if(res.startsWith("100")){
                 JOptionPane.showMessageDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
-                this.jLstMensajesEnviados.add(this, Destinatario + "->: " + Mensaje);
+                this.getjLstMensajesEnviados().add(this, Destinatario + "->: " + Mensaje);
             }
             else{
                 JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
@@ -574,14 +574,14 @@ public class JFCliente extends javax.swing.JFrame {
      * @return the jList1
      */
     public javax.swing.JList<String> getjList1() {
-        return jLstMensajesEnviados;
+        return getjLstMensajesEnviados();
     }
 
     /**
      * @param jList1 the jList1 to set
      */
     public void setjList1(javax.swing.JList<String> jList1) {
-        this.jLstMensajesEnviados = jList1;
+        this.setjLstMensajesEnviados(jList1);
     }
 
     /**
@@ -764,5 +764,47 @@ public class JFCliente extends javax.swing.JFrame {
      */
     public void setTxtPort(javax.swing.JTextField txtPort) {
         this.txtPort = txtPort;
+    }
+
+    /**
+     * @return the HiloMensajes
+     */
+    public hiloEscucharYEnviarMensajes getHiloMensajes() {
+        return HiloMensajes;
+    }
+
+    /**
+     * @param HiloMensajes the HiloMensajes to set
+     */
+    public void setHiloMensajes(hiloEscucharYEnviarMensajes HiloMensajes) {
+        this.HiloMensajes = HiloMensajes;
+    }
+
+    /**
+     * @return the modelo
+     */
+    public DefaultListModel getModelo() {
+        return modelo;
+    }
+
+    /**
+     * @param modelo the modelo to set
+     */
+    public void setModelo(DefaultListModel modelo) {
+        this.modelo = modelo;
+    }
+
+    /**
+     * @return the jLstMensajesEnviados
+     */
+    public javax.swing.JList<String> getjLstMensajesEnviados() {
+        return jLstMensajesEnviados;
+    }
+
+    /**
+     * @param jLstMensajesEnviados the jLstMensajesEnviados to set
+     */
+    public void setjLstMensajesEnviados(javax.swing.JList<String> jLstMensajesEnviados) {
+        this.jLstMensajesEnviados = jLstMensajesEnviados;
     }
 }
