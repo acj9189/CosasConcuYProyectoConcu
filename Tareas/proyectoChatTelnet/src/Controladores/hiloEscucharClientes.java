@@ -99,7 +99,7 @@ public class hiloEscucharClientes implements Runnable{
           String Res = this.theIn.readLine();
           if(Res.startsWith("105")){
               Res = Res.substring(23);
-              System.out.println(Res);
+              //System.out.println(Res);
     //          String[] c = Res.split(":");
     //          int temp2 = (Integer.valueOf(c[0]));
               int temp = Integer.valueOf(Res);

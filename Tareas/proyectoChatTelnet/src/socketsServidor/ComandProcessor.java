@@ -26,7 +26,7 @@ public class ComandProcessor {
         for (SocketController client : clients) {
             if (client.getName().equalsIgnoreCase(name)) {
                 client.listMsg.put(socket.getIdMessage(), text);
-                client.writeText(text);
+                client.writeText("MSG " + text);
                 return true;
             }
         }
@@ -55,12 +55,13 @@ public class ComandProcessor {
     }
 
     public boolean writeTextAll(SocketController sender, String text) {
+        System.out.println(clients.size());
         if (clients.size() > 1) {
             String idMessage = socket.getIdMessage();
             for (SocketController client : clients) {
                 if (sender != client) {
                     client.listMsg.put(idMessage, text);
-                    client.writeText(socket.getName() + "-> " + text);
+                    client.writeText("MSG " + socket.getName() + "-> " + text);
                 }
             }
             return true;

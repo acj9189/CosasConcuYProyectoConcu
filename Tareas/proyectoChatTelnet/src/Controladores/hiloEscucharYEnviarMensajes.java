@@ -111,13 +111,13 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
            try {
                String Datos = this.getTheIn().readLine();
               // System.err.println("Observacion de errores "+ Datos);
-//               if(Datos.startsWith("103")){
-//                    String Datos2 = this.getTheIn().readLine();
-//                    if(!modelo.contains(Datos)){
-//                        this.modelo.addElement(Datos);
-//                        this.ListaMostrar.setModel(this.modelo);
-//                    }
-//               }
+               if(Datos.startsWith("MSG")){
+                    String Datos2 = this.getTheIn().readLine();
+                    if(!modelo.contains(Datos)){
+                        this.modelo.addElement(Datos);
+                        this.ListaMostrar.setModel(this.modelo);
+                    }
+               }
 //               else{if(Datos.startsWith("102")){
 //                    String Datos2 = this.getTheIn().readLine();
 //                    if(!modelo.contains(Datos)){
