@@ -236,7 +236,12 @@ public class JFCliente extends javax.swing.JFrame {
                    
                     this.setHiLoClientes(new hiloEscucharClientes(this.getSocketConeccion(), this.getjLstUsuariosConectados(), this));
                     Thread Hilo = new Thread(this.getHiLoClientes());
-                    Hilo.start();  
+                    Hilo.start();
+                    try {
+                        Hilo.join();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     
                     this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.getSocketConeccion(), this.jLstMensajesEnviados, this);
                     Thread Hilo2 = new Thread(this.HiloMensajes);

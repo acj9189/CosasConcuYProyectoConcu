@@ -31,7 +31,10 @@ public class hiloEscucharClientes implements Runnable{
    private BufferedReader theIn;
    private JFCliente cliente;
    
+   
    private int numeroConectadosActual = 0;
+   
+   private boolean esperaBolean = true;
    
    
    
@@ -56,6 +59,15 @@ public class hiloEscucharClientes implements Runnable{
         this.ListaMostrar = ListaMostrar;
     }
 
+    public void setEsperaBolean(boolean esperaBolean) {
+        this.esperaBolean = esperaBolean;
+    }
+
+    public boolean isEsperaBolean() {
+        return esperaBolean;
+    }
+
+    
 
     public Socket getSoketAnalisis() {
         return SoketAnalisis;
@@ -68,14 +80,14 @@ public class hiloEscucharClientes implements Runnable{
     @Override
     public void run() {
         
-        while(true){
+        while(this.esperaBolean){
            agregarLista();
         }
         
         
     }
     
-    private void agregarLista(){
+    private synchronized void agregarLista(){
        try { 
           this.theOut.println("NUMOFUSERS");
           String Res = this.theIn.readLine().substring(23);
