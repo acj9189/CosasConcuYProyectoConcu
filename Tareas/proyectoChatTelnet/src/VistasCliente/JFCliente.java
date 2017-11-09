@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package VistasCliente;
+
 import Controladores.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import java.util.concurrent.locks.*;
 import java.util.concurrent.Semaphore;
+
 /**
  *
  * @author Andrés
@@ -25,32 +27,39 @@ public class JFCliente extends javax.swing.JFrame {
     /**
      * Creates new form JFCliente
      */
-    
     private hiloEscucharClientes HiLoClientes;
     private hiloEscucharYEnviarMensajes HiloMensajes;
     private Socket socketConeccion;
     private JFCliente inCliente;
     private String nombreUsuario;
-    
+
     static PrintWriter theOut;
     static BufferedReader theIn;
     private int cont = 0;
-    
+
     private boolean seleUsuEnviar = false;
     private String usuAEnviar = "";
-    
+
     private DefaultListModel modelo = new DefaultListModel();
     private DefaultListModel modelo2 = new DefaultListModel();
-    static final Semaphore semaphore = new Semaphore(1);
-    
+    static final Semaphore semaphoreLectura = new Semaphore(1);
+    static final Semaphore semaphoreEscritura = new Semaphore(1);
+
     private Thread Hilo;
     private Thread Hilo2;
-    
-    
+
     public JFCliente() {
-        initComponents();  
+        initComponents();
         this.inCliente = this;
-        
+
+    }
+
+    public static Semaphore getSemaforoLectura() {
+        return semaphoreLectura;
+    }
+
+    public static Semaphore getSemaforoEscritura() {
+        return semaphoreEscritura;
     }
 
     /**
@@ -212,89 +221,76 @@ public class JFCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConectarceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConectarceMouseClicked
-      
+
         try {
-            
+
             String ip = this.getTxtHost().getText();
             int puerto = Integer.valueOf(this.getTxtPort().getText());
             this.setNombreUsuario(this.getTxtName().getText());
-            
-            if(this.getCont() == 0){
-                
-                    
-                    this.setSocketConeccion(new Socket(ip, puerto));
-                    this.setTheOut(new PrintWriter(this.getSocketConeccion().getOutputStream(), true));
-                    this.setTheIn(new BufferedReader(new InputStreamReader(this.getSocketConeccion().getInputStream(), "UTF-8")));
-                    
-                
+
+            if (this.getCont() == 0) {
+                this.setSocketConeccion(new Socket(ip, puerto));
+                this.setTheOut(new PrintWriter(this.getSocketConeccion().getOutputStream(), true));
+                this.setTheIn(new BufferedReader(new InputStreamReader(this.getSocketConeccion().getInputStream(), "UTF-8")));
+
             }
-            if(this.getCont() < 3){
+            if (this.getCont() < 3) {
                 String ResEs = this.getTheIn().readLine();
-               // System.out.println("REDLINEI... "+ ResEs);
+                // System.out.println("REDLINEI... "+ ResEs);
                 this.getTheOut().println("REGISTER " + this.getNombreUsuario());
                 this.setCont(this.getCont() + 1);
                 String Res = this.getTheIn().readLine();
-               // System.err.println("REGISTER... "+ Res);
+                // System.err.println("REGISTER... "+ Res);
 //                this.getTheOut().println("NUMOFUSERS");
-                if(Res.startsWith("100")){
+                if (Res.startsWith("100")) {
                     JOptionPane.showMessageDialog(this, "Usted se ha conectado con exito al servidor");
-                    try {
-                        //                    this.getTheOut().println("NUMOFUSERS");
+
+                    // this.getTheOut().println("NUMOFUSERS");
 //                    String res = this.getTheIn().readLine();
 //                    System.out.println(Res );
-                        this.semaphore.acquire();
+                    //  this.semaphoreLectura.acquire();
 //                        this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados, this));
 //                        this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados));
-                        this.HiLoClientes = new hiloEscucharClientes(jLstUsuariosConectados);
-                        this.Hilo = new Thread(this.getHiLoClientes());
-                        this.Hilo.start();
+                    this.HiLoClientes = new hiloEscucharClientes(this.jLstUsuariosConectados);
+                    this.Hilo = new Thread(this.getHiLoClientes());
+                    this.Hilo.start();
 
-                        this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.theOut, this.theIn, this.jLstMensajesEnviados);
-                        this.Hilo2 = new Thread(this.HiloMensajes);
-                        this.Hilo2.start();
-                        this.semaphore.release();
-                        this.getTxtName().setEditable(false);
-                        this.getBtnConectarce().setEnabled(false);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                    
-                   
-                }
-                else{
-                    if(this.getCont() == 3){
+                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.jLstMensajesEnviados);
+                    this.Hilo2 = new Thread(this.HiloMensajes);
+                    this.Hilo2.start();
+                    this.getTxtName().setEditable(false);
+                    this.getBtnConectarce().setEnabled(false);
+                } else {
+                    if (this.getCont() == 3) {
                         JOptionPane.showMessageDialog(this, "El numero maximo de intentos para el nombre de usuario es 3");
                         this.getTxtName().setText("");
-                        this.setSocketConeccion(null); 
+                        this.setSocketConeccion(null);
                         this.setCont(0);
                         this.setNombreUsuario("");
                         this.setTheIn(null);
                         this.setTheOut(null);
-                    }
-                    else{
+                    } else {
                         JOptionPane.showMessageDialog(this, "Porfavor Ingrece un nuevo nombre de usuario que el que escribio ya existe");
                         this.getTxtName().setText("");
                     }
                 }
-            }  
-            
+            }
+
         } catch (IOException ex) {
             Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnConectarceMouseClicked
 
     private void btnEnviarMensajeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeMouseClicked
-       String Mensaje = this.getTxtEnviarMensaje().getText();
-       int dialogButton = JOptionPane.YES_NO_OPTION;
-       int dialogResult = JOptionPane.showConfirmDialog (null, "Desea a enviar a todos los usuarios conectados ?","Warning",dialogButton);
-       if(dialogResult == JOptionPane.YES_OPTION){
-           sendAll(Mensaje);
-       }
-       else{
-           JOptionPane.showInputDialog(this, "Debio previamnte seleccionar al usuario que quiere enviarle el mensaje");
-           sendPersonal(Mensaje , this.getUsuAEnviar());
-       }   
+        String Mensaje = this.getTxtEnviarMensaje().getText();
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Desea a enviar a todos los usuarios conectados ?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            sendAll(Mensaje);
+        } else {
+            JOptionPane.showInputDialog(this, "Debio previamnte seleccionar al usuario que quiere enviarle el mensaje");
+            sendPersonal(Mensaje, this.getUsuAEnviar());
+        }
     }//GEN-LAST:event_btnEnviarMensajeMouseClicked
 
     private void jLstUsuariosConectadosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosKeyPressed
@@ -302,102 +298,91 @@ public class JFCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLstUsuariosConectadosKeyPressed
 
     private void jLstUsuariosConectadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosValueChanged
-        
+
         this.setUsuAEnviar(this.getjLstUsuariosConectados().getSelectedValue());
-        if(!this.usuAEnviar.equals(this.nombreUsuario)){
+        if (!this.usuAEnviar.equals(this.nombreUsuario)) {
             this.setSeleUsuEnviar(true);
-        }
-        else{
+        } else {
             this.setUsuAEnviar("");
-        
+
         }
-        
-        
+
+
     }//GEN-LAST:event_jLstUsuariosConectadosValueChanged
 
     private void jLstMensajesEnviadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosValueChanged
-      
+
         String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
-        eliminarMensaje(mensajeCompletoAEliminar);    
+        eliminarMensaje(mensajeCompletoAEliminar);
     }//GEN-LAST:event_jLstMensajesEnviadosValueChanged
 
-    
-    private void eliminarMensaje(String MensajeCompletoSinSeparar){
-        
-    
+    private void eliminarMensaje(String MensajeCompletoSinSeparar) {
+
     }
-    
-    private void sendAll(String Mensaje){
-       
-            
+
+    private void sendAll(String Mensaje) {
+
 //            this.Hilo.stop();
-            String Comando = "SENDALL " + Mensaje;
-            
-            escribirsocket(Comando);
-            
-           // this.getTheOut().println(Comando);
+        String Comando = "SENDALL " + Mensaje;
+
+        escribirsocket(Comando);
+
+        // this.getTheOut().println(Comando);
 //            System.out.println("Entro por enviar a todos.." + Comando);
 //            String res = this.getTheIn().readLine();
-            String res = leersocket();
+        String res = leersocket();
 //            System.out.println("Res: sendall "+ res);
-            if(res.startsWith("103")){
+        if (res.startsWith("103")) {
 //                System.err.println("Respueata " + res);
-                JOptionPane.showMessageDialog(this, "Mensaje enviado con exito");
-                this.getModelo().addElement("->: " + Mensaje);
-                this.getjLstMensajesEnviados().setModel(getModelo());
-                //this.jLstMensajesEnviados.add(this, "->: " + Mensaje);   
-            }
-            else{if(res.startsWith("203")){
+            JOptionPane.showMessageDialog(this, "Mensaje enviado con exito");
+            this.getModelo().addElement("->: " + Mensaje);
+            this.getjLstMensajesEnviados().setModel(getModelo());
+            //this.jLstMensajesEnviados.add(this, "->: " + Mensaje);   
+        } else {
+            if (res.startsWith("203")) {
                 JOptionPane.showMessageDialog(this, "Mensaje No se envio  ");
-                }    
             }
-          
+        }
+
     }
-    
-    private void sendPersonal(String Mensaje, String Destinatario){
-            String Comando = "SEND " + Destinatario + " " + Mensaje;
+
+    private void sendPersonal(String Mensaje, String Destinatario) {
+        String Comando = "SEND " + Destinatario + " " + Mensaje;
 //            this.getTheOut().println("SEND " + Destinatario + " " + Mensaje);
-            escribirsocket(Comando);
+        escribirsocket(Comando);
 //            String res = this.getTheIn().readLine();
-            String res = leersocket();
-            if(res.startsWith("102")){
-                JOptionPane.showMessageDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
+        String res = leersocket();
+        if (res.startsWith("102")) {
+            JOptionPane.showMessageDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
 //                this.getjLstMensajesEnviados().add(this, Destinatario + "->: " + Mensaje);
-                this.modelo2.addElement(Destinatario + "->: " + Mensaje);
-                this.jLstMensajesEnviados.setModel(this.modelo2);
-            }
-            else{
-                JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
-            }
-       
+            this.modelo2.addElement(Destinatario + "->: " + Mensaje);
+            this.jLstMensajesEnviados.setModel(this.modelo2);
+        } else {
+            JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
+        }
+
     }
+
     /**
      * @param args the command line arguments
      */
-    
-    public static void escribirsocket(String Comando){
-        try {
-            semaphore.acquire();
-            theOut.println(Comando);
-           
-        } catch (InterruptedException ex) {
-            Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+    public static void escribirsocket(String Comando) {
+//            semaphoreLectura.acquire();
+        theOut.println(Comando);
     }
-    
-    public static String leersocket(){
-       String a = "";
+
+    public static String leersocket() {
+        String a = "";
         try {
             a = theIn.readLine();
-            semaphore.release();
             return a;
         } catch (IOException ex) {
             Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         return a;
     }
-    
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

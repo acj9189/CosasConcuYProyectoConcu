@@ -17,6 +17,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import static VistasCliente.JFCliente.escribirsocket;
 import static VistasCliente.JFCliente.leersocket;
+import static VistasCliente.JFCliente.getSemaforoLectura;
 /**
  *
  * @author Andres
@@ -109,28 +110,34 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
     public void run() {
         
         while(true){
-            agregarListaEntradaSalida();
+            try {
+                agregarListaEntradaSalida();
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(hiloEscucharYEnviarMensajes.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }
     
     
     
-     private synchronized void agregarListaEntradaSalida() {
+     private void agregarListaEntradaSalida() throws InterruptedException {
           
-           try {
-//               String Datos = this.getTheIn().readLine();
-
-               String Datos = leersocket();
-               
-              // System.err.println("Observacion de errores "+ Datos);
-               if(Datos.startsWith("MSG")){
-                    String Datos2 = this.getTheIn().readLine();
-                    if(!modelo.contains(Datos)){
-                        this.modelo.addElement(Datos);
-                        this.ListaMostrar.setModel(this.modelo);
-                    }
-               }
+         //               String Datos = this.getTheIn().readLine();
+//         getSemaforoLectura().acquire();
+//         System.out.println("Bloqueo lectura ES");
+//         System.out.println("Desbloqueo lectura ES");
+//         getSemaforoLectura().release();
+         String Datos = leersocket();
+         // System.err.println("Observacion de errores "+ Datos);
+         if(Datos.startsWith("MSG")){
+             //String Datos2 = this.getTheIn().readLine();
+             if(!modelo.contains(Datos)){
+                 this.modelo.addElement(Datos);
+                 this.ListaMostrar.setModel(this.modelo);
+             }
+         }
 //               else{if(Datos.startsWith("102")){
 //                    String Datos2 = this.getTheIn().readLine();
 //                    if(!modelo.contains(Datos)){
@@ -139,11 +146,6 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
 //                    }
 //                   }
 //               }
-              
-               
-           } catch (IOException ex) {
-               Logger.getLogger(hiloEscucharYEnviarMensajes.class.getName()).log(Level.SEVERE, null, ex);
-           }
 
        
     }

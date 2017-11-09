@@ -17,6 +17,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import static VistasCliente.JFCliente.escribirsocket;
 import static VistasCliente.JFCliente.leersocket; 
+import static VistasCliente.JFCliente.getSemaforoEscritura;
+import static VistasCliente.JFCliente.getSemaforoLectura;
+
 
 /**
  *
@@ -97,7 +100,7 @@ public class hiloEscucharClientes implements Runnable{
             try {
                 //  System.out.println("qqqq");
                 agregarLista();
-                Thread.sleep(100);
+                Thread.sleep(200);
             } catch (InterruptedException ex) {
                 Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -106,10 +109,14 @@ public class hiloEscucharClientes implements Runnable{
         
     }
     
-    private void agregarLista(){
+    private void agregarLista() throws InterruptedException{
           //this.theOut.println("NUMOFUSERS");
+          getSemaforoLectura().acquire();
+          System.out.println("Bloqueo lectura Cl");
           escribirsocket("NUMOFUSERS");
           String Res = leersocket();
+          System.out.println("Desbloqueo lectura Cl");
+          getSemaforoLectura().release();
           if(Res.startsWith("105")){
               Res = Res.substring(23);
               //System.out.println(Res);
@@ -118,8 +125,12 @@ public class hiloEscucharClientes implements Runnable{
               int temp = Integer.valueOf(Res);
               if(this.numeroConectadosActual != temp){
 //                    this.getTheOut().println("GETUSERS"); 
+                    getSemaforoLectura().acquire();
+                    System.out.println("Bloqueo lectura Cl");
                     escribirsocket("GETUSERS");
                     String Datos = leersocket();
+                    System.out.println("Desbloqueo lectura Cl");
+                    getSemaforoLectura().release();
                     // " id:nombre ; id nombre"
     //                System.out.println(Datos);
                     Datos = Datos.substring(22);
