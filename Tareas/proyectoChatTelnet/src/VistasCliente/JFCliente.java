@@ -32,15 +32,16 @@ public class JFCliente extends javax.swing.JFrame {
     private JFCliente inCliente;
     private String nombreUsuario;
     
-    private PrintWriter theOut;
-    private BufferedReader theIn;
+    static PrintWriter theOut;
+    static BufferedReader theIn;
     private int cont = 0;
     
     private boolean seleUsuEnviar = false;
     private String usuAEnviar = "";
     
     private DefaultListModel modelo = new DefaultListModel();
-    final Semaphore semaphore = new Semaphore(1);
+    private DefaultListModel modelo2 = new DefaultListModel();
+    static final Semaphore semaphore = new Semaphore(1);
     
     private Thread Hilo;
     private Thread Hilo2;
@@ -219,15 +220,13 @@ public class JFCliente extends javax.swing.JFrame {
             this.setNombreUsuario(this.getTxtName().getText());
             
             if(this.getCont() == 0){
-                try {
-                    this.semaphore.acquire();
+                
+                    
                     this.setSocketConeccion(new Socket(ip, puerto));
                     this.setTheOut(new PrintWriter(this.getSocketConeccion().getOutputStream(), true));
                     this.setTheIn(new BufferedReader(new InputStreamReader(this.getSocketConeccion().getInputStream(), "UTF-8")));
-                    this.semaphore.release();
-                }catch (InterruptedException ex) {
-                    Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    
+                
             }
             if(this.getCont() < 3){
                 String ResEs = this.getTheIn().readLine();
@@ -244,8 +243,9 @@ public class JFCliente extends javax.swing.JFrame {
 //                    String res = this.getTheIn().readLine();
 //                    System.out.println(Res );
                         this.semaphore.acquire();
-                        this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados, this));
-                        this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados));
+//                        this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados, this));
+//                        this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados));
+                        this.HiLoClientes = new hiloEscucharClientes(jLstUsuariosConectados);
                         this.Hilo = new Thread(this.getHiLoClientes());
                         this.Hilo.start();
 
@@ -328,17 +328,20 @@ public class JFCliente extends javax.swing.JFrame {
     }
     
     private void sendAll(String Mensaje){
-        try {
+       
             
-            this.Hilo.stop();
+//            this.Hilo.stop();
             String Comando = "SENDALL " + Mensaje;
-            this.getTheOut().println(Comando);
-            System.out.println("Entro por enviar a todos.." + Comando);
-            String res = this.getTheIn().readLine();
-            System.out.println("Res: sendall "+ res);
-           
+            
+            escribirsocket(Comando);
+            
+           // this.getTheOut().println(Comando);
+//            System.out.println("Entro por enviar a todos.." + Comando);
+//            String res = this.getTheIn().readLine();
+            String res = leersocket();
+//            System.out.println("Res: sendall "+ res);
             if(res.startsWith("103")){
-                System.err.println("Respueata " + res);
+//                System.err.println("Respueata " + res);
                 JOptionPane.showMessageDialog(this, "Mensaje enviado con exito");
                 this.getModelo().addElement("->: " + Mensaje);
                 this.getjLstMensajesEnviados().setModel(getModelo());
@@ -346,32 +349,55 @@ public class JFCliente extends javax.swing.JFrame {
             }
             else{if(res.startsWith("203")){
                 JOptionPane.showMessageDialog(this, "Mensaje No se envio  ");
+                }    
             }
-                
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+          
     }
     
     private void sendPersonal(String Mensaje, String Destinatario){
-        try {
-            this.getTheOut().println("SEND " + Destinatario + " " + Mensaje);
-            String res = this.getTheIn().readLine();
-            if(res.startsWith("100")){
+            String Comando = "SEND " + Destinatario + " " + Mensaje;
+//            this.getTheOut().println("SEND " + Destinatario + " " + Mensaje);
+            escribirsocket(Comando);
+//            String res = this.getTheIn().readLine();
+            String res = leersocket();
+            if(res.startsWith("102")){
                 JOptionPane.showMessageDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
-                this.getjLstMensajesEnviados().add(this, Destinatario + "->: " + Mensaje);
+//                this.getjLstMensajesEnviados().add(this, Destinatario + "->: " + Mensaje);
+                this.modelo2.addElement(Destinatario + "->: " + Mensaje);
+                this.jLstMensajesEnviados.setModel(this.modelo2);
             }
             else{
                 JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
             }
-        } catch (IOException ex) {
-            Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }
     /**
      * @param args the command line arguments
      */
+    
+    public static void escribirsocket(String Comando){
+        try {
+            semaphore.acquire();
+            theOut.println(Comando);
+           
+        } catch (InterruptedException ex) {
+            Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String leersocket(){
+       String a = "";
+        try {
+            a = theIn.readLine();
+            semaphore.release();
+            return a;
+        } catch (IOException ex) {
+            Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

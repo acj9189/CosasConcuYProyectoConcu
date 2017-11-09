@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import static VistasCliente.JFCliente.escribirsocket;
+import static VistasCliente.JFCliente.leersocket; 
 
 /**
  *
@@ -55,6 +57,13 @@ public class hiloEscucharClientes implements Runnable{
         this.theIn = in;
       //  this.cliente = cliente;
     }
+     
+     public hiloEscucharClientes(JList<String> ListaMostrar){
+        
+        //this.SoketAnalisis = SoketAnalisis;
+        this.ListaMostrar = ListaMostrar;
+      //  this.cliente = cliente;
+    }
 
     public JList getListaMostrar() {
         return ListaMostrar;
@@ -84,19 +93,23 @@ public class hiloEscucharClientes implements Runnable{
  
     @Override
     public void run() {
-        
         while(this.esperaBolean){
-          //  System.out.println("qqqq");
-           agregarLista();
+            try {
+                //  System.out.println("qqqq");
+                agregarLista();
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         
     }
     
-    private synchronized void agregarLista(){
-       try { 
-          this.theOut.println("NUMOFUSERS");
-          String Res = this.theIn.readLine();
+    private void agregarLista(){
+          //this.theOut.println("NUMOFUSERS");
+          escribirsocket("NUMOFUSERS");
+          String Res = leersocket();
           if(Res.startsWith("105")){
               Res = Res.substring(23);
               //System.out.println(Res);
@@ -104,8 +117,9 @@ public class hiloEscucharClientes implements Runnable{
     //          int temp2 = (Integer.valueOf(c[0]));
               int temp = Integer.valueOf(Res);
               if(this.numeroConectadosActual != temp){
-                    this.getTheOut().println("GETUSERS");  
-                    String Datos = this.getTheIn().readLine();
+//                    this.getTheOut().println("GETUSERS"); 
+                    escribirsocket("GETUSERS");
+                    String Datos = leersocket();
                     // " id:nombre ; id nombre"
     //                System.out.println(Datos);
                     Datos = Datos.substring(22);
@@ -124,13 +138,7 @@ public class hiloEscucharClientes implements Runnable{
                      this.numeroConectadosActual = a.length;
                      this.ListaMostrar.setModel(modelo);
               }
-          
           }
-            
-       } catch (IOException ex) {
-           Logger.getLogger(hiloEscucharClientes.class.getName()).log(Level.SEVERE, null, ex);
-       }
-    
     }
 
     /**

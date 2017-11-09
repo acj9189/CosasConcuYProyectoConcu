@@ -15,7 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-
+import static VistasCliente.JFCliente.escribirsocket;
+import static VistasCliente.JFCliente.leersocket;
 /**
  *
  * @author Andres
@@ -40,6 +41,15 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
       // this.cliente = cliente;  
    
    }
+   
+   public hiloEscucharYEnviarMensajes(JList ListaMostrar){
+       
+       // this.SoketAnalisis = SoketAnalisis;
+       this.ListaMostrar = ListaMostrar;
+      // this.cliente = cliente;  
+   
+   }
+
 
     public JFCliente getCliente() {
         return cliente;
@@ -109,7 +119,10 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
      private synchronized void agregarListaEntradaSalida() {
           
            try {
-               String Datos = this.getTheIn().readLine();
+//               String Datos = this.getTheIn().readLine();
+
+               String Datos = leersocket();
+               
               // System.err.println("Observacion de errores "+ Datos);
                if(Datos.startsWith("MSG")){
                     String Datos2 = this.getTheIn().readLine();
