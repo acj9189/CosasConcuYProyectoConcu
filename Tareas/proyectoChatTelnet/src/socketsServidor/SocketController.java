@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static socketsServidor.SocketListener.clients;
+import static socketsServidor.SocketListener.publicarUsuarios;
 
 /**
  *
@@ -59,8 +60,10 @@ public class SocketController implements Runnable {
         System.err.println("idMessage->"+time+" generado por "+getName());
         return time;
     }
-    
 
+    public SocketController() {
+    }
+    
     public SocketController(Socket newSocket) {
         theSocket = newSocket;
         theCommandProcessor = new ComandProcessor(this);
@@ -109,6 +112,7 @@ public class SocketController implements Runnable {
             if (command != null) {
                 if (command.trim().toUpperCase().equals("QUIT")) {
                     quit = true;
+                    publicarUsuarios(this.name,1);
                     getTheCommandProcessor().remove(this);
                     close();
                 } else if (!isRegister()) {
@@ -117,12 +121,12 @@ public class SocketController implements Runnable {
                         setName(command.substring(9).toUpperCase());
                         
                         if (getTheCommandProcessor().checkName(getName())) {
-                            
                             writeText("100 USUARIO REGISTRADO CON EXITO A: " + getName());
                             //System.out.println(getName());
                             timeout++;
                             clients.add(this);
                             this.setId((Integer) clients.size());
+                            publicarUsuarios(this.name,0);
                             setRegister(true);
                         } else {
                             writeText("200 USUARIO NO SE PUDO REGISTRAR NICKNAME YA EN USO");
@@ -140,6 +144,7 @@ public class SocketController implements Runnable {
                     writeText(getTheCommandProcessor().responseCommand(this, command));
                 }
             } else {
+                publicarUsuarios(this.name,1);
                 getTheCommandProcessor().remove(this);
                 quit = true;
             }

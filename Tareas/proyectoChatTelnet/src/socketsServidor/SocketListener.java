@@ -18,12 +18,25 @@ import java.util.logging.Logger;
  * @author santiguzman
  */
 public class SocketListener {
-    
+
     private int thePort = 0;
     public static final List<SocketController> clients = new LinkedList<>();
-   
+
     public SocketListener(int newPort) {
         thePort = newPort;
+    }
+
+    public static void publicarUsuarios(String usuario, int operacion) {
+        if (operacion == 0) {
+            for (SocketController client : clients) {
+                client.writeText("ADDUSER " + usuario);
+            }
+        } else {
+            for (SocketController client : clients) {
+                client.writeText("RMVUSER " + usuario);
+            }
+        }
+
     }
 
     public void run() {
@@ -37,8 +50,8 @@ public class SocketListener {
         } catch (IOException ex) {
             Logger.getLogger(SocketListener.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(serverSocket !=null){
+
+        if (serverSocket != null) {
             while (!quit) {
                 try {
                     socket = serverSocket.accept();
