@@ -7,57 +7,53 @@ package Controladores;
 
 import VistasCliente.JFCliente;
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import static VistasCliente.JFCliente.escribirsocket;
 import static VistasCliente.JFCliente.leersocket;
-import static VistasCliente.JFCliente.getSemaforoLectura;
+
 /**
  *
  * @author Andres
  */
-public class hiloEscucharYEnviarMensajes implements Runnable{
-    
-   private Socket SoketAnalisis;
-   private JList<String> ListaMostrar;
-   
-   private PrintWriter theOut;
-   private BufferedReader theIn;
-   private JFCliente cliente;
-   
-   DefaultListModel modelo = new DefaultListModel();
-   
-   public hiloEscucharYEnviarMensajes(PrintWriter out, BufferedReader in,  JList ListaMostrar){
-       
-       // this.SoketAnalisis = SoketAnalisis;
-       this.ListaMostrar = ListaMostrar;
-       this.theOut = out;
-       this.theIn = in;
-      // this.cliente = cliente;  
-   
-   }
-   
-   public hiloEscucharYEnviarMensajes(JList ListaMostrar){
-       
-       // this.SoketAnalisis = SoketAnalisis;
-       this.ListaMostrar = ListaMostrar;
-      // this.cliente = cliente;  
-   
-   }
+public class hiloEscucharYEnviarMensajes implements Runnable {
 
+    private Socket SoketAnalisis;
+    private JList<String> ListaMensaje;
+    private JList<String> ListaClientes;
+
+    private final Thread hilo;
+
+    private PrintWriter theOut;
+    private BufferedReader theIn;
+    private JFCliente cliente;
+
+    DefaultListModel modeloMensajes = new DefaultListModel();
+    DefaultListModel modeloClientes = new DefaultListModel();
+
+    public hiloEscucharYEnviarMensajes() {
+        this.hilo = new Thread(this);
+    }
+
+    public hiloEscucharYEnviarMensajes(JList ListaMensaje, JList ListaClientes) {
+        this.hilo = new Thread(this);
+        this.ListaMensaje = ListaMensaje;
+        this.ListaClientes = ListaClientes;
+    }
+
+    public void iniciar() {
+        this.hilo.start();
+    }
 
     public JFCliente getCliente() {
         return cliente;
     }
 
     public JList<String> getListaMostrar() {
-        return ListaMostrar;
+        return ListaMensaje;
     }
 
     public Socket getSoketAnalisis() {
@@ -71,6 +67,7 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
     public PrintWriter getTheOut() {
         return theOut;
     }
+
     /**
      * @param SoketAnalisis the SoketAnalisis to set
      */
@@ -79,10 +76,10 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
     }
 
     /**
-     * @param ListaMostrar the ListaMostrar to set
+     * @param ListaMostrar the ListaMensaje to set
      */
     public void setListaMostrar(JList<String> ListaMostrar) {
-        this.ListaMostrar = ListaMostrar;
+        this.ListaMensaje = ListaMostrar;
     }
 
     /**
@@ -105,50 +102,58 @@ public class hiloEscucharYEnviarMensajes implements Runnable{
     public void setCliente(JFCliente cliente) {
         this.cliente = cliente;
     }
-    
-     @Override
+
+    @Override
     public void run() {
-        
-        while(true){
-            try {
-                agregarListaEntradaSalida();
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(hiloEscucharYEnviarMensajes.class.getName()).log(Level.SEVERE, null, ex);
+        while (true) {
+            String datos = leersocket();
+            if (!datos.equals("")) {
+                if (datos.startsWith("MSG")) {
+                    if (!modeloMensajes.contains(datos)) {
+                        this.modeloMensajes.addElement(datos);
+                        this.ListaMensaje.setModel(this.modeloMensajes);
+                    }
+                } else if (datos.startsWith("106 ")) {
+                    datos = datos.replace("106 LISTA DE USUARIOS:", "");
+                    for (String user : datos.split(";")) {
+                        if (!this.modeloClientes.contains(user.split(" ")[1].toUpperCase())) {
+                            this.modeloClientes.addElement(user.split(" ")[1]);
+                            this.ListaClientes.setModel(this.modeloClientes);
+                        }
+                    }
+                } else if (datos.startsWith("ADDUSER ")) {
+                    datos = datos.substring(8);
+                    if (!this.modeloClientes.contains(datos.toUpperCase())) {
+                        this.modeloClientes.addElement(datos.toUpperCase());
+                        this.ListaClientes.setModel(this.modeloClientes);
+                    }
+                } else if (datos.startsWith("RMVUSER ")) {
+                    datos = datos.substring(8);
+                    if (this.modeloClientes.contains(datos.toUpperCase())) {
+                        this.modeloClientes.removeElement(datos.toUpperCase());
+                        this.ListaClientes.setModel(this.modeloClientes);
+                    }
+                }
             }
         }
-        
+
     }
-    
-    
-    
-     private void agregarListaEntradaSalida() throws InterruptedException {
-          
-         //               String Datos = this.getTheIn().readLine();
-//         getSemaforoLectura().acquire();
-//         System.out.println("Bloqueo lectura ES");
-//         System.out.println("Desbloqueo lectura ES");
-//         getSemaforoLectura().release();
-         String Datos = leersocket();
-         // System.err.println("Observacion de errores "+ Datos);
-         if(Datos.startsWith("MSG")){
-             //String Datos2 = this.getTheIn().readLine();
-             if(!modelo.contains(Datos)){
-                 this.modelo.addElement(Datos);
-                 this.ListaMostrar.setModel(this.modelo);
-             }
-         }
+
+    /*private void agregarListaEntradaSalida() throws InterruptedException {
+        if (Datos.startsWith("MSG")) {
+            if (!modelo.contains(Datos)) {
+                this.modelo.addElement(Datos);
+                this.ListaMensaje.setModel(this.modelo);
+            }
+        }
 //               else{if(Datos.startsWith("102")){
 //                    String Datos2 = this.getTheIn().readLine();
 //                    if(!modelo.contains(Datos)){
 //                        this.modelo.addElement(Datos);
-//                        this.ListaMostrar.setModel(this.modelo);
+//                        this.ListaMensaje.setModel(this.modelo);
 //                    }
 //                   }
 //               }
 
-       
-    }
-    
-    
+    }*/
 }

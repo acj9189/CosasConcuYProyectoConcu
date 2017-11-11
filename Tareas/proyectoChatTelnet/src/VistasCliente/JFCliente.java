@@ -27,7 +27,6 @@ public class JFCliente extends javax.swing.JFrame {
     /**
      * Creates new form JFCliente
      */
-    private hiloEscucharClientes HiLoClientes;
     private hiloEscucharYEnviarMensajes HiloMensajes;
     private Socket socketConeccion;
     private JFCliente inCliente;
@@ -42,24 +41,11 @@ public class JFCliente extends javax.swing.JFrame {
 
     private DefaultListModel modelo = new DefaultListModel();
     private DefaultListModel modelo2 = new DefaultListModel();
-    static final Semaphore semaphoreLectura = new Semaphore(1);
-    static final Semaphore semaphoreEscritura = new Semaphore(1);
-
-    private Thread Hilo;
-    private Thread Hilo2;
 
     public JFCliente() {
         initComponents();
         this.inCliente = this;
 
-    }
-
-    public static Semaphore getSemaforoLectura() {
-        return semaphoreLectura;
-    }
-
-    public static Semaphore getSemaforoEscritura() {
-        return semaphoreEscritura;
     }
 
     /**
@@ -236,14 +222,14 @@ public class JFCliente extends javax.swing.JFrame {
             }
             if (this.getCont() < 3) {
                 String ResEs = this.getTheIn().readLine();
-                // System.out.println("REDLINEI... "+ ResEs);
-                this.getTheOut().println("REGISTER " + this.getNombreUsuario());
+                String command = "REGISTER " + this.getNombreUsuario();
+                escribirsocket(command);
                 this.setCont(this.getCont() + 1);
-                String Res = this.getTheIn().readLine();
-                // System.err.println("REGISTER... "+ Res);
-//                this.getTheOut().println("NUMOFUSERS");
+                String Res = leersocket();
+
                 if (Res.startsWith("100")) {
                     JOptionPane.showMessageDialog(this, "Usted se ha conectado con exito al servidor");
+                    
 
                     // this.getTheOut().println("NUMOFUSERS");
 //                    String res = this.getTheIn().readLine();
@@ -251,13 +237,12 @@ public class JFCliente extends javax.swing.JFrame {
                     //  this.semaphoreLectura.acquire();
 //                        this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados, this));
 //                        this.setHiLoClientes(new hiloEscucharClientes(this.theOut, this.theIn, this.jLstUsuariosConectados));
-                    this.HiLoClientes = new hiloEscucharClientes(this.jLstUsuariosConectados);
+                    /*this.HiLoClientes = new hiloEscucharClientes(this.jLstUsuariosConectados);
                     this.Hilo = new Thread(this.getHiLoClientes());
-                    this.Hilo.start();
-
-                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.jLstMensajesEnviados);
-                    this.Hilo2 = new Thread(this.HiloMensajes);
-                    this.Hilo2.start();
+                    this.Hilo.start();*/
+                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.jLstMensajesEnviados,this.jLstUsuariosConectados);
+                    this.HiloMensajes.iniciar();
+                    escribirsocket("GETUSERS");
                     this.getTxtName().setEditable(false);
                     this.getBtnConectarce().setEnabled(false);
                 } else {
@@ -366,9 +351,7 @@ public class JFCliente extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
     public static void escribirsocket(String Comando) {
-//            semaphoreLectura.acquire();
         theOut.println(Comando);
     }
 
@@ -435,20 +418,7 @@ public class JFCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtPort;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * @return the HiLoClientes
-     */
-    public hiloEscucharClientes getHiLoClientes() {
-        return HiLoClientes;
-    }
-
-    /**
-     * @param HiLoClientes the HiLoClientes to set
-     */
-    public void setHiLoClientes(hiloEscucharClientes HiLoClientes) {
-        this.HiLoClientes = HiLoClientes;
-    }
-
+   
     /**
      * @return the socketConeccion
      */
