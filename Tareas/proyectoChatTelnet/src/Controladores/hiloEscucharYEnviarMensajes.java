@@ -152,28 +152,10 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
                         this.modeloMensajes.remove(temp);
                         this.ListaMensaje.setModel(this.modeloMensajes);
                     }
-                }
+                  }
                 }
             }
-        
-
     }
 
-    /*private void agregarListaEntradaSalida() throws InterruptedException {
-        if (Datos.startsWith("MSG")) {
-            if (!modelo.contains(Datos)) {
-                this.modelo.addElement(Datos);
-                this.ListaMensaje.setModel(this.modelo);
-            }
-        }
-//               else{if(Datos.startsWith("102")){
-//                    String Datos2 = this.getTheIn().readLine();
-//                    if(!modelo.contains(Datos)){
-//                        this.modelo.addElement(Datos);
-//                        this.ListaMensaje.setModel(this.modelo);
-//                    }
-//                   }
-//               }
 
-    }*/
 }
