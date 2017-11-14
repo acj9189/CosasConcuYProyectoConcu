@@ -312,12 +312,19 @@ public class JFCliente extends javax.swing.JFrame {
     private void jLstMensajesEnviadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosValueChanged
 
         String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
-        eliminarMensaje(mensajeCompletoAEliminar);
+        if(mensajeCompletoAEliminar.startsWith("MIO")){
+            eliminarMensaje(mensajeCompletoAEliminar);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No se puede eliminar un Mensaje que no haya sido enviado por mi");
+        }
+        
     }//GEN-LAST:event_jLstMensajesEnviadosValueChanged
 
     private void eliminarMensaje(String MensajeCompletoSinSeparar) {
         
-        
+        String Comando = "REMOVEMSG " ;
+        escribirsocket(Comando);
 
     }
 

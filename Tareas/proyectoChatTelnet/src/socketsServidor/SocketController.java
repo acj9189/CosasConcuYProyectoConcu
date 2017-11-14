@@ -59,6 +59,7 @@ public class SocketController implements Runnable {
             time = "0" + time;
         }
         System.err.println("idMessage->" + time + " generado por " + getName());
+        System.out.println("Tamaño del mensaje " + time.length());
         return time;
     }
 

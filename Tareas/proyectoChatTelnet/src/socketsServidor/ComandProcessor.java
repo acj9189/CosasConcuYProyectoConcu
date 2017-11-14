@@ -25,8 +25,9 @@ public class ComandProcessor {
     public boolean writeText(String name, String text) {
         for (SocketController client : clients) {
             if (client.getName().equalsIgnoreCase(name)) {
-                client.listMsg.put(socket.getIdMessage(), text);
-                client.writeText("MSG " + text);
+                String idMessage = socket.getIdMessage();
+                client.listMsg.put(idMessage, text);
+                client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
                 return true;
             }
         }
@@ -61,7 +62,7 @@ public class ComandProcessor {
             for (SocketController client : clients) {
                 if (sender != client) {
                     client.listMsg.put(idMessage, text);
-                    client.writeText("MSG " + socket.getName() + "-> " + text);
+                    client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
                 }
             }
             return true;

@@ -110,6 +110,8 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
             String datos = leersocket();
             if (!datos.equals("")) {
                 if (datos.startsWith("MSG")) {
+//                    String datos2 = datos.substring(4, 0);
+                    System.out.println(datos);
                     if (!modeloMensajes.contains(datos)) {
                         this.modeloMensajes.addElement(datos);
                         this.ListaMensaje.setModel(this.modeloMensajes);
