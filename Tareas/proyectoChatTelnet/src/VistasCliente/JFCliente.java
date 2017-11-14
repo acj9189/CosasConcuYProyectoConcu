@@ -41,6 +41,10 @@ public class JFCliente extends javax.swing.JFrame {
 
     private DefaultListModel modelo = new DefaultListModel();
     private DefaultListModel modelo2 = new DefaultListModel();
+    
+    private static Semaphore semaforo = new Semaphore(1);
+    
+    DefaultListModel modeloMensajes = new DefaultListModel();
 
     public JFCliente() {
         initComponents();
@@ -136,71 +140,72 @@ public class JFCliente extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(324, 324, 324))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnEnviarMensaje)
+                        .addContainerGap(597, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnConectarce)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnConectarce)
+                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(30, 30, 30)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEnviarMensaje))
-                        .addContainerGap(402, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtEnviarMensaje, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(txtEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnConectarce)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConectarce)
-                .addGap(18, 18, 18)
                 .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEnviarMensaje)
-                .addGap(28, 28, 28))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -240,7 +245,7 @@ public class JFCliente extends javax.swing.JFrame {
                     /*this.HiLoClientes = new hiloEscucharClientes(this.jLstUsuariosConectados);
                     this.Hilo = new Thread(this.getHiLoClientes());
                     this.Hilo.start();*/
-                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.jLstMensajesEnviados,this.jLstUsuariosConectados);
+                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.jLstMensajesEnviados,this.jLstUsuariosConectados, this.modeloMensajes);
                     this.HiloMensajes.iniciar();
                     escribirsocket("GETUSERS");
                     this.getTxtName().setEditable(false);
@@ -272,9 +277,18 @@ public class JFCliente extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showConfirmDialog(null, "Desea a enviar a todos los usuarios conectados ?", "Warning", dialogButton);
         if (dialogResult == JOptionPane.YES_OPTION) {
             sendAll(Mensaje);
+            ElementoEnviado(Mensaje);
+            
         } else {
-            JOptionPane.showInputDialog(this, "Debio previamnte seleccionar al usuario que quiere enviarle el mensaje");
-            sendPersonal(Mensaje, this.getUsuAEnviar());
+            //J
+            if(this.getUsuAEnviar().equals("")){
+                JOptionPane.showMessageDialog(this, "Debe seleccionar al usuario que quiere enviarle el mensaje");
+            }
+            else{
+                sendPersonal(Mensaje, this.getUsuAEnviar());
+                ElementoEnviado(Mensaje);
+            }
+            
         }
     }//GEN-LAST:event_btnEnviarMensajeMouseClicked
 
@@ -302,6 +316,8 @@ public class JFCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLstMensajesEnviadosValueChanged
 
     private void eliminarMensaje(String MensajeCompletoSinSeparar) {
+        
+        
 
     }
 
@@ -309,25 +325,18 @@ public class JFCliente extends javax.swing.JFrame {
 
 //            this.Hilo.stop();
         String Comando = "SENDALL " + Mensaje;
-
         escribirsocket(Comando);
-
-        // this.getTheOut().println(Comando);
-//            System.out.println("Entro por enviar a todos.." + Comando);
-//            String res = this.getTheIn().readLine();
-        String res = leersocket();
-//            System.out.println("Res: sendall "+ res);
-        if (res.startsWith("103")) {
-//                System.err.println("Respueata " + res);
-            JOptionPane.showMessageDialog(this, "Mensaje enviado con exito");
-            this.getModelo().addElement("->: " + Mensaje);
-            this.getjLstMensajesEnviados().setModel(getModelo());
-            //this.jLstMensajesEnviados.add(this, "->: " + Mensaje);   
-        } else {
-            if (res.startsWith("203")) {
-                JOptionPane.showMessageDialog(this, "Mensaje No se envio  ");
-            }
-        }
+//        String res = leersocket();
+//        if (res.startsWith("103")){
+//            JOptionPane.showMessageDialog(this, "Mensaje enviado con exito");
+//            this.getModelo().addElement(Mensaje);
+//            this.getjLstMensajesEnviados().setModel(getModelo());
+//            //this.jLstMensajesEnviados.add(this, "->: " + Mensaje);   
+//        } else {
+//            if (res.startsWith("203")) {
+//                JOptionPane.showMessageDialog(this, "Mensaje No se envio  ");
+//            }
+//        }
 
     }
 
@@ -336,29 +345,47 @@ public class JFCliente extends javax.swing.JFrame {
 //            this.getTheOut().println("SEND " + Destinatario + " " + Mensaje);
         escribirsocket(Comando);
 //            String res = this.getTheIn().readLine();
-        String res = leersocket();
-        if (res.startsWith("102")) {
-            JOptionPane.showMessageDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
-//                this.getjLstMensajesEnviados().add(this, Destinatario + "->: " + Mensaje);
-            this.modelo2.addElement(Destinatario + "->: " + Mensaje);
-            this.jLstMensajesEnviados.setModel(this.modelo2);
-        } else {
-            JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
-        }
+//        String res = leersocket();
+//        if (res.startsWith("102")) {
+//            JOptionPane.showMessageDialog(this, "Mensaje enviado con exito al usuario " + Destinatario);
+////                this.getjLstMensajesEnviados().add(this, Destinatario + "->: " + Mensaje);
+//            this.modelo2.addElement(Destinatario + "->: " + Mensaje);
+//            this.jLstMensajesEnviados.setModel(this.modelo2);
+//        } else {
+//            JOptionPane.showConfirmDialog(this, "Mensaje No se envio  ");
+//        }
 
+    }
+    
+    private void ElementoEnviado(String datos){
+        
+        if (!modeloMensajes.contains(datos)) {
+            this.modeloMensajes.addElement("MIO " + datos);
+            this.jLstMensajesEnviados.setModel(this.modeloMensajes);
+        }
+        
+//        this.jLstMensajesEnviados.
+    
+    
     }
 
     /**
      * @param args the command line arguments
      */
     public static void escribirsocket(String Comando) {
-        theOut.println(Comando);
+//        try {
+//            semaforo.acquire();
+            theOut.println(Comando);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public static String leersocket() {
         String a = "";
         try {
             a = theIn.readLine();
+//            semaforo.release();
             return a;
         } catch (IOException ex) {
             Logger.getLogger(JFCliente.class.getName()).log(Level.SEVERE, null, ex);

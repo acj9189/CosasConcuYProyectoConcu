@@ -31,17 +31,18 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
     private BufferedReader theIn;
     private JFCliente cliente;
 
-    DefaultListModel modeloMensajes = new DefaultListModel();
+    DefaultListModel modeloMensajes;
     DefaultListModel modeloClientes = new DefaultListModel();
 
     public hiloEscucharYEnviarMensajes() {
         this.hilo = new Thread(this);
     }
 
-    public hiloEscucharYEnviarMensajes(JList ListaMensaje, JList ListaClientes) {
+    public hiloEscucharYEnviarMensajes(JList ListaMensaje, JList ListaClientes, DefaultListModel modelo) {
         this.hilo = new Thread(this);
         this.ListaMensaje = ListaMensaje;
         this.ListaClientes = ListaClientes;
+        this.modeloMensajes = modelo;
     }
 
     public void iniciar() {
