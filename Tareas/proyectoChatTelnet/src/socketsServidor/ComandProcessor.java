@@ -109,7 +109,7 @@ public class ComandProcessor {
             String idMessage = aCommand.substring(10);
             if (Integer.parseInt(idMessage.substring(0, 3)) == socket.getId()) {
                 removeMessage(idMessage);
-                response = "104 MENSAJE BORRADO CON EXITO";
+                response = "104 MENSAJE BORRADO CON EXITO: " + idMessage ;
             }else{
                 response = "204 MENSAJE NO FUE BORRADO YA QUE NO TIENE PERMISO PARA ESTA OPERACION";
             }

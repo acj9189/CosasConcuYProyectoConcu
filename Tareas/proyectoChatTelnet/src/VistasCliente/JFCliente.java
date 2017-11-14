@@ -316,7 +316,7 @@ public class JFCliente extends javax.swing.JFrame {
 
         String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
         int Posicion = this.jLstMensajesEnviados.getSelectedIndex();
-        String NOmbreUsuCom = mensajeCompletoAEliminar.substring(23,this.nombreUsuario.length());
+        String NOmbreUsuCom = mensajeCompletoAEliminar.substring(4, 4 + this.nombreUsuario.length());
         if(NOmbreUsuCom.equals(this.nombreUsuario)){
             eliminarMensaje(mensajeCompletoAEliminar, Posicion);
         }

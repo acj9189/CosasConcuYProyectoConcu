@@ -143,9 +143,19 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
                         this.modeloClientes.removeElement(datos.toUpperCase());
                         this.ListaClientes.setModel(this.modeloClientes);
                     }
+                } else if(datos.startsWith("104 ")){
+                    datos = datos.substring(31);
+                    int temp;
+                    if(this.ListaIDMensaje.contains(datos.toUpperCase())){
+                        temp = this.modeloMensajes.indexOf(datos);
+                        this.ListaIDMensaje.remove(datos);
+                        this.modeloMensajes.remove(temp);
+                        this.ListaMensaje.setModel(this.modeloMensajes);
+                    }
+                }
                 }
             }
-        }
+        
 
     }
 
