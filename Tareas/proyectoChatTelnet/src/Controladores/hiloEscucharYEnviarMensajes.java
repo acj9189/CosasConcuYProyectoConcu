@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import static VistasCliente.JFCliente.leersocket;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -24,6 +26,8 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
     private Socket SoketAnalisis;
     private JList<String> ListaMensaje;
     private JList<String> ListaClientes;
+    
+    private LinkedList<String> ListaIDMensaje;
 
     private final Thread hilo;
 
@@ -38,11 +42,12 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
         this.hilo = new Thread(this);
     }
 
-    public hiloEscucharYEnviarMensajes(JList ListaMensaje, JList ListaClientes, DefaultListModel modelo) {
+    public hiloEscucharYEnviarMensajes(JList ListaMensaje, JList ListaClientes, DefaultListModel modelo, LinkedList IDMensaje) {
         this.hilo = new Thread(this);
         this.ListaMensaje = ListaMensaje;
         this.ListaClientes = ListaClientes;
         this.modeloMensajes = modelo;
+        this.ListaIDMensaje = IDMensaje;
     }
 
     public void iniciar() {
@@ -109,11 +114,13 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
         while (true) {
             String datos = leersocket();
             if (!datos.equals("")) {
-                if (datos.startsWith("MSG")) {
-//                    String datos2 = datos.substring(4, 0);
-                    System.out.println(datos);
+                if (datos.startsWith("MSG:")) {
+                    String datos2 = datos.substring(4, 21);
+                   //System.err.println(datos2 + "Tamaño");
+                   datos = "MSG:" + datos.substring(22);
                     if (!modeloMensajes.contains(datos)) {
                         this.modeloMensajes.addElement(datos);
+                        this.ListaIDMensaje.add(datos2);
                         this.ListaMensaje.setModel(this.modeloMensajes);
                     }
                 } else if (datos.startsWith("106 ")) {

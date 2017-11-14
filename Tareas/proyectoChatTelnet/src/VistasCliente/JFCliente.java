@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -45,10 +47,13 @@ public class JFCliente extends javax.swing.JFrame {
     private static Semaphore semaforo = new Semaphore(1);
     
     DefaultListModel modeloMensajes = new DefaultListModel();
+    
+    private LinkedList<String> ListaIDMensaje;
 
     public JFCliente() {
         initComponents();
         this.inCliente = this;
+        this.ListaIDMensaje = new LinkedList<>();
 
     }
 
@@ -245,7 +250,7 @@ public class JFCliente extends javax.swing.JFrame {
                     /*this.HiLoClientes = new hiloEscucharClientes(this.jLstUsuariosConectados);
                     this.Hilo = new Thread(this.getHiLoClientes());
                     this.Hilo.start();*/
-                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.jLstMensajesEnviados,this.jLstUsuariosConectados, this.modeloMensajes);
+                    this.HiloMensajes = new hiloEscucharYEnviarMensajes(this.jLstMensajesEnviados,this.jLstUsuariosConectados, this.modeloMensajes, this.ListaIDMensaje);
                     this.HiloMensajes.iniciar();
                     escribirsocket("GETUSERS");
                     this.getTxtName().setEditable(false);
@@ -277,7 +282,7 @@ public class JFCliente extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showConfirmDialog(null, "Desea a enviar a todos los usuarios conectados ?", "Warning", dialogButton);
         if (dialogResult == JOptionPane.YES_OPTION) {
             sendAll(Mensaje);
-            ElementoEnviado(Mensaje);
+           // ElementoEnviado(Mensaje);
             
         } else {
             //J
@@ -286,7 +291,7 @@ public class JFCliente extends javax.swing.JFrame {
             }
             else{
                 sendPersonal(Mensaje, this.getUsuAEnviar());
-                ElementoEnviado(Mensaje);
+               // ElementoEnviado(Mensaje);
             }
             
         }
@@ -305,15 +310,15 @@ public class JFCliente extends javax.swing.JFrame {
             this.setUsuAEnviar("");
 
         }
-
-
     }//GEN-LAST:event_jLstUsuariosConectadosValueChanged
 
     private void jLstMensajesEnviadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosValueChanged
 
         String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
-        if(mensajeCompletoAEliminar.startsWith("MIO")){
-            eliminarMensaje(mensajeCompletoAEliminar);
+        int Posicion = this.jLstMensajesEnviados.getSelectedIndex();
+        String NOmbreUsuCom = mensajeCompletoAEliminar.substring(23,this.nombreUsuario.length());
+        if(NOmbreUsuCom.equals(this.nombreUsuario)){
+            eliminarMensaje(mensajeCompletoAEliminar, Posicion);
         }
         else{
             JOptionPane.showMessageDialog(this, "No se puede eliminar un Mensaje que no haya sido enviado por mi");
@@ -321,9 +326,10 @@ public class JFCliente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jLstMensajesEnviadosValueChanged
 
-    private void eliminarMensaje(String MensajeCompletoSinSeparar) {
+    private void eliminarMensaje(String MensajeCompletoSinSeparar, int pos) {
         
-        String Comando = "REMOVEMSG " ;
+        String ID = this.ListaIDMensaje.get(pos);
+        String Comando = "REMOVEMSG "+ ID ;
         escribirsocket(Comando);
 
     }
@@ -367,7 +373,9 @@ public class JFCliente extends javax.swing.JFrame {
     private void ElementoEnviado(String datos){
         
         if (!modeloMensajes.contains(datos)) {
-            this.modeloMensajes.addElement("MIO " + datos);
+            datos = datos.toUpperCase();
+            this.modeloMensajes.addElement("MIO: "+ this.nombreUsuario +"-> "+ datos);
+            this.ListaIDMensaje.add("Aquii deberia de estar el id que se genereo para el enviar a todos...");
             this.jLstMensajesEnviados.setModel(this.modeloMensajes);
         }
         

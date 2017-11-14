@@ -60,10 +60,10 @@ public class ComandProcessor {
         if (clients.size() > 1) {
             String idMessage = socket.getIdMessage();
             for (SocketController client : clients) {
-                if (sender != client) {
+//                if (sender != client) {
                     client.listMsg.put(idMessage, text);
                     client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
-                }
+//                }
             }
             return true;
         }
