@@ -28,6 +28,7 @@ public class ComandProcessor {
                 String idMessage = socket.getIdMessage();
                 client.listMsg.put(idMessage, text);
                 client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
+               // socket.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
                 return true;
             }
         }
