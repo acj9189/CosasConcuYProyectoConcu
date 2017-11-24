@@ -149,9 +149,6 @@ public class JFCliente extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnEnviarMensaje)
-                        .addContainerGap(597, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,7 +165,10 @@ public class JFCliente extends javax.swing.JFrame {
                                     .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(txtEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 21, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnEnviarMensaje)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,23 +279,32 @@ public class JFCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConectarceMouseClicked
 
     private void btnEnviarMensajeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnviarMensajeMouseClicked
-        String Mensaje = this.getTxtEnviarMensaje().getText();
-        int dialogButton = JOptionPane.YES_NO_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Desea a enviar a todos los usuarios conectados ?", "Warning", dialogButton);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            sendAll(Mensaje);
-           // ElementoEnviado(Mensaje);
-            
-        } else {
-            //J
-            if(this.getUsuAEnviar().equals("")){
-                JOptionPane.showMessageDialog(this, "Debe seleccionar al usuario que quiere enviarle el mensaje");
+//        String Mensaje = this.getTxtEnviarMensaje().getText();
+//        int dialogButton = JOptionPane.YES_NO_OPTION;
+//        int dialogResult = JOptionPane.showConfirmDialog(null, "Desea a enviar a todos los usuarios conectados ?", "Warning", dialogButton);
+//        if (dialogResult == JOptionPane.YES_OPTION) {
+//            sendAll(Mensaje);
+//           // ElementoEnviado(Mensaje);
+//            
+//        } else {
+//            //J
+//            if(this.getUsuAEnviar().equals("")){
+//                JOptionPane.showMessageDialog(this, "Debe seleccionar al usuario que quiere enviarle el mensaje");
+//            }
+//            else{
+//                sendPersonal(Mensaje, this.getUsuAEnviar());
+//               // ElementoEnviado(Mensaje);
+//            }
+//            
+//        }
+        List<String> listaDestinos = this.jLstUsuariosConectados.getSelectedValuesList();
+        String mensaje = this.getTxtEnviarMensaje().getText();
+        if(listaDestinos.size() == 0){
+            sendAll(mensaje);
+        }else{
+            for( String usuarioDestino: listaDestinos){
+                sendPersonal(mensaje, usuarioDestino);
             }
-            else{
-                sendPersonal(Mensaje, this.getUsuAEnviar());
-               // ElementoEnviado(Mensaje);
-            }
-            
         }
     }//GEN-LAST:event_btnEnviarMensajeMouseClicked
 
@@ -305,13 +314,13 @@ public class JFCliente extends javax.swing.JFrame {
 
     private void jLstUsuariosConectadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosValueChanged
 
-        this.setUsuAEnviar(this.getjLstUsuariosConectados().getSelectedValue());
-        if (!this.usuAEnviar.equals(this.nombreUsuario)) {
-            this.setSeleUsuEnviar(true);
-        } else {
-            this.setUsuAEnviar("");
-
-        }
+//        this.setUsuAEnviar(this.getjLstUsuariosConectados().getSelectedValue());
+//        if (!this.usuAEnviar.equals(this.nombreUsuario)) {
+//            this.setSeleUsuEnviar(true);
+//        } else {
+//            this.setUsuAEnviar("");
+//
+//        }
     }//GEN-LAST:event_jLstUsuariosConectadosValueChanged
 
     private void jLstMensajesEnviadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosValueChanged

@@ -92,7 +92,13 @@ public class SocketController implements Runnable {
     }
 
     public void writeText(String text) {
-        getTheOut().println(text);
+        try {
+            getTheOut().println(text);
+        } catch (Exception ex) {
+            System.out.println("Error readText() socketController " + ex);
+            clients.remove(this);
+            quit = true;
+        }
     }
 
     public String readText() throws IOException {
@@ -100,7 +106,7 @@ public class SocketController implements Runnable {
         try {
             text = getTheIn().readLine();
         } catch (SocketException ex) {
-            System.out.println("Error readText() socketController "+ex);
+            System.out.println("Error readText() socketController " + ex);
             clients.remove(this);
             quit = true;
         }
@@ -108,10 +114,10 @@ public class SocketController implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void run(){
         int timeout = 3;
         String command = null;
-        
+
         writeText("W/Server");
         while (!quit) {
             try {
