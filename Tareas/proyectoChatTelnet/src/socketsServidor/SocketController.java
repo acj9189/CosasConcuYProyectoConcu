@@ -33,6 +33,7 @@ public class SocketController implements Runnable {
     private ComandProcessor theCommandProcessor;
     private String name;
     private boolean register;
+    private boolean quit = false;
     public HashMap<String, String> listMsg = new HashMap<>();
 
     public int getId() {
@@ -94,12 +95,14 @@ public class SocketController implements Runnable {
         getTheOut().println(text);
     }
 
-    public String readText() {
-        String text = null;
+    public String readText() throws IOException {
+        String text = "";
         try {
             text = getTheIn().readLine();
-        } catch (IOException ex) {
-            Logger.getLogger(SocketController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SocketException ex) {
+            System.out.println("Error readText() socketController "+ex);
+            clients.remove(this);
+            quit = true;
         }
         return text;
     }
@@ -108,10 +111,14 @@ public class SocketController implements Runnable {
     public void run() {
         int timeout = 3;
         String command = null;
-        boolean quit = false;
+        
         writeText("W/Server");
         while (!quit) {
-            command = readText();
+            try {
+                command = readText();
+            } catch (IOException ex) {
+                Logger.getLogger(SocketController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if (command != null) {
                 if (command.trim().toUpperCase().equals("QUIT")) {
                     quit = true;
