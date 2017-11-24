@@ -306,6 +306,7 @@ public class JFCliente extends javax.swing.JFrame {
                 sendPersonal(mensaje, usuarioDestino);
             }
         }
+        ElementoEnviado(mensaje);
     }//GEN-LAST:event_btnEnviarMensajeMouseClicked
 
     private void jLstUsuariosConectadosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosKeyPressed
