@@ -327,9 +327,11 @@ public class JFCliente extends javax.swing.JFrame {
     private void jLstMensajesEnviadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosValueChanged
 
         String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
+        System.err.println("mesa:"+mensajeCompletoAEliminar);
         int Posicion = this.jLstMensajesEnviados.getSelectedIndex();
-        String NOmbreUsuCom = mensajeCompletoAEliminar.substring(4, 4 + this.nombreUsuario.length());
-        if(NOmbreUsuCom.equals(this.nombreUsuario)){
+        String NOmbreUsuCom = mensajeCompletoAEliminar.substring(4, mensajeCompletoAEliminar.indexOf("-"));
+        System.err.println("us:"+NOmbreUsuCom);
+        if(NOmbreUsuCom.equalsIgnoreCase(this.nombreUsuario)){
             eliminarMensaje(mensajeCompletoAEliminar, Posicion);
         }
         else{
