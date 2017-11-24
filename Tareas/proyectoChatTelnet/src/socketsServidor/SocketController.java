@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -110,11 +111,7 @@ public class SocketController implements Runnable {
         boolean quit = false;
         writeText("W/Server");
         while (!quit) {
-            try {
-                command = readText();
-            } catch (Exception e) {
-                continue;
-            }
+            command = readText();
             if (command != null) {
                 if (command.trim().toUpperCase().equals("QUIT")) {
                     quit = true;
