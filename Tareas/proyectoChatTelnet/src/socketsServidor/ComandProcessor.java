@@ -23,25 +23,28 @@ public class ComandProcessor {
     }
 
     public boolean writeText(String name, String text) {
+        boolean salida = false;
         for (SocketController client : clients) {
-            if (client.getName().equalsIgnoreCase(name)) {
+            if (client.getName().equalsIgnoreCase(name) || client.getName().equalsIgnoreCase(this.socket.getName())) {
                 String idMessage = socket.getIdMessage();
-                client.listMsg.put(idMessage, text);
-                socket.listMsg.put(idMessage, text);
-//                client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
-                socket.writeText("MSG:"+idMessage + "-> " + text);
-                client.writeText("MSG:"+idMessage + "-> " + text);
+//                client.listMsg.put(idMessage, text);
+//                sender.listMsg.put(idMessage, text);
+                System.out.println("Enviado a:"+client.getName()+ ": desde "+ socket.getName());
+                client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
+                //socket.writeText("MSG:"+idMessage + "-> " + text);
+               // sender.writeText("MSG:"+idMessage + "-> " + text);
                 
-                return true;
+//                salida = true;
             }
         }
-        return false;
+        return salida;
     }
 
     public void removeMessage(String idMessage) {
         for (SocketController client : clients) {
 //            if (client.listMsg.containsKey(idMessage)) {
                 client.listMsg.remove(idMessage);
+                client.writeText("104 MENSAJE BORRADO CON EXITO: " + idMessage);
 //            }
         }
     }

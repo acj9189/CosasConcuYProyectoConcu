@@ -85,6 +85,11 @@ public class JFCliente extends javax.swing.JFrame {
         label6 = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         label1.setText("Cliente");
 
@@ -109,9 +114,17 @@ public class JFCliente extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jLstMensajesEnviados);
 
+        jLstUsuariosConectados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLstUsuariosConectadosMouseReleased(evt);
+            }
+        });
         jLstUsuariosConectados.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jLstUsuariosConectadosKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jLstUsuariosConectadosKeyReleased(evt);
             }
         });
         jLstUsuariosConectados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -317,6 +330,7 @@ public class JFCliente extends javax.swing.JFrame {
             }
         }
        // ElementoEnviado(mensaje);
+       
     }//GEN-LAST:event_btnEnviarMensajeMouseClicked
 
     private void jLstUsuariosConectadosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosKeyPressed
@@ -380,6 +394,22 @@ public class JFCliente extends javax.swing.JFrame {
     private void btnEnviarMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarMensajeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEnviarMensajeActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        
+        
+        
+    }//GEN-LAST:event_formMouseClicked
+
+    private void jLstUsuariosConectadosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosKeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jLstUsuariosConectadosKeyReleased
+
+    private void jLstUsuariosConectadosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosMouseReleased
+        // TODO add your handling code here:
+        this.jLstUsuariosConectados.setSelectedIndex(-1);
+    }//GEN-LAST:event_jLstUsuariosConectadosMouseReleased
 
     private void eliminarMensaje(String MensajeCompletoSinSeparar, int pos) {
         

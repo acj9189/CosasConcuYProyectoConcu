@@ -151,7 +151,7 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
                         int temp = this.ListaIDMensaje.indexOf(datos);
                         this.ListaIDMensaje.remove(datos);
                        // this.modeloMensajes.remove(temp);
-                       this.modeloMensajes.removeElementAt(temp);
+                        this.modeloMensajes.removeElementAt(temp);
                         this.ListaMensaje.setModel(this.modeloMensajes);
 //                    }
                   }
