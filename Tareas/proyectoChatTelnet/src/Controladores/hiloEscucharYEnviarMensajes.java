@@ -113,16 +113,17 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
     public void run() {
         while (true) {
             String datos = leersocket();
+            System.out.println(datos);
             if (!datos.equals("")) {
                 if (datos.startsWith("MSG:")) {
                     String datos2 = datos.substring(4, 21);
                    //System.err.println(datos2 + "Tamaño");
                    datos = "MSG:" + datos.substring(22);
-                    if (!modeloMensajes.contains(datos)) {
+//                    if (!modeloMensajes.contains(datos)) {
                         this.modeloMensajes.addElement(datos);
                         this.ListaIDMensaje.add(datos2);
                         this.ListaMensaje.setModel(this.modeloMensajes);
-                    }
+//                    }
                 } else if (datos.startsWith("106 ")) {
                     datos = datos.replace("106 LISTA DE USUARIOS:", "");
                     for (String user : datos.split(";")) {
@@ -145,13 +146,14 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
                     }
                 } else if(datos.startsWith("104 ")){
                     datos = datos.substring(31);
-                    int temp;
-                    if(this.ListaIDMensaje.contains(datos.toUpperCase())){
-                        temp = this.modeloMensajes.indexOf(datos);
+//                    if(this.ListaIDMensaje.contains(datos.toUpperCase())){
+                        //int temp = this.modeloMensajes.indexOf(datos);
+                        int temp = this.ListaIDMensaje.indexOf(datos);
                         this.ListaIDMensaje.remove(datos);
-                        this.modeloMensajes.remove(temp);
+                       // this.modeloMensajes.remove(temp);
+                       this.modeloMensajes.removeElementAt(temp);
                         this.ListaMensaje.setModel(this.modeloMensajes);
-                    }
+//                    }
                   }
                 }
             }

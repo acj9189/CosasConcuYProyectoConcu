@@ -97,6 +97,11 @@ public class JFCliente extends javax.swing.JFrame {
 
         label4.setText("Mensajes Enviados y Recibidos");
 
+        jLstMensajesEnviados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLstMensajesEnviadosMouseClicked(evt);
+            }
+        });
         jLstMensajesEnviados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jLstMensajesEnviadosValueChanged(evt);
@@ -128,6 +133,11 @@ public class JFCliente extends javax.swing.JFrame {
         btnEnviarMensaje.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEnviarMensajeMouseClicked(evt);
+            }
+        });
+        btnEnviarMensaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarMensajeActionPerformed(evt);
             }
         });
 
@@ -224,7 +234,7 @@ public class JFCliente extends javax.swing.JFrame {
 
             String ip = this.getTxtHost().getText();
             int puerto = Integer.valueOf(this.getTxtPort().getText());
-            this.setNombreUsuario(this.getTxtName().getText());
+            this.setNombreUsuario(this.getTxtName().getText().toUpperCase());
 
             if (this.getCont() == 0) {
                 this.setSocketConeccion(new Socket(ip, puerto));
@@ -306,7 +316,7 @@ public class JFCliente extends javax.swing.JFrame {
                 sendPersonal(mensaje, usuarioDestino);
             }
         }
-        ElementoEnviado(mensaje);
+       // ElementoEnviado(mensaje);
     }//GEN-LAST:event_btnEnviarMensajeMouseClicked
 
     private void jLstUsuariosConectadosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosKeyPressed
@@ -326,24 +336,62 @@ public class JFCliente extends javax.swing.JFrame {
 
     private void jLstMensajesEnviadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosValueChanged
 
-        String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
-        System.err.println("mesa:"+mensajeCompletoAEliminar);
-        int Posicion = this.jLstMensajesEnviados.getSelectedIndex();
+        try {
+            
+             String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
+       // System.err.println("mesa:"+mensajeCompletoAEliminar);
+        
+        int Posicion = this.jLstMensajesEnviados.getSelectedIndex() ;
+//        System.out.println(Posicion + "HHH");
         String NOmbreUsuCom = mensajeCompletoAEliminar.substring(4, mensajeCompletoAEliminar.indexOf("-"));
-        System.err.println("us:"+NOmbreUsuCom);
-        if(NOmbreUsuCom.equalsIgnoreCase(this.nombreUsuario)){
+//        System.out.println(mensajeCompletoAEliminar + " : " + Posicion);
+       // System.err.println("us:"+NOmbreUsuCom);
+//        if(NOmbreUsuCom.equalsIgnoreCase(this.nombreUsuario)){
             eliminarMensaje(mensajeCompletoAEliminar, Posicion);
+//        }
+//        else{
+//            JOptionPane.showMessageDialog(this, "No se puede eliminar un Mensaje que no haya sido enviado por mi");
+//        }
+            
+        } catch (Exception e) {
         }
-        else{
-            JOptionPane.showMessageDialog(this, "No se puede eliminar un Mensaje que no haya sido enviado por mi");
-        }
+       
         
     }//GEN-LAST:event_jLstMensajesEnviadosValueChanged
 
+    private void jLstMensajesEnviadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosMouseClicked
+        
+//         String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
+//       // System.err.println("mesa:"+mensajeCompletoAEliminar);
+//        
+//        int Posicion = this.jLstMensajesEnviados.getSelectedIndex() + 1;
+//        String NOmbreUsuCom = mensajeCompletoAEliminar.substring(4, mensajeCompletoAEliminar.indexOf("-"));
+//        System.out.println(mensajeCompletoAEliminar + " : " + Posicion);
+//       // System.err.println("us:"+NOmbreUsuCom);
+////        if(NOmbreUsuCom.equalsIgnoreCase(this.nombreUsuario)){
+//            eliminarMensaje(mensajeCompletoAEliminar, Posicion);
+////        }
+////        else{
+////            JOptionPane.showMessageDialog(this, "No se puede eliminar un Mensaje que no haya sido enviado por mi");
+////        }
+        
+    }//GEN-LAST:event_jLstMensajesEnviadosMouseClicked
+
+    private void btnEnviarMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarMensajeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEnviarMensajeActionPerformed
+
     private void eliminarMensaje(String MensajeCompletoSinSeparar, int pos) {
         
+//        for (int i = 0; i < this.ListaIDMensaje.size(); i++) {
+//            System.out.println(this.ListaIDMensaje.get(i)+ "HH");
+//        }
+        
+      // System.out.println("JJJJ + "+ pos);
         String ID = this.ListaIDMensaje.get(pos);
+        //System.out.println(ID);
         String Comando = "REMOVEMSG "+ ID ;
+       // System.err.println(Comando + "Comando");
         escribirsocket(Comando);
 
     }
@@ -388,7 +436,7 @@ public class JFCliente extends javax.swing.JFrame {
         
         if (!modeloMensajes.contains(datos)) {
             datos = datos.toUpperCase();
-            this.modeloMensajes.addElement("MIO: "+ this.nombreUsuario +"-> "+ datos);
+            this.modeloMensajes.addElement("MIO:"+ this.nombreUsuario +"-> "+ datos);
             this.ListaIDMensaje.add("Aquii deberia de estar el id que se genereo para el enviar a todos...");
             this.jLstMensajesEnviados.setModel(this.modeloMensajes);
         }

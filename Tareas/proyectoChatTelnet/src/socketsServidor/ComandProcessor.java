@@ -27,8 +27,11 @@ public class ComandProcessor {
             if (client.getName().equalsIgnoreCase(name)) {
                 String idMessage = socket.getIdMessage();
                 client.listMsg.put(idMessage, text);
-                client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
-               // socket.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
+                socket.listMsg.put(idMessage, text);
+//                client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
+                socket.writeText("MSG:"+idMessage + "-> " + text);
+                client.writeText("MSG:"+idMessage + "-> " + text);
+                
                 return true;
             }
         }
@@ -37,9 +40,9 @@ public class ComandProcessor {
 
     public void removeMessage(String idMessage) {
         for (SocketController client : clients) {
-            if (client.listMsg.containsKey(idMessage)) {
+//            if (client.listMsg.containsKey(idMessage)) {
                 client.listMsg.remove(idMessage);
-            }
+//            }
         }
     }
 
@@ -57,13 +60,13 @@ public class ComandProcessor {
     }
 
     public boolean writeTextAll(SocketController sender, String text) {
-        System.out.println(clients.size());
+      //  System.out.println(clients.size());
         if (clients.size() > 1) {
             String idMessage = socket.getIdMessage();
             for (SocketController client : clients) {
 //                if (sender != client) {
                     client.listMsg.put(idMessage, text);
-                    client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
+                    client.writeText("MSG:"+ idMessage +" " + text);
 //                }
             }
             return true;
@@ -101,7 +104,8 @@ public class ComandProcessor {
         } else if (aCommand.startsWith("SEND ")) {
             String userName = aCommand.substring(5).substring(0, aCommand.substring(5).indexOf(" "));
             String msg = aCommand.substring(5 + userName.length());
-            if (writeText(userName, socket.getName() + "->" + msg)) {
+//            if (writeText(userName, socket.getName() + "->" + msg)) {
+              if (writeText(userName,  msg)) {
                 response = "102 MENSAJE ENVIADO CON EXITO";
             } else {
                 response = "202 MENSAJE SIN ENVIAR";
