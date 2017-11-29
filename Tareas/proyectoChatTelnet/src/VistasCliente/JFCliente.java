@@ -115,6 +115,9 @@ public class JFCliente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jLstMensajesEnviados);
 
         jLstUsuariosConectados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLstUsuariosConectadosMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jLstUsuariosConectadosMouseReleased(evt);
             }
@@ -394,8 +397,17 @@ public class JFCliente extends javax.swing.JFrame {
 
     private void jLstUsuariosConectadosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosMouseReleased
         // TODO add your handling code here:
-        this.jLstUsuariosConectados.setSelectedIndex(-1);
+        
     }//GEN-LAST:event_jLstUsuariosConectadosMouseReleased
+
+    private void jLstUsuariosConectadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLstUsuariosConectadosMouseClicked
+        
+        if(evt.getClickCount() == 2){
+            this.jLstUsuariosConectados.clearSelection();
+            System.err.println("2");
+        }
+        
+    }//GEN-LAST:event_jLstUsuariosConectadosMouseClicked
 
     private void eliminarMensaje(String MensajeCompletoSinSeparar, int pos) {
         
