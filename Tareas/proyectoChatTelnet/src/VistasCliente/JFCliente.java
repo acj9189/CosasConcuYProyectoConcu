@@ -349,45 +349,31 @@ public class JFCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLstUsuariosConectadosValueChanged
 
     private void jLstMensajesEnviadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosValueChanged
-
-        try {
-            
-             String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
-       // System.err.println("mesa:"+mensajeCompletoAEliminar);
-        
-        int Posicion = this.jLstMensajesEnviados.getSelectedIndex() ;
-//        System.out.println(Posicion + "HHH");
-        String NOmbreUsuCom = mensajeCompletoAEliminar.substring(4, mensajeCompletoAEliminar.indexOf("-"));
-//        System.out.println(mensajeCompletoAEliminar + " : " + Posicion);
-       // System.err.println("us:"+NOmbreUsuCom);
-//        if(NOmbreUsuCom.equalsIgnoreCase(this.nombreUsuario)){
-            eliminarMensaje(mensajeCompletoAEliminar, Posicion);
-//        }
-//        else{
-//            JOptionPane.showMessageDialog(this, "No se puede eliminar un Mensaje que no haya sido enviado por mi");
-//        }
-            
-        } catch (Exception e) {
-        }
-       
-        
+ 
     }//GEN-LAST:event_jLstMensajesEnviadosValueChanged
 
     private void jLstMensajesEnviadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLstMensajesEnviadosMouseClicked
+       
+           try {
+            
+             String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
+           // System.err.println("mesa:"+mensajeCompletoAEliminar);
         
-//         String mensajeCompletoAEliminar = this.getjLstMensajesEnviados().getSelectedValue();
-//       // System.err.println("mesa:"+mensajeCompletoAEliminar);
-//        
-//        int Posicion = this.jLstMensajesEnviados.getSelectedIndex() + 1;
-//        String NOmbreUsuCom = mensajeCompletoAEliminar.substring(4, mensajeCompletoAEliminar.indexOf("-"));
-//        System.out.println(mensajeCompletoAEliminar + " : " + Posicion);
-//       // System.err.println("us:"+NOmbreUsuCom);
-////        if(NOmbreUsuCom.equalsIgnoreCase(this.nombreUsuario)){
-//            eliminarMensaje(mensajeCompletoAEliminar, Posicion);
-////        }
-////        else{
-////            JOptionPane.showMessageDialog(this, "No se puede eliminar un Mensaje que no haya sido enviado por mi");
-////        }
+            int Posicion = this.jLstMensajesEnviados.getSelectedIndex() ;
+    //        System.out.println(Posicion + "HHH");
+//            String NOmbreUsuCom = mensajeCompletoAEliminar.substring(4, mensajeCompletoAEliminar.indexOf("-"));
+    //        System.out.println(mensajeCompletoAEliminar + " : " + Posicion);
+           // System.err.println("us:"+NOmbreUsuCom);
+    //        if(NOmbreUsuCom.equalsIgnoreCase(this.nombreUsuario)){
+                eliminarMensaje(mensajeCompletoAEliminar, Posicion);
+    //        }
+    //        else{
+    //            JOptionPane.showMessageDialog(this, "No se puede eliminar un Mensaje que no haya sido enviado por mi");
+    //        }
+
+            } catch (Exception e) {
+            }
+
         
     }//GEN-LAST:event_jLstMensajesEnviadosMouseClicked
 

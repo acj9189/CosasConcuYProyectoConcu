@@ -21,6 +21,21 @@ public class ComandProcessor {
     public ComandProcessor(SocketController socket) {
         this.socket = socket;
     }
+    
+    public boolean writeTextAll(SocketController sender, String text) {
+      //  System.out.println(clients.size());
+        if (clients.size() > 1) {
+            String idMessage = socket.getIdMessage();
+            for (SocketController client : clients) {
+//                if (sender != client) {
+                    client.listMsg.put(idMessage, text);
+                    client.writeText("MSG:" + idMessage+ " " + client.getName()+ "-> " + text);
+//                }
+            }
+            return true;
+        }
+        return false;
+    }
 
     public boolean writeText(String name, String text) {
         boolean salida = false;
@@ -30,7 +45,7 @@ public class ComandProcessor {
 //                client.listMsg.put(idMessage, text);
 //                sender.listMsg.put(idMessage, text);
                 System.out.println("Enviado a:"+client.getName()+ ": desde "+ socket.getName());
-                client.writeText("MSG:"+idMessage +" "+ socket.getName() + "-> " + text);
+                client.writeText("MSG:" + idMessage + " " + socket.getName() + "-> " + text);
                 //socket.writeText("MSG:"+idMessage + "-> " + text);
                // sender.writeText("MSG:"+idMessage + "-> " + text);
                 
@@ -62,21 +77,6 @@ public class ComandProcessor {
         return true;
     }
 
-    public boolean writeTextAll(SocketController sender, String text) {
-      //  System.out.println(clients.size());
-        if (clients.size() > 1) {
-            String idMessage = socket.getIdMessage();
-            for (SocketController client : clients) {
-//                if (sender != client) {
-                    client.listMsg.put(idMessage, text);
-                    client.writeText("MSG:"+ idMessage +" " + text);
-//                }
-            }
-            return true;
-        }
-        return false;
-    }
-    
     public int getNumofUsers() {
         return clients.size();
     }

@@ -111,6 +111,7 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
 
     @Override
     public void run() {
+        
         while (true) {
             String datos = leersocket();
             System.out.println(datos);
@@ -146,14 +147,14 @@ public class hiloEscucharYEnviarMensajes implements Runnable {
                     }
                 } else if(datos.startsWith("104 ")){
                     datos = datos.substring(31);
-//                    if(this.ListaIDMensaje.contains(datos.toUpperCase())){
+                    if(this.ListaIDMensaje.contains(datos.toUpperCase())){
                         //int temp = this.modeloMensajes.indexOf(datos);
                         int temp = this.ListaIDMensaje.indexOf(datos);
                         this.ListaIDMensaje.remove(datos);
                        // this.modeloMensajes.remove(temp);
                         this.modeloMensajes.removeElementAt(temp);
                         this.ListaMensaje.setModel(this.modeloMensajes);
-//                    }
+                    }
                   }
                 }
             }
