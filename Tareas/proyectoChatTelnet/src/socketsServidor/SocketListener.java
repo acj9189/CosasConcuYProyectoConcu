@@ -46,7 +46,6 @@ public class SocketListener {
         SocketController socketController = null;
         try {
             serverSocket = new ServerSocket(thePort);
-
         } catch (IOException ex) {
             Logger.getLogger(SocketListener.class.getName()).log(Level.SEVERE, null, ex);
         }
