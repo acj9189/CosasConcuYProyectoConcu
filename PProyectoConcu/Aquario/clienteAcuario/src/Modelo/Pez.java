@@ -5,10 +5,15 @@
  */
 package Modelo;
 
+import java.awt.Image;
+
 /**
  *
  * @author Danii
  */
 public class Pez {
-    
+    private int x;
+    private int y;
+    private Image imagen;
+
 }
