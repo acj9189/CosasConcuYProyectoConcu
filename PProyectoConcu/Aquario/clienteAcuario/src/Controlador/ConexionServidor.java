@@ -29,7 +29,7 @@ public class ConexionServidor {
     public ConexionServidor() {
     }
 
-    public ConexionServidor( int Port, String Address) {
+    public ConexionServidor(String Address ,int Port) {
         
         this.Port = Port;
         this.Address = Address;
