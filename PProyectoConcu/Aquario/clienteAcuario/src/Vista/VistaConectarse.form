@@ -69,6 +69,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnConectarce2MouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConectarce2ActionPerformed"/>
       </Events>
     </Component>
     <Component class="java.awt.Label" name="label6">
@@ -83,9 +84,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ingrese la direccion del Host"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Ingrese la direccion del Host"/>
-      </AccessibilityProperties>
     </Component>
     <Component class="java.awt.Label" name="label4">
       <Properties>

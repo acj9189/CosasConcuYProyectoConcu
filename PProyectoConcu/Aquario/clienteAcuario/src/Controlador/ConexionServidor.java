@@ -18,32 +18,34 @@ import java.util.logging.Logger;
  * @author Andres
  */
 public class ConexionServidor {
-    
+
     private Socket Socket;
     private int Port;
     private String Address;
-    
+
     public PrintWriter theOut;
     public BufferedReader theIn;
 
     public ConexionServidor() {
     }
 
-    public ConexionServidor(String Address ,int Port) {
-        
+    public ConexionServidor(String Address, int Port) {
+
         this.Port = Port;
         this.Address = Address;
         try {
             this.Socket = new Socket(this.Address, this.Port);
-            this.theOut = new PrintWriter(this.Socket.getOutputStream(), true);
-            this.theIn = new BufferedReader(new InputStreamReader(this.Socket.getInputStream(), "UTF-8"));
-        } catch (IOException ex) {
+            if (this.Socket != null) {
+                this.theOut = new PrintWriter(this.Socket.getOutputStream(), true);
+                this.theIn = new BufferedReader(new InputStreamReader(this.Socket.getInputStream(), "UTF-8"));
+            }
+        } catch (Exception ex) {
             Logger.getLogger(ConexionServidor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public String Write(String Comando){
-        String Retorno ="";
+
+    public String Write(String Comando) {
+        String Retorno = "";
         try {
             this.theOut.println(Comando);
             Retorno = this.theIn.readLine();
@@ -52,9 +54,9 @@ public class ConexionServidor {
         }
         return Retorno;
     }
-    
-    public String Read(){
-        String Retorno ="";
+
+    public String Read() {
+        String Retorno = "";
         try {
             Retorno = this.theIn.readLine();
         } catch (IOException ex) {
@@ -62,10 +64,5 @@ public class ConexionServidor {
         }
         return Retorno;
     }
-    
-    
-    
-    
-    
-    
+
 }

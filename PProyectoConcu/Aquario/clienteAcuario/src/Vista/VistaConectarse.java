@@ -6,6 +6,7 @@
 package Vista;
 
 import Controlador.ConexionServidor;
+import Controlador.GestorCliente;
 
 /**
  *
@@ -18,6 +19,7 @@ public class VistaConectarse extends javax.swing.JFrame {
      */
     public VistaConectarse() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -42,6 +44,11 @@ public class VistaConectarse extends javax.swing.JFrame {
         btnConectarce2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnConectarce2MouseClicked(evt);
+            }
+        });
+        btnConectarce2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConectarce2ActionPerformed(evt);
             }
         });
 
@@ -88,28 +95,25 @@ public class VistaConectarse extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        label3.getAccessibleContext().setAccessibleName("Ingrese la direccion del Host");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConectarce2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConectarce2MouseClicked
-
         String address = this.txtHost1.getText();
         int port = Integer.valueOf(this.txtPort.getText());
         ConexionServidor cnx = new ConexionServidor(address, port);
-        if (port == 1108){
+        if (port == 1107){
             cnx.Write("<Register Admin>1234");
+            new VistaAdmin().setVisible(true);
+        }else if(port == 1108){
+            new GestorCliente(cnx);
         }
-        else{if(port == 1007){
-            cnx.Write("<Register>&1234&");
-        
-        }
-        }
-        
-        
-        
+        this.dispose();
     }//GEN-LAST:event_btnConectarce2MouseClicked
+
+    private void btnConectarce2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConectarce2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConectarce2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,13 +151,10 @@ public class VistaConectarse extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnConectarce;
-    private javax.swing.JButton btnConectarce1;
     private javax.swing.JButton btnConectarce2;
     private java.awt.Label label3;
     private java.awt.Label label4;
     private java.awt.Label label6;
-    private javax.swing.JTextField txtHost;
     private javax.swing.JTextField txtHost1;
     private javax.swing.JTextField txtPort;
     // End of variables declaration//GEN-END:variables
