@@ -36,15 +36,19 @@ public class PanelCliente extends javax.swing.JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        //if (isPaint()) {
+        if (isPaint()) {
             if (getBackground() != null) {
                 g.drawImage(getBackgroundP().getImage(), 0, 0, 1366, 768, this);
             }
-            for (int i = 0; i < listaPeces.size(); i++) {
-                g.drawImage(listaPeces.get(i).getImagen(), listaPeces.get(i).getX() - 100, listaPeces.get(i).getY() - 180, this);
-
+            try {
+                for (int i = 0; i < listaPeces.size(); i++) {
+                    g.drawImage(listaPeces.get(i).getImagen(), listaPeces.get(i).getX() - 100, listaPeces.get(i).getY() - 180, this);
+                }
+            } catch (Exception e) {
+                System.err.println("Error no importante");
             }
-        //}
+
+        }
         repaint();
     }
 
