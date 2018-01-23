@@ -40,8 +40,9 @@ public class PanelCliente extends javax.swing.JPanel {
             if (getBackground() != null) {
                 g.drawImage(getBackgroundP().getImage(), 0, 0, 1366, 768, this);
             }
-            for (Pez pez : listaPeces) {
-                g.drawImage(pez.getImagen(), pez.getX() - 100, pez.getY() - 180, this);
+            for (int i = 0; i < listaPeces.size(); i++) {
+                g.drawImage(listaPeces.get(i).getImagen(), listaPeces.get(i).getX() - 100, listaPeces.get(i).getY() - 180, this);
+
             }
         }
         repaint();
