@@ -47,9 +47,11 @@ public class GestorCliente implements Runnable {
                     this.vista.definirFondo(sentido);
                     this.vista.setVisible(true);
                 } else if (read.startsWith("<RemoveAllFishes>")) {
+                    this.vista.repintar(false);
                     listaPeces.clear();
+                    this.vista.repintar(true);
                 } else if (read.startsWith("<Repaint>")) {
-                    this.vista.repintar();
+                    this.vista.repintar(true);
                 } else if (read.startsWith("<Add Fish>")) {
                     String pez = read.replace("<Add Fish>", "");
                     //<Add Fish>0&374&128&0

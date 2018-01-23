@@ -92,8 +92,8 @@ public class VistaCliente extends javax.swing.JFrame {
     public void definirFondo(int sentido){
         this.panelCliente1.definirFondo(sentido);
     }
-    public void repintar(){
-        this.panelCliente1.setPaint(true);
+    public void repintar(boolean val){
+        this.panelCliente1.setPaint(val);
     }
     /**
      * @param args the command line arguments
