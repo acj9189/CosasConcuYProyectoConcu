@@ -135,8 +135,8 @@ public class VistaAdmin extends javax.swing.JFrame {
         String Commando = "<Add Fish>" + this.TipoFish + "&100&" + this.Direccon;
         cnx.Write(Commando);
         
-        this.TipoFish = 10;
-        this.Direccon = 3;
+        this.TipoFish = 0;
+        this.Direccon = 0;
         
         jBtnCrearFish.setEnabled(false);
         jCboxTipoFish.setEnabled(false);
