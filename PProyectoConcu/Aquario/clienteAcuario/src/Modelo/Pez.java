@@ -29,7 +29,11 @@ public class Pez {
         this.tipo = tipo;
         this.sentido = sentido;
         String ruta = "../Vista/Images/"+tipo+"-"+sentido+".png";
-        this.imagen = new ImageIcon(getClass().getResource(ruta)).getImage();
+        try {
+            this.imagen = new ImageIcon(getClass().getResource(ruta)).getImage();
+        } catch (Exception e) {
+            System.err.println("Error al cargar la imagen "+e );
+        }
     }
 
     /**

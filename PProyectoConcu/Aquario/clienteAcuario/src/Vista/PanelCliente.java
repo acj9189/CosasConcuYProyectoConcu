@@ -36,7 +36,7 @@ public class PanelCliente extends javax.swing.JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        if (isPaint()) {
+        //if (isPaint()) {
             if (getBackground() != null) {
                 g.drawImage(getBackgroundP().getImage(), 0, 0, 1366, 768, this);
             }
@@ -44,7 +44,7 @@ public class PanelCliente extends javax.swing.JPanel {
                 g.drawImage(listaPeces.get(i).getImagen(), listaPeces.get(i).getX() - 100, listaPeces.get(i).getY() - 180, this);
 
             }
-        }
+        //}
         repaint();
     }
 
