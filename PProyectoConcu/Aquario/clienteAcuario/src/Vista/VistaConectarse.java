@@ -104,7 +104,7 @@ public class VistaConectarse extends javax.swing.JFrame {
         ConexionServidor cnx = new ConexionServidor(address, port);
         if (port == 1107){
             cnx.Write("<Register Admin>1234");
-            new VistaAdmin().setVisible(true);
+            new VistaAdmin(cnx).setVisible(true);
         }else if(port == 1108){
             new GestorCliente(cnx);
         }
