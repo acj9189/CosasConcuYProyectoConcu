@@ -42,7 +42,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="83" max="32767" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -59,7 +59,7 @@
               <Component id="jCboxDireccion" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jBtnCrearFish" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -68,13 +68,14 @@
     <Component class="javax.swing.JComboBox" name="jCboxTipoFish">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
+          <StringArray count="7">
             <StringItem index="0" value="Fish 1"/>
             <StringItem index="1" value="Fish 2"/>
             <StringItem index="2" value="Fish 3"/>
             <StringItem index="3" value="Fish 4"/>
             <StringItem index="4" value="Fish 5"/>
             <StringItem index="5" value="Fish 6"/>
+            <StringItem index="6" value="fish 7"/>
           </StringArray>
         </Property>
       </Properties>

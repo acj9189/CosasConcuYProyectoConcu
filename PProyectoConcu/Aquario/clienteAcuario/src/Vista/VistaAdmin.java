@@ -47,7 +47,7 @@ public class VistaAdmin extends javax.swing.JFrame {
             }
         });
 
-        jCboxTipoFish.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fish 1", "Fish 2", "Fish 3", "Fish 4", "Fish 5", "Fish 6" }));
+        jCboxTipoFish.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fish 1", "Fish 2", "Fish 3", "Fish 4", "Fish 5", "Fish 6", "fish 7" }));
         jCboxTipoFish.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jCboxTipoFishItemStateChanged(evt);
@@ -93,7 +93,7 @@ public class VistaAdmin extends javax.swing.JFrame {
                             .addComponent(jCboxTipoFish, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jBtnCrearFish, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jBtnPermiterCreacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +108,7 @@ public class VistaAdmin extends javax.swing.JFrame {
                 .addComponent(jCboxDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnCrearFish)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -131,8 +131,16 @@ public class VistaAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnPermiterCreacionMouseClicked
 
     private void jBtnCrearFishMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnCrearFishMouseClicked
+        String Commando="";
         
-        String Commando = "<Add Fish>" + this.TipoFish + "&100&" + this.Direccon;
+        if(this.Direccon == 1){
+        Commando = "<Add Fish>" + this.TipoFish + "&1366&" + this.Direccon;
+        
+        }
+        else{
+            Commando = "<Add Fish>" + this.TipoFish + "&100&" + this.Direccon;
+        }
+        
         cnx.Write(Commando);
         
         this.TipoFish = 0;
@@ -170,6 +178,10 @@ public class VistaAdmin extends javax.swing.JFrame {
                 
               case 5:
                 this.TipoFish = 5;
+                break;
+                
+              case 6:
+                this.TipoFish = 6;
                 break;
             
         
