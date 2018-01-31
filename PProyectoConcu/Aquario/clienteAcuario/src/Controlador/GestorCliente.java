@@ -35,17 +35,21 @@ public class GestorCliente implements Runnable {
     @Override
     public void run() {
         String read;
-        this.cnx.Write("<Register>1234&1366&768");
+        this.vista = new VistaCliente();
+        this.vista.setVisible(true);
+        int ancho = (this.vista.getWidth()== 1366)?1366:1920;
+        int alto = (this.vista.getHeight()== 768)?768:1080;
+        this.vista.getPanelCliente1().alto = alto;
+        this.vista.getPanelCliente1().ancho = ancho;
+        this.cnx.Write("<Register>1234&"+ancho+"&"+alto);
         while (!controlHilo) {
             if ((read = this.cnx.Read()) != null) {
                 if (read.startsWith("<Background>")) {
-                    this.vista = new VistaCliente();
                     int sentido = 0;
                     if (read.equalsIgnoreCase("<Background>1")) {
                         sentido = 1;
                     }
                     this.vista.definirFondo(sentido);
-                    this.vista.setVisible(true);
                 } else if (read.startsWith("<RemoveAllFishes>")) {
                     this.vista.repintar(false);
                     listaPeces.clear();

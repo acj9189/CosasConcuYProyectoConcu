@@ -18,6 +18,8 @@ public class PanelCliente extends javax.swing.JPanel {
 
     private ImageIcon background;
     private boolean paint;
+    public int alto;
+    public int ancho;
 
     /**
      * Creates new form PanelCliente
@@ -38,7 +40,7 @@ public class PanelCliente extends javax.swing.JPanel {
     public void paintComponent(Graphics g) {
         if (isPaint()) {
             if (getBackground() != null) {
-                g.drawImage(getBackgroundP().getImage(), 0, 0, 1366, 768, this);
+                g.drawImage(getBackgroundP().getImage(), 0, 0, ancho, alto, this);
             }
             try {
                 for (int i = 0; i < listaPeces.size(); i++) {

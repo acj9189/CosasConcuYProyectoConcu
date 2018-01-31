@@ -86,14 +86,14 @@ public class VistaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        System.err.println("pos:"+evt.getX()+"-"+evt.getY());
+        cnx.Write("<Click>"+evt.getX()+"&"+evt.getY());
     }//GEN-LAST:event_formMouseClicked
     
     public void definirFondo(int sentido){
-        this.panelCliente1.definirFondo(sentido);
+        this.getPanelCliente1().definirFondo(sentido);
     }
     public void repintar(boolean val){
-        this.panelCliente1.setPaint(val);
+        this.getPanelCliente1().setPaint(val);
     }
     /**
      * @param args the command line arguments
@@ -133,4 +133,18 @@ public class VistaCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Vista.PanelCliente panelCliente1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the panelCliente1
+     */
+    public Vista.PanelCliente getPanelCliente1() {
+        return panelCliente1;
+    }
+
+    /**
+     * @param panelCliente1 the panelCliente1 to set
+     */
+    public void setPanelCliente1(Vista.PanelCliente panelCliente1) {
+        this.panelCliente1 = panelCliente1;
+    }
 }
