@@ -6,6 +6,7 @@
 package Vista;
 
 import Controlador.ConexionServidor;
+import Modelo.Imagen;
 
 /**
  *
@@ -19,9 +20,12 @@ public class VistaAdmin extends javax.swing.JFrame {
     static ConexionServidor cnx;
     int TipoFish = 0;
     int Direccon = 0;
+    Imagen Imagen;
     public VistaAdmin(ConexionServidor cnx) {
         initComponents();
         this.cnx = cnx;
+        this.Imagen = new Imagen();
+        
         
     }
 
@@ -34,11 +38,24 @@ public class VistaAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jCboxTipoFish = new javax.swing.JComboBox<>();
         jBtnCrearFish = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jBtnPermiterCreacion = new javax.swing.JToggleButton();
         jCboxDireccion = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -47,7 +64,7 @@ public class VistaAdmin extends javax.swing.JFrame {
             }
         });
 
-        jCboxTipoFish.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fish 1", "Fish 2", "Fish 3", "Fish 4", "Fish 5", "Fish 6", "fish 7" }));
+        jCboxTipoFish.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fish 1", "Fish 2", "Fish 3", "Fish 4", "Fish 5", "Fish 6", "Fish 7" }));
         jCboxTipoFish.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jCboxTipoFishItemStateChanged(evt);
@@ -77,6 +94,17 @@ public class VistaAdmin extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 120, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,8 +120,10 @@ public class VistaAdmin extends javax.swing.JFrame {
                             .addComponent(jCboxDireccion, 0, 175, Short.MAX_VALUE)
                             .addComponent(jCboxTipoFish, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jBtnCrearFish, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jBtnPermiterCreacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                            .addComponent(jBtnPermiterCreacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(66, 66, 66)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,13 +132,19 @@ public class VistaAdmin extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(33, 33, 33)
                 .addComponent(jBtnPermiterCreacion)
-                .addGap(56, 56, 56)
-                .addComponent(jCboxTipoFish, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jCboxDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnCrearFish)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jCboxTipoFish, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jCboxDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnCrearFish)
+                        .addContainerGap(23, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33))))
         );
 
         pack();
@@ -154,34 +190,72 @@ public class VistaAdmin extends javax.swing.JFrame {
 
     private void jCboxTipoFishItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboxTipoFishItemStateChanged
         int seleccion = (jCboxTipoFish.getSelectedIndex());
+        String Ruta = "";
+        
+        
         
         switch (seleccion){
             case 0:
                 this.TipoFish = 0;
+                Ruta =  "../Vista/Images/"+this.TipoFish+"-"+"0.png";
+                this.Imagen.setRuta(Ruta);
+                jPanel2.add(this.Imagen);
+                jPanel2.repaint();
+                
                 break;
                 
              case 1:
                 this.TipoFish = 1;
+                Ruta =  "../Vista/Images/"+this.TipoFish+"-"+"0.png";
+                this.Imagen.setRuta(Ruta);
+                jPanel2.add(this.Imagen);
+                jPanel2.repaint();
+                
                 break;
                 
              case 2:
                 this.TipoFish = 2;
+                Ruta =  "../Vista/Images/"+this.TipoFish+"-"+"0.png";
+                this.Imagen.setRuta(Ruta);
+                jPanel2.add(this.Imagen);
+                jPanel2.repaint();
+                
                 break;
                 
              case 3:
                 this.TipoFish = 3;
+                Ruta =  "../Vista/Images/"+this.TipoFish+"-"+"0.png";
+                this.Imagen.setRuta(Ruta);
+                jPanel2.add(this.Imagen);
+                jPanel2.repaint();
+                
                 break;
                 
              case 4:
                 this.TipoFish = 4;
+                Ruta =  "../Vista/Images/"+this.TipoFish+"-"+"0.png";
+                this.Imagen.setRuta(Ruta);
+                jPanel2.add(this.Imagen);
+                jPanel2.repaint();
+                
                 break;
                 
               case 5:
                 this.TipoFish = 5;
+                Ruta =  "../Vista/Images/"+this.TipoFish+"-"+"0.png";
+                this.Imagen.setRuta(Ruta);
+                jPanel2.add(this.Imagen);
+                jPanel2.repaint();
+                
                 break;
                 
               case 6:
                 this.TipoFish = 6;
+                Ruta =  "../Vista/Images/"+this.TipoFish+"-"+"0.png";
+                this.Imagen.setRuta(Ruta);
+                jPanel2.add(this.Imagen);
+                jPanel2.repaint();
+                
                 break;
             
         
@@ -248,5 +322,7 @@ public class VistaAdmin extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCboxDireccion;
     private javax.swing.JComboBox<String> jCboxTipoFish;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
