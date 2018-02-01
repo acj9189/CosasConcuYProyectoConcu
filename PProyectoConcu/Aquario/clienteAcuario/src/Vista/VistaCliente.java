@@ -22,7 +22,6 @@ public class VistaCliente extends javax.swing.JFrame {
      */
     public VistaCliente() {
         initComponents();
-        JOptionPane.showMessageDialog(rootPane,"Para salir precione la tecla Esc.");
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setResizable(false);
     }
