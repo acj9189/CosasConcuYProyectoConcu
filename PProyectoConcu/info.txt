@@ -1,1 +1,0 @@
-java -jar AquariumServer.java 11000 12000 1234
