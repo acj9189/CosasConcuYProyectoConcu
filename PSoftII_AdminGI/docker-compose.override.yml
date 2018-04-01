@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  psoftii_admingi:
+    ports:
+      - "80"
+networks:
+  default:
+    external:
+      name: nat

@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  psoftii_admingi:
+    image: psoftiiadmingi
+    build:
+      context: .\PSoftII_AdminGI
+      dockerfile: Dockerfile
