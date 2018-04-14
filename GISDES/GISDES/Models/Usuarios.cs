@@ -11,16 +11,13 @@ namespace GISDES.Models
 {
     using System;
     using System.Collections.Generic;
-
-    public partial class Evento
+    
+    public partial class Usuarios
     {
         public decimal Id { get; set; }
-        public string Nombre { get; set; }
-        public string Tipo { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public bool Certificado { get; set; }
-        public string Descripcion { get; set; }
-        public bool Estado { get; set; }
-
+        public string NombreUsuario { get; set; }
+        public string Contraseña { get; set; }
+        public string Rol { get; set; }
+        public string Estado { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GISDESModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GISDESModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Evento">
           <Key>
             <PropertyRef Name="Id" />
@@ -12,16 +12,39 @@
           <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Tipo" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Fecha" Type="smalldatetime" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
           <Property Name="Certificado" Type="bit" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="200" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="PersonaExterna">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Cedula" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="Fechaingreso" Type="date" Nullable="false" />
+          <Property Name="Ocupacion" Type="nvarchar" MaxLength="60" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="1" Scale="1" Nullable="false" />
+          <Property Name="NombreUsuario" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Contraseña" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Rol" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="GISDESModelStoreContainer">
           <EntitySet Name="Evento" EntityType="Self.Evento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonaExterna" EntityType="Self.PersonaExterna" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GISDESModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -39,7 +62,31 @@
         </EntityType>
         <EntityContainer Name="GISDESEntity" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Evento" EntityType="Self.Evento" />
+          <EntitySet Name="PersonaExterna" EntityType="GISDESModel.PersonaExterna" />
+          <EntitySet Name="Usuarios" EntityType="GISDESModel.Usuarios" />
         </EntityContainer>
+        <EntityType Name="PersonaExterna">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Cedula" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="Fechaingreso" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Ocupacion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Nullable="false" Precision="1" Scale="1" />
+          <Property Name="NombreUsuario" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Contraseña" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Rol" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -56,6 +103,30 @@
                 <ScalarProperty Name="Certificado" ColumnName="Certificado" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonaExterna">
+            <EntityTypeMapping TypeName="GISDESModel.PersonaExterna">
+              <MappingFragment StoreEntitySet="PersonaExterna">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Ocupacion" ColumnName="Ocupacion" />
+                <ScalarProperty Name="Fechaingreso" ColumnName="Fechaingreso" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="GISDESModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

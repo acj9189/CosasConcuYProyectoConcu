@@ -71,7 +71,9 @@ namespace GISDES.Controllers
                     eventoNuevo.Nombre = evento.Nombre;
                     eventoNuevo.Tipo = evento.Tipo;
                     eventoNuevo.Fecha = evento.Fecha;
+                    bd.SaveChanges();
 
+                    return RedirectToAction("Index");
                 }
             }
             catch (Exception ex)
@@ -82,9 +84,24 @@ namespace GISDES.Controllers
             return View();
         }
 
-        public ActionResult Eliminar()
+        public ActionResult Eliminar(int id)
         {
-            return View();
+            try
+            {
+                using (GISDESEntity bd = new GISDESEntity())
+                {
+                    Evento e = bd.Evento.Find(id);
+                    e.Estado = false;
+                    bd.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Error al almacenar el evento modificado", ex);
+                return View();
+            }
         }
 
     }

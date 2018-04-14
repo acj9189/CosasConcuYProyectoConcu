@@ -26,5 +26,7 @@ namespace GISDES.Models
         }
     
         public virtual DbSet<Evento> Evento { get; set; }
+        public virtual DbSet<PersonaExterna> PersonaExterna { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
     }
 }

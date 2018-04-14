@@ -14,5 +14,29 @@
   </EntityType>
   <EntityContainer Name="GISDESEntity" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Evento" EntityType="Self.Evento" />
+    <EntitySet Name="PersonaExterna" EntityType="GISDESModel.PersonaExterna" />
+    <EntitySet Name="Usuarios" EntityType="GISDESModel.Usuarios" />
   </EntityContainer>
+  <EntityType Name="PersonaExterna">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Apellido" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Cedula" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+    <Property Name="Fechaingreso" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Ocupacion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="Estado" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="1" Scale="1" />
+    <Property Name="NombreUsuario" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Contraseña" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Rol" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Estado" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>
