@@ -14,7 +14,7 @@ namespace GISDES.Controllers
         {
             using (GISDESEntity bd = new GISDESEntity())
             {
-                List<Evento> lista = bd.Evento.ToList();
+                List<Evento> lista = bd.Evento.Where(ev => ev.Estado == true).ToList();
                 return View(lista);
             }
         }
@@ -27,6 +27,7 @@ namespace GISDES.Controllers
             {
                 using (GISDESEntity bd = new GISDESEntity())
                 {
+                    e.Estado = true;
                     bd.Evento.Add(e);
                     bd.SaveChanges();
                     return RedirectToAction("Index");

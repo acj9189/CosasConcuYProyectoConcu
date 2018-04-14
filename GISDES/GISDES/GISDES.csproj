@@ -149,7 +149,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Class\DatePickerModel.cs" />
     <Compile Include="Models\Evento.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
