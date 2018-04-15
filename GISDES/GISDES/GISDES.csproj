@@ -146,8 +146,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EventoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfesorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Estudiantes.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Evento.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -170,7 +174,10 @@
     <Compile Include="Models\PersonaExterna.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usuarios.cs">
+    <Compile Include="Models\Profesor.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -276,6 +283,9 @@
     <Content Include="Views\Evento\Index.cshtml" />
     <Content Include="Views\Evento\Crear.cshtml" />
     <Content Include="Views\Evento\Modificar.cshtml" />
+    <Content Include="Views\Profesor\Index.cshtml" />
+    <Content Include="Views\Profesor\Agregar.cshtml" />
+    <Content Include="Views\Profesor\Actualizar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

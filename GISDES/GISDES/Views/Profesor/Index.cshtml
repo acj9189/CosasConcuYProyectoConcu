@@ -1,0 +1,63 @@
+﻿@model IEnumerable<GISDES.Models.Profesor>
+
+@{
+    ViewBag.Title = "Agregar profesor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Agregar profesor", "Agregar")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cvlac)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Intereses)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Departamento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellidos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cvlac)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Intereses)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Departamento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Actualizar", new { id=item.Id }) |
+            @Html.ActionLink("Borrar", "Eliminar", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

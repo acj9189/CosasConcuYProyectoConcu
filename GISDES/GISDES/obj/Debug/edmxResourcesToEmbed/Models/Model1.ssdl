@@ -1,5 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GISDESModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Estudiantes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nombres" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellidos" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+    <Property Name="Estudios" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Celular" Type="nvarchar" MaxLength="50" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="Evento">
     <Key>
       <PropertyRef Name="Id" />
@@ -24,19 +36,33 @@
     <Property Name="Ocupacion" Type="nvarchar" MaxLength="60" />
     <Property Name="Estado" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="Usuarios">
+  <EntityType Name="Profesor">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="numeric" Precision="1" Scale="1" Nullable="false" />
-    <Property Name="NombreUsuario" Type="nvarchar" MaxLength="30" Nullable="false" />
-    <Property Name="Contraseña" Type="nvarchar" MaxLength="30" Nullable="false" />
-    <Property Name="Rol" Type="nvarchar" MaxLength="30" Nullable="false" />
-    <Property Name="Estado" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Apellidos" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Cvlac" Type="nvarchar" MaxLength="200" />
+    <Property Name="Intereses" Type="nvarchar" MaxLength="200" />
+    <Property Name="Departamento" Type="nvarchar" MaxLength="200" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityContainer Name="GISDESModelStoreContainer">
+    <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Evento" EntityType="Self.Evento" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PersonaExterna" EntityType="Self.PersonaExterna" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>

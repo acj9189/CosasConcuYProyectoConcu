@@ -12,14 +12,14 @@ namespace GISDES.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Evento
+    public partial class Estudiantes
     {
-        public decimal Id { get; set; }
-        public string Nombre { get; set; }
-        public string Tipo { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public bool Certificado { get; set; }
-        public string Descripcion { get; set; }
-        public bool Estado { get; set; }
+        public string id { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        public System.DateTime FechaNacimiento { get; set; }
+        public string Estudios { get; set; }
+        public string Celular { get; set; }
+        public string Correo { get; set; }
     }
 }

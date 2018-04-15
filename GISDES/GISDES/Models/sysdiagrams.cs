@@ -12,14 +12,12 @@ namespace GISDES.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Evento
+    public partial class sysdiagrams
     {
-        public decimal Id { get; set; }
-        public string Nombre { get; set; }
-        public string Tipo { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public bool Certificado { get; set; }
-        public string Descripcion { get; set; }
-        public bool Estado { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

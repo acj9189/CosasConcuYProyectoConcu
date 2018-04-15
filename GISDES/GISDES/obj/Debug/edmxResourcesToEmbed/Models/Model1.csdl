@@ -15,7 +15,9 @@
   <EntityContainer Name="GISDESEntity" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Evento" EntityType="Self.Evento" />
     <EntitySet Name="PersonaExterna" EntityType="GISDESModel.PersonaExterna" />
-    <EntitySet Name="Usuarios" EntityType="GISDESModel.Usuarios" />
+    <EntitySet Name="Estudiantes" EntityType="GISDESModel.Estudiantes" />
+    <EntitySet Name="sysdiagrams" EntityType="GISDESModel.sysdiagrams" />
+    <EntitySet Name="Profesor" EntityType="GISDESModel.Profesor" />
   </EntityContainer>
   <EntityType Name="PersonaExterna">
     <Key>
@@ -29,14 +31,38 @@
     <Property Name="Ocupacion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
     <Property Name="Estado" Type="Boolean" Nullable="false" />
   </EntityType>
-  <EntityType Name="Usuarios">
+  <EntityType Name="Estudiantes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Estudios" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Profesor">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Decimal" Nullable="false" Precision="1" Scale="1" />
-    <Property Name="NombreUsuario" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-    <Property Name="Contraseña" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-    <Property Name="Rol" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-    <Property Name="Estado" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Cvlac" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Intereses" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Departamento" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Estado" Type="Boolean" Nullable="false" />
   </EntityType>
 </Schema>

@@ -153,8 +153,8 @@ D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\bin\es\System.Web.Web
 D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\bin\es\System.Web.WebPages.Deployment.resources.dll
 D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\bin\es\System.Web.WebPages.Razor.resources.dll
 D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\bin\es\System.Web.Optimization.resources.dll
-D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\obj\Debug\GISDES.csprojResolveAssemblyReference.cache
 D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\obj\Debug\GISDES.csproj.CoreCompileInputs.cache
 D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\obj\Debug\GISDES.csproj.CopyComplete
 D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\obj\Debug\GISDES.dll
 D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\obj\Debug\GISDES.pdb
+D:\Documents\GitHub\proyectoSoftIIProgramari\GISDES\GISDES\obj\Debug\GISDES.csprojResolveAssemblyReference.cache
