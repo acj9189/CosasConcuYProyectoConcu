@@ -1,11 +1,11 @@
-﻿using GISDES.Models;
+﻿using GisDes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace GISDES.Controllers
+namespace GisDes.Controllers
 {
     public class ProfesorController : Controller
     {
@@ -17,16 +17,16 @@ namespace GISDES.Controllers
                 List<Profesor> listaProfesores = bd.Profesor.ToList();
                 return View(listaProfesores);
             }
-                
+
         }
-        
+
         public ActionResult Agregar(Profesor profesor)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View();
             try
             {
-                using(GISDESEntity bd = new GISDESEntity())
+                using (GISDESEntity bd = new GISDESEntity())
                 {
                     bd.Profesor.Add(profesor);
                     bd.SaveChanges();

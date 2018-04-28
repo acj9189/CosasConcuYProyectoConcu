@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace GISDES.Controllers
+namespace GisDes.Controllers
 {
     public class HomeController : Controller
     {

@@ -48,21 +48,21 @@
     <Property Name="Departamento" Type="nvarchar" MaxLength="200" />
     <Property Name="Estado" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
+  <EntityType Name="Usuarios">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreUsuario" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Contraseña" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Rol" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Estado" Type="nvarchar" MaxLength="30" Nullable="false" />
   </EntityType>
   <EntityContainer Name="GISDESModelStoreContainer">
     <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Evento" EntityType="Self.Evento" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PersonaExterna" EntityType="Self.PersonaExterna" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>

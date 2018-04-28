@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GISDES.Models
+namespace GisDes.Models
 {
     using System;
     using System.Collections.Generic;

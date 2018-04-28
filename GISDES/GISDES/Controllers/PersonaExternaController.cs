@@ -1,32 +1,32 @@
-﻿using GISDES.Models;
+﻿using GisDes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace GISDES.Controllers
+namespace GisDes.Controllers
 {
     public class PersonaExternaController : Controller
     {
         // GET: PersonaExterna
         public ActionResult Index()
         {
-            using (GISDESEntities bd = new Models.GISDESEntities())
+            using (GISDESEntity bd = new Models.GISDESEntity())
             {
                 List<PersonaExterna> lista = bd.PersonaExterna.Where(ev => ev.Estado == true).ToList();
                 return View(lista);
             }
         }
-    
-   
+
+
         public ActionResult Agregar(PersonaExterna e)
         {
             if (!ModelState.IsValid)
                 return View();
             try
             {
-                using (GISDESEntities bd = new GISDESEntities())
+                using (GISDESEntity bd = new GISDESEntity())
                 {
                     e.Estado = true;
                     bd.PersonaExterna.Add(e);
@@ -47,7 +47,7 @@ namespace GISDES.Controllers
         {
             try
             {
-                using (GISDESEntities db = new GISDESEntities())
+                using (GISDESEntity db = new GISDESEntity())
                 {
                     PersonaExterna personaExterna = db.PersonaExterna.Find(id);
                     return View(personaExterna);
@@ -67,7 +67,7 @@ namespace GISDES.Controllers
         {
             try
             {
-                using (GISDESEntities db = new GISDESEntities())
+                using (GISDESEntity db = new GISDESEntity())
                 {
                     PersonaExterna personaExternaNuevo = db.PersonaExterna.Find(persona.Id);
                     personaExternaNuevo.Nombre = persona.Nombre;
@@ -93,7 +93,7 @@ namespace GISDES.Controllers
         {
             try
             {
-                using (GISDESEntities db = new GISDESEntities())
+                using (GISDESEntity db = new GISDESEntity())
                 {
                     PersonaExterna personaExterna = db.PersonaExterna.Find(id);
                     return View(personaExterna);
@@ -109,7 +109,7 @@ namespace GISDES.Controllers
 
         public ActionResult Eliminar(int id)
         {
-            using (GISDESEntities db = new GISDESEntities())
+            using (GISDESEntity db = new GISDESEntity())
             {
                 PersonaExterna personaExterna = db.PersonaExterna.Find(id);
                 db.PersonaExterna.Remove(personaExterna);
@@ -117,7 +117,7 @@ namespace GISDES.Controllers
                 return RedirectToAction("Index");
 
             }
-          
+
         }
     }
 }

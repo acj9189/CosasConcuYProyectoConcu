@@ -12,14 +12,12 @@ namespace GisDes.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Estudiantes
+    public partial class Usuarios
     {
-        public string id { get; set; }
-        public string Nombres { get; set; }
-        public string Apellidos { get; set; }
-        public System.DateTime FechaNacimiento { get; set; }
-        public string Estudios { get; set; }
-        public string Celular { get; set; }
-        public string Correo { get; set; }
+        public int Id { get; set; }
+        public string NombreUsuario { get; set; }
+        public string Contraseña { get; set; }
+        public string Rol { get; set; }
+        public string Estado { get; set; }
     }
 }

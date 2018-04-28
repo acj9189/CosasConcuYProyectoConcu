@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace GISDES
+namespace GisDes
 {
     public class BundleConfig
     {

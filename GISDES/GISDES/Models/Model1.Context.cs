@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GISDES.Models
+namespace GisDes.Models
 {
     using System;
     using System.Data.Entity;
@@ -25,10 +25,10 @@ namespace GISDES.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Estudiantes> Estudiantes { get; set; }
         public virtual DbSet<Evento> Evento { get; set; }
         public virtual DbSet<PersonaExterna> PersonaExterna { get; set; }
-        public virtual DbSet<Estudiantes> Estudiantes { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
     }
 }

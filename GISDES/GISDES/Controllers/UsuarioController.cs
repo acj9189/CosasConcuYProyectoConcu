@@ -1,11 +1,11 @@
-﻿using GISDES.Models;
+﻿using GisDes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace GISDES.Controllers
+namespace GisDes.Controllers
 {
     public class UsuarioController : Controller
     {
@@ -18,7 +18,7 @@ namespace GISDES.Controllers
                 List<Usuarios> lista = bd.Usuarios.ToList();
                 return View(lista);
             }
-            
+
         }
 
         // Método que crea un Usuario, adicionandolo a la base de datos, recibiendo como parámetro 
@@ -26,7 +26,7 @@ namespace GISDES.Controllers
 
         public ActionResult CrearU(Usuarios u)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View();
             try
             {
@@ -66,7 +66,7 @@ namespace GISDES.Controllers
             }
         }
 
-        
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -91,7 +91,7 @@ namespace GISDES.Controllers
                 ModelState.AddModelError("Error al almacenar el usuario modificado", ex);
                 return View();
             }
-            
+
         }
 
 
