@@ -13,10 +13,10 @@ namespace GisDes.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GISDESEntity : DbContext
+    public partial class GISDESEntities : DbContext
     {
-        public GISDESEntity()
-            : base("name=GISDESEntity")
+        public GISDESEntities()
+            : base("name=GISDESEntities")
         {
         }
     
@@ -25,10 +25,9 @@ namespace GisDes.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Estudiantes> Estudiantes { get; set; }
         public virtual DbSet<Evento> Evento { get; set; }
-        public virtual DbSet<PersonaExterna> PersonaExterna { get; set; }
-        public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<Integrantes> Integrantes { get; set; }
+        public virtual DbSet<SemilleroInvestigacion> SemilleroInvestigacion { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
     }
 }

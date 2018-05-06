@@ -12,14 +12,13 @@ namespace GisDes.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Estudiantes
+    public partial class SemilleroInvestigacion
     {
-        public string id { get; set; }
-        public string Nombres { get; set; }
-        public string Apellidos { get; set; }
-        public System.DateTime FechaNacimiento { get; set; }
-        public string Estudios { get; set; }
-        public string Celular { get; set; }
-        public string Correo { get; set; }
+        public decimal ID { get; set; }
+        public string Nombre { get; set; }
+        public int IDCoordinador { get; set; }
+        public string Descripcion { get; set; }
+    
+        public virtual Integrantes Integrantes { get; set; }
     }
 }

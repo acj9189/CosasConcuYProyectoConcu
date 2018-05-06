@@ -4,19 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GISDESModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Estudiantes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Nombres" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Apellidos" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="FechaNacimiento" Type="date" Nullable="false" />
-          <Property Name="Estudios" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Celular" Type="nvarchar" MaxLength="50" />
-          <Property Name="Correo" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
+    <Schema Namespace="GISDESModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Evento">
           <Key>
             <PropertyRef Name="Id" />
@@ -29,30 +17,41 @@
           <Property Name="Descripcion" Type="nvarchar" MaxLength="200" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="PersonaExterna">
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'GISDES.dbo.GruposInvestigacion' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="GruposInvestigacion">
+          <Property Name="ID" Type="int" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="IdCordinador" Type="int" />
+          <Property Name="IdSemillero" Type="int" />
+        </EntityType>-->
+        <EntityType Name="Integrantes">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Apellido" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Cedula" Type="numeric" Precision="12" Scale="0" Nullable="false" />
-          <Property Name="Fechaingreso" Type="date" Nullable="false" />
-          <Property Name="Ocupacion" Type="nvarchar" MaxLength="60" />
-          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="Ocupación" Type="varchar" MaxLength="50" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CvLAC" Type="varchar(max)" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Profesor">
+        <EntityType Name="SemilleroInvestigacion">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Apellidos" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Cvlac" Type="nvarchar" MaxLength="200" />
-          <Property Name="Intereses" Type="nvarchar" MaxLength="200" />
-          <Property Name="Departamento" Type="nvarchar" MaxLength="200" />
-          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IDCoordinador" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'GISDES.dbo.Table_prueba' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Table_prueba">
+          <Property Name="id" Type="int" />
+          <Property Name="nombre" Type="nchar" MaxLength="10" />
+        </EntityType>-->
         <EntityType Name="Usuarios">
           <Key>
             <PropertyRef Name="Id" />
@@ -63,30 +62,32 @@
           <Property Name="Rol" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Estado" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
+        <Association Name="FK_SemilleroInvestigacion_Integrantes">
+          <End Role="Integrantes" Type="Self.Integrantes" Multiplicity="1" />
+          <End Role="SemilleroInvestigacion" Type="Self.SemilleroInvestigacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Integrantes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SemilleroInvestigacion">
+              <PropertyRef Name="IDCoordinador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GISDESModelStoreContainer">
-          <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Evento" EntityType="Self.Evento" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PersonaExterna" EntityType="Self.PersonaExterna" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Integrantes" EntityType="Self.Integrantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SemilleroInvestigacion" EntityType="Self.SemilleroInvestigacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SemilleroInvestigacion_Integrantes" Association="Self.FK_SemilleroInvestigacion_Integrantes">
+            <End Role="Integrantes" EntitySet="Integrantes" />
+            <End Role="SemilleroInvestigacion" EntitySet="SemilleroInvestigacion" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GISDESModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Estudiantes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Estudios" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="Evento">
           <Key>
             <PropertyRef Name="Id" />
@@ -99,29 +100,28 @@
           <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="PersonaExterna">
+        <EntityType Name="Integrantes">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Cedula" Type="Decimal" Precision="12" Scale="0" Nullable="false" />
-          <Property Name="Fechaingreso" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Ocupacion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ocupación" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CvLAC" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SemilleroInvestigacion" Relationship="Self.FK_SemilleroInvestigacion_Integrantes" FromRole="Integrantes" ToRole="SemilleroInvestigacion" />
         </EntityType>
-        <EntityType Name="Profesor">
+        <EntityType Name="SemilleroInvestigacion">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Apellidos" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Cvlac" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Intereses" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Departamento" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IDCoordinador" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Integrantes" Relationship="Self.FK_SemilleroInvestigacion_Integrantes" FromRole="SemilleroInvestigacion" ToRole="Integrantes" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -133,32 +133,34 @@
           <Property Name="Rol" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="GISDESEntity" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" />
+        <Association Name="FK_SemilleroInvestigacion_Integrantes">
+          <End Role="Integrantes" Type="Self.Integrantes" Multiplicity="1" />
+          <End Role="SemilleroInvestigacion" Type="Self.SemilleroInvestigacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Integrantes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SemilleroInvestigacion">
+              <PropertyRef Name="IDCoordinador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GISDESEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Evento" EntityType="Self.Evento" />
-          <EntitySet Name="PersonaExterna" EntityType="Self.PersonaExterna" />
-          <EntitySet Name="Profesor" EntityType="Self.Profesor" />
+          <EntitySet Name="Integrantes" EntityType="Self.Integrantes" />
+          <EntitySet Name="SemilleroInvestigacion" EntityType="Self.SemilleroInvestigacion" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_SemilleroInvestigacion_Integrantes" Association="Self.FK_SemilleroInvestigacion_Integrantes">
+            <End Role="Integrantes" EntitySet="Integrantes" />
+            <End Role="SemilleroInvestigacion" EntitySet="SemilleroInvestigacion" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GISDESModelStoreContainer" CdmEntityContainer="GISDESEntity">
-          <EntitySetMapping Name="Estudiantes">
-            <EntityTypeMapping TypeName="GISDESModel.Estudiantes">
-              <MappingFragment StoreEntitySet="Estudiantes">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="Estudios" ColumnName="Estudios" />
-                <ScalarProperty Name="Celular" ColumnName="Celular" />
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="GISDESModelStoreContainer" CdmEntityContainer="GISDESEntities">
           <EntitySetMapping Name="Evento">
             <EntityTypeMapping TypeName="GISDESModel.Evento">
               <MappingFragment StoreEntitySet="Evento">
@@ -172,29 +174,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PersonaExterna">
-            <EntityTypeMapping TypeName="GISDESModel.PersonaExterna">
-              <MappingFragment StoreEntitySet="PersonaExterna">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-                <ScalarProperty Name="Fechaingreso" ColumnName="Fechaingreso" />
-                <ScalarProperty Name="Ocupacion" ColumnName="Ocupacion" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <EntitySetMapping Name="Integrantes">
+            <EntityTypeMapping TypeName="GISDESModel.Integrantes">
+              <MappingFragment StoreEntitySet="Integrantes">
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Ocupación" ColumnName="Ocupación" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CvLAC" ColumnName="CvLAC" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Profesor">
-            <EntityTypeMapping TypeName="GISDESModel.Profesor">
-              <MappingFragment StoreEntitySet="Profesor">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="SemilleroInvestigacion">
+            <EntityTypeMapping TypeName="GISDESModel.SemilleroInvestigacion">
+              <MappingFragment StoreEntitySet="SemilleroInvestigacion">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="Cvlac" ColumnName="Cvlac" />
-                <ScalarProperty Name="Intereses" ColumnName="Intereses" />
-                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IDCoordinador" ColumnName="IDCoordinador" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
