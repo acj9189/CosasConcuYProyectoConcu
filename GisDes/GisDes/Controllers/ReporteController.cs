@@ -36,12 +36,6 @@ namespace GisDes.Controllers
                                                        && integrante.FechaIngreso < fechaFinal 
                                                        && integrante.Estado == 1).ToList();
 
-                f
-
-
-
-
-
                 switch (parametroReporte.ToLower())
                 {
                     case "año":
