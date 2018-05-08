@@ -44,6 +44,8 @@ namespace GisDes.Controllers
                         break;
                     case "dia":
                         break;
+                    case "DIA":
+                        break;
                 }
  
 
