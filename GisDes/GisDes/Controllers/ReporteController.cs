@@ -49,8 +49,8 @@ namespace GisDes.Controllers
                     case "DIA":
                         break;
                 }
- 
 
+                return View(listaSemillerosIntegrantes);
             }
             return View();
         }
