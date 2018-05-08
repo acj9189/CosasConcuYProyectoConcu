@@ -15,6 +15,8 @@ namespace GisDes.Controllers
             return View();
         }
 
+        //Este desdarrollo lo realizo Daniel
+
         /// <summary>
         /// Reporte de semilleros por numero de estudiantes en rango de fecha a partir de los datos capturados desde la vista
         /// Caso de uso: CD-01
@@ -36,12 +38,6 @@ namespace GisDes.Controllers
                                                        && integrante.FechaIngreso < fechaFinal 
                                                        && integrante.Estado == 1).ToList();
 
-                f
-
-
-
-
-
                 switch (parametroReporte.ToLower())
                 {
                     case "año":
@@ -49,6 +45,8 @@ namespace GisDes.Controllers
                     case "mes":
                         break;
                     case "dia":
+                        break;
+                    case "DIA":
                         break;
                 }
  
