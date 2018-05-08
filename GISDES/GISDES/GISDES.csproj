@@ -150,41 +150,130 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\EstudianteController.cs" />
-    <Compile Include="Controllers\EventoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PersonaExternaController.cs" />
-    <Compile Include="Controllers\ProfesorController.cs" />
-    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Actividad.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ActividadAsociadoGrupoInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ActividadAsociadoSemilleroInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Articulo.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArticuloAsociadoGrupoInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArticuloAsociadoSemilleroInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Categoria.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Clasificacion.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ConexionBD.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConexionBD.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ConexionBD.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ConexionBD.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConexionBD.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Estado.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Evento.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ConexionBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Integrantes.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\EventoAsociadoGrupoInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
+    <Compile Include="Models\EventoAsociadoSemilleroInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\GrupoInvestigacion.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <Compile Include="Models\Integrante.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IntegranteActividad.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IntegranteArticulo.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IntegranteEvento.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IntegranteGrupoInvestigacion.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IntegranteLibro.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IntegranteProyecto.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IntegranteReconocimiento.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IntegranteSemilleroInvestigacion.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Libro.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LibroAsociadoGrupoInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LibroAsociadoSemilleroInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LineaInvestigacion.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NivelAcademico.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Proyecto.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProyectoAsociadoGrupoInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProyectoAsociadoSemilleroInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReconociemientoAsociadoGrupoInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReconociemientoAsociadoSemilleroInv.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Reconocimiento.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SemilleroInvestigacion.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ConexionBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usuarios.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\TipoIntegrante.cs">
+      <DependentUpon>ConexionBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -195,27 +284,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Model1.Context.tt">
+    <Content Include="Models\ConexionBD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>ConexionBD.edmx</DependentUpon>
+      <LastGenOutput>ConexionBD.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Model1.tt">
+    <Content Include="Models\ConexionBD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>ConexionBD.edmx</DependentUpon>
+      <LastGenOutput>ConexionBD.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\Model1.edmx">
+    <EntityDeploy Include="Models\ConexionBD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>ConexionBD.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <Content Include="Models\ConexionBD.edmx.diagram">
+      <DependentUpon>ConexionBD.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -242,18 +331,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Estudiante\Create.cshtml" />
-    <Content Include="Views\Estudiante\Delete.cshtml" />
-    <Content Include="Views\Estudiante\Details.cshtml" />
-    <Content Include="Views\Estudiante\Edit.cshtml" />
-    <Content Include="Views\Estudiante\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Evento\" />
-    <Folder Include="Views\PersonaExterna\" />
-    <Folder Include="Views\Profesor\" />
-    <Folder Include="Views\Usuario\" />
+    <Folder Include="Views\Reporte\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

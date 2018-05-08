@@ -12,31 +12,32 @@ namespace GisDes.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Evento
+    public partial class Proyecto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Evento()
+        public Proyecto()
         {
-            this.IntegranteEvento = new HashSet<IntegranteEvento>();
-            this.EventoAsociadoGrupoInv = new HashSet<EventoAsociadoGrupoInv>();
-            this.EventoAsociadoSemilleroInv = new HashSet<EventoAsociadoSemilleroInv>();
+            this.IntegranteProyecto = new HashSet<IntegranteProyecto>();
+            this.ProyectoAsociadoGrupoInv = new HashSet<ProyectoAsociadoGrupoInv>();
+            this.ProyectoAsociadoSemilleroInv = new HashSet<ProyectoAsociadoSemilleroInv>();
         }
     
         public decimal Id { get; set; }
         public string Nombre { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public string EnteOrganizador { get; set; }
-        public bool Certificado { get; set; }
-        public string Ciudad { get; set; }
+        public string Lugar { get; set; }
+        public decimal InvestigadorPrincipal { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public System.DateTime FechaFin { get; set; }
         public System.DateTime FechaUpdate { get; set; }
         public Nullable<decimal> Estado { get; set; }
     
         public virtual Estado Estado1 { get; set; }
+        public virtual Integrante Integrante { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IntegranteEvento> IntegranteEvento { get; set; }
+        public virtual ICollection<IntegranteProyecto> IntegranteProyecto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventoAsociadoGrupoInv> EventoAsociadoGrupoInv { get; set; }
+        public virtual ICollection<ProyectoAsociadoGrupoInv> ProyectoAsociadoGrupoInv { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventoAsociadoSemilleroInv> EventoAsociadoSemilleroInv { get; set; }
+        public virtual ICollection<ProyectoAsociadoSemilleroInv> ProyectoAsociadoSemilleroInv { get; set; }
     }
 }

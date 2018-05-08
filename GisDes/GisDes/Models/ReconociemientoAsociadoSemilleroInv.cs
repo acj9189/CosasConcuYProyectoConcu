@@ -12,12 +12,15 @@ namespace GisDes.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuarios
+    public partial class ReconociemientoAsociadoSemilleroInv
     {
-        public int Id { get; set; }
-        public string NombreUsuario { get; set; }
-        public string Contraseña { get; set; }
-        public string Rol { get; set; }
-        public string Estado { get; set; }
+        public decimal IdSemillero { get; set; }
+        public decimal IdReconocimiento { get; set; }
+        public System.DateTime FechaUpdate { get; set; }
+        public Nullable<decimal> Estado { get; set; }
+    
+        public virtual Estado Estado1 { get; set; }
+        public virtual Reconocimiento Reconocimiento { get; set; }
+        public virtual SemilleroInvestigacion SemilleroInvestigacion { get; set; }
     }
 }

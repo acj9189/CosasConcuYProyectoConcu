@@ -1,19 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="GISDESModelStoreContainer" CdmEntityContainer="GISDESEntity">
-    <EntitySetMapping Name="Estudiantes">
-      <EntityTypeMapping TypeName="GISDESModel.Estudiantes">
-        <MappingFragment StoreEntitySet="Estudiantes">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-          <ScalarProperty Name="Estudios" ColumnName="Estudios" />
-          <ScalarProperty Name="Celular" ColumnName="Celular" />
-          <ScalarProperty Name="Correo" ColumnName="Correo" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
+  <EntityContainerMapping StorageEntityContainer="GISDESModelStoreContainer" CdmEntityContainer="GISDESEntities">
     <EntitySetMapping Name="Evento">
       <EntityTypeMapping TypeName="GISDESModel.Evento">
         <MappingFragment StoreEntitySet="Evento">
@@ -27,29 +14,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PersonaExterna">
-      <EntityTypeMapping TypeName="GISDESModel.PersonaExterna">
-        <MappingFragment StoreEntitySet="PersonaExterna">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-          <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-          <ScalarProperty Name="Fechaingreso" ColumnName="Fechaingreso" />
-          <ScalarProperty Name="Ocupacion" ColumnName="Ocupacion" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
+    <EntitySetMapping Name="Integrantes">
+      <EntityTypeMapping TypeName="GISDESModel.Integrantes">
+        <MappingFragment StoreEntitySet="Integrantes">
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+          <ScalarProperty Name="Ocupación" ColumnName="Ocupación" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CvLAC" ColumnName="CvLAC" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Profesor">
-      <EntityTypeMapping TypeName="GISDESModel.Profesor">
-        <MappingFragment StoreEntitySet="Profesor">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+    <EntitySetMapping Name="SemilleroInvestigacion">
+      <EntityTypeMapping TypeName="GISDESModel.SemilleroInvestigacion">
+        <MappingFragment StoreEntitySet="SemilleroInvestigacion">
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-          <ScalarProperty Name="Cvlac" ColumnName="Cvlac" />
-          <ScalarProperty Name="Intereses" ColumnName="Intereses" />
-          <ScalarProperty Name="Departamento" ColumnName="Departamento" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="IDCoordinador" ColumnName="IDCoordinador" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

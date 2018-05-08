@@ -1,17 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GISDESModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="Estudiantes">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Estudios" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-  </EntityType>
   <EntityType Name="Evento">
     <Key>
       <PropertyRef Name="Id" />
@@ -24,29 +12,28 @@
     <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Estado" Type="Boolean" Nullable="false" />
   </EntityType>
-  <EntityType Name="PersonaExterna">
+  <EntityType Name="Integrantes">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Cedula" Type="Decimal" Precision="12" Scale="0" Nullable="false" />
-    <Property Name="Fechaingreso" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Ocupacion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="Estado" Type="Boolean" Nullable="false" />
+    <Property Name="Nombres" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ocupación" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="CvLAC" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SemilleroInvestigacion" Relationship="Self.FK_SemilleroInvestigacion_Integrantes" FromRole="Integrantes" ToRole="SemilleroInvestigacion" />
   </EntityType>
-  <EntityType Name="Profesor">
+  <EntityType Name="SemilleroInvestigacion">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Apellidos" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Cvlac" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Intereses" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Departamento" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Estado" Type="Boolean" Nullable="false" />
+    <Property Name="IDCoordinador" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Integrantes" Relationship="Self.FK_SemilleroInvestigacion_Integrantes" FromRole="SemilleroInvestigacion" ToRole="Integrantes" />
   </EntityType>
   <EntityType Name="Usuarios">
     <Key>
@@ -58,11 +45,26 @@
     <Property Name="Rol" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Estado" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
-  <EntityContainer Name="GISDESEntity" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" />
+  <Association Name="FK_SemilleroInvestigacion_Integrantes">
+    <End Role="Integrantes" Type="Self.Integrantes" Multiplicity="1" />
+    <End Role="SemilleroInvestigacion" Type="Self.SemilleroInvestigacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Integrantes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SemilleroInvestigacion">
+        <PropertyRef Name="IDCoordinador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GISDESEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Evento" EntityType="Self.Evento" />
-    <EntitySet Name="PersonaExterna" EntityType="Self.PersonaExterna" />
-    <EntitySet Name="Profesor" EntityType="Self.Profesor" />
+    <EntitySet Name="Integrantes" EntityType="Self.Integrantes" />
+    <EntitySet Name="SemilleroInvestigacion" EntityType="Self.SemilleroInvestigacion" />
     <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+    <AssociationSet Name="FK_SemilleroInvestigacion_Integrantes" Association="Self.FK_SemilleroInvestigacion_Integrantes">
+      <End Role="Integrantes" EntitySet="Integrantes" />
+      <End Role="SemilleroInvestigacion" EntitySet="SemilleroInvestigacion" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

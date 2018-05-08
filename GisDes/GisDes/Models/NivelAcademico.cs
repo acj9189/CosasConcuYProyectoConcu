@@ -12,23 +12,21 @@ namespace GisDes.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Integrantes
+    public partial class NivelAcademico
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Integrantes()
+        public NivelAcademico()
         {
-            this.SemilleroInvestigacion = new HashSet<SemilleroInvestigacion>();
+            this.Integrante = new HashSet<Integrante>();
         }
     
-        public string Nombres { get; set; }
-        public string Apellidos { get; set; }
-        public string Ocupación { get; set; }
-        public string Tipo { get; set; }
-        public int ID { get; set; }
-        public string CvLAC { get; set; }
-        public string Email { get; set; }
+        public decimal Id { get; set; }
+        public string Nombre { get; set; }
+        public System.DateTime FechaUpdate { get; set; }
+        public Nullable<decimal> Estado { get; set; }
     
+        public virtual Estado Estado1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SemilleroInvestigacion> SemilleroInvestigacion { get; set; }
+        public virtual ICollection<Integrante> Integrante { get; set; }
     }
 }
