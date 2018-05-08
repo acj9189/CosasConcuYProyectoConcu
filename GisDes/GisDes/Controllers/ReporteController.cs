@@ -15,6 +15,8 @@ namespace GisDes.Controllers
             return View();
         }
 
+        //Este desdarrollo lo realizo Daniel
+
         /// <summary>
         /// Reporte de semilleros por numero de estudiantes en rango de fecha a partir de los datos capturados desde la vista
         /// Caso de uso: CD-01
